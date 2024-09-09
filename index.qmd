@@ -1,7 +1,5 @@
 ---
-title: "Github_local/sm2302-special-lecture"
+title: "Welcome"
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+More info soon.

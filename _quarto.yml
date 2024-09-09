@@ -2,12 +2,13 @@ project:
   type: website
 
 website:
-  title: "Github_local/sm2302-special-lecture"
+  title: "SM-2302 Special Lectures"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: 1-scraping_linear_reg.qmd
+        text: Scraping and Linear Regression
 
 format:
   html:
