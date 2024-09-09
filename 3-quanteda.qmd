@@ -1,0 +1,41 @@
+---
+title: Quantitative analysis of textual data
+editor_options: 
+  chunk_output_type: console
+---
+
+- https://tutorials.quanteda.io/introduction/
+
+
+## Introduction
+
+There are several R packages used for quantitative text analysis, but we will focus specifically on the `{quanteda}` package. So, first install the package from CRAN:
+
+```{r}
+#| eval: false
+install.packages("quanteda")
+```
+
+Since the release of `{quanteda}` version 3.0, `textstat_*`, `textmodel_*` and `textplot_*` functions are available in separate packages. We will use several of these functions in the chapters below and strongly recommend installing these packages.
+
+
+```{r}
+#| eval: false
+install.packages("quanteda.textmodels")
+install.packages("quanteda.textstats")
+install.packages("quanteda.textplots")
+```
+
+We will use the `{readtext}` package to read in different types of text data in these tutorials. 
+
+
+```{r}
+#| eval: false
+install.packages("readtext")
+```
+
+
+## Quantitative data 
+
+### Pre-formatted files
+
