@@ -48,6 +48,17 @@ library(quanteda.textplots)
 library(readtext)
 ```
 
+And these ones lates for the modelling section:
+
+```{r}
+#| message: false
+library(seededlda)
+library(LSX)
+library(lubridate)
+library(ggdendro)
+```
+
+
 ### Pre-formatted files
 
 If your text data is stored in a pre-formatted file where one column contains the text and additional columns might store document-level variables (e.g. year, author, or language), you can import this into R using `read_csv()`.
@@ -436,7 +447,7 @@ Unlike `topfeatures()`, `textstat_frequency()` shows both term and document freq
 
 ```{r}
 #| cache: true
-corp_tweets <- download(url = "https://www.dropbox.com/s/846skn1i5elbnd2/data_corpus_sampletweets.rds?dl=1")
+corp_tweets <- quanteda.corpora::download(url = "https://www.dropbox.com/s/846skn1i5elbnd2/data_corpus_sampletweets.rds?dl=1")
 ```
 
 We can analyse the most frequent hashtags by applying `tokens_keep(pattern = "#*")` before creating a DFM.
@@ -626,6 +637,14 @@ Scaling and classification aim to uncover hidden structures, relationships, and 
 
 Wordfish is a Poisson scaling model of one-dimensional document positions [@slapin2008scaling]. This model is used primarily for scaling political texts to position documents (like speeches or manifestos) on a latent dimension, often reflecting ideological or policy positions. The main objective is to identify the relative positioning of texts on a scale (e.g., left-right political spectrum) based on word frequencies.
 
+Let $y_{ij}$ be the count of word $j$ in document $i$. Then assume 
+$$
+\begin{align}
+y_{ij} &\sim \operatorname{Poi}(\lambda_{ij}) \\
+\log (\lambda_{ij}) &= \psi_j +\beta_j \theta_i
+\end{align}
+$$
+
 In this example, we will show how to apply Wordfish to the Irish budget speeches from 2010. First, we will create a document-feature matrix. Afterwards, we will run Wordfish.
 
 ```{r}
@@ -647,15 +666,199 @@ We can plot the results of a fitted scaling model using `textplot_scale1d()`.
 textplot_scale1d(tmod_wf)
 ```
 
+::: {.callout-note}
+The value of 0 for theta in the Wordfish model is not a true zero in an absolute sense. Instead, it serves as a relative reference point on the latent scale. In Wordfish, theta values are relative, meaning they indicate positions along a spectrum where the direction (positive or negative) is determined by the model’s scaling based on the data and specified parameters.
+:::
+
 The function also allows you to plot scores by a grouping variable, in this case the party affiliation of the speakers.
 
 ```{r}
 textplot_scale1d(tmod_wf, groups = dfmat_irish$party)
 ```
 
+Finally, we can plot the estimated word positions and highlight certain features.
+
+```{r}
+textplot_scale1d(
+  tmod_wf, 
+  margin = "features", 
+  highlighted = c("government", "global", "children", 
+                  "bank", "economy", "the", "citizenship",
+                  "productivity", "deficit")
+)
+```
+
+Beta (x-axis) Reflects how strongly a word is associated with the latent dimension (e.g., ideological position). Words with high absolute beta values are more influential in distinguishing between different positions; positive beta values indicate words more associated with one end of the scale, while negative values indicate the opposite.
+
+Psi (y-axis) Represents the variance in word frequency. Higher psi values suggest that the word occurs with varying frequency across documents, while lower values indicate more consistent usage.
+
+Therefore, words in the upper right (high beta, high psi) are influential and variably used, indicating key terms that may strongly differentiate between document positions. Words in the lower left (low beta, low psi) are less influential and consistently used, likely serving as common or neutral terms.
+
+The plot also helps identify which words are driving the distinctions in the latent scale and how their usage varies across documents.
 
 ### Topic models
 
+Topic models are statistical models used to identify the underlying themes or topics within a large collection of documents. They analyze word co-occurrences across documents to group words into topics, where each topic is a distribution over words, and each document is a mixture of these topics.
+
+A common topic model is Latent Dirichlet Allocation (LDA), which assumes that each document contains multiple topics in varying proportions. Topic models help uncover hidden semantic structures in text, making them useful for organizing, summarizing, and exploring large text datasets. In R, we use the `{seededlda}` package for LDA.
+
+```{r}
+#| message: false
+#| warning: false
+# install.packages("seededlda")
+library(seededlda)
+```
+
+Back to the Guardian data, `corp_news`.
+We will select only news articles published in 2016 using `corpus_subset()` function and the `year()` function from the `{lubridate}` package 
+
+```{r}
+corp_news_2016 <- corpus_subset(corp_news, year(date) == 2016)
+ndoc(corp_news_2016)
+```
+
+Further, after removal of function words and punctuation in `dfm()`, we will only keep the top 20% of the most frequent features (`min_termfreq = 0.8`) that appear in less than 10% of all documents (`max_docfreq = 0.1`) using `dfm_trim()` to focus on common but distinguishing features.
+
+
+```{r}
+#| cache: true
+# Create tokens
+toks_news <- 
+  tokens(
+    corp_news_2016, 
+    remove_punct = TRUE, 
+    remove_numbers = TRUE, 
+    remove_symbol = TRUE
+  ) |>
+  tokens_remove(
+    pattern = c(stopwords("en"), "*-time", "updated-*", "gmt", "bst")
+  )
+
+# Create DFM
+dfmat_news <- 
+  dfm(toks_news) %>% 
+  dfm_trim(
+    min_termfreq = 0.8, 
+    termfreq_type = "quantile",
+    max_docfreq = 0.1, 
+    docfreq_type = "prop"
+  )
+```
+
+The LDA is fitted using the code below. Note that `k = 10` specifies the number of topics to be discovered. This is an important parameter and you should try a variety of values and validate the outputs of your topic models thoroughly.
+
+
+```{r}
+#| cache: true
+# Takes a while to fit!
+tmod_lda <- seededlda::textmodel_lda(dfmat_news, k = 10)
+```
+
+You can extract the most important terms for each topic from the model using `terms()`. Each column (`topic1`, `topic2`, etc.) lists words that frequently co-occur in the dataset, suggesting a common theme within each topic.
+
+
+```{r}
+terms(tmod_lda, 10)
+```
+
+As an example, Topic 1 ("syria", "refugees", "isis"), is likely related to international conflicts, specifically around Syria and refugee crises. Topic 4 ("funding", "housing", "nhs") is likely related to public services and social welfare issues, such as healthcare and housing.
+Each topic provides a distinct theme, derived from the words that frequently appear together in the corpus, helping to summarize and understand the main themes in the text.
+
+You can then obtain the most likely topics using topics() and save them as a document-level variable.
+
+```{r}
+# assign topic as a new document-level variable
+dfmat_news$topic <- topics(tmod_lda)
+
+# cross-table of the topic frequency
+table(dfmat_news$topic)
+```
+
+In the seeded LDA, you can pre-define topics in LDA using a dictionary of "seeded" words. For more information, see the `{seededlda}` package documentation.
+
 ### Latent semantic scaling
 
-Hello
+Latent Semantic Scaling (LSS) is a method used to place words or documents on a latent scale that represents an underlying dimension, such as sentiment, ideology, or any other semantic axis. The key idea is to use the co-occurrence patterns of words across documents to identify and position items along this hidden dimension.
+
+LSS is performed using the `{LSX}` package. In this example, we will apply LSS to the corpus of Sputnik articles about Ukraine. First, we prepare the data set.
+
+```{r}
+#| cache: true
+# Read the RDS file directly from the URL
+corp <- readRDS(url("https://www.dropbox.com/s/abme18nlrwxgmz8/data_corpus_sputnik2022.rds?dl=1"))
+
+toks <-
+  corp |>
+  corpus_reshape("sentences") |>  # this is a must!
+  tokens(
+    remove_punct = TRUE, 
+    remove_symbols = TRUE, 
+    remove_numbers = TRUE, 
+    remove_url = TRUE
+  )
+
+dfmt <-
+  dfm(toks) |>
+  dfm_remove(pattern = stopwords("en"))
+```
+
+Now to run an LSS model, run the following command:
+
+```{r}
+#| cache: true
+lss <- textmodel_lss(
+  dfmt, 
+  seeds = as.seedwords(data_dictionary_sentiment), 
+  k = 300, 
+  cache = TRUE, 
+  include_data = TRUE, 
+  group_data = TRUE
+)
+```
+
+Taking the DFM and the seed words as the only inputs, `textmodel_lss()` computes the *polarity* scores of all the words in the corpus based on their semantic similarity to the seed words. You usually do not need to change the value of `k` (300 by default).
+
+Let's look at the output of the LSS model:
+
+```{r}
+summary(lss)
+```
+
+Polarity scores in Latent Semantic Scaling (LSS) quantify how words or documents relate to a specific dimension (e.g., sentiment) based on predefined seed words. Seed words represent the extremes of this dimension (e.g., "good" vs. "bad"). LSS analyzes how other words co-occur with these seed words to assign a score.
+
+We can visualize the polarity of words using `textplot_terms()`. If you pass a dictionary to be highlighted, words are plotted in different colors. `data_dictionary_LSD2015` is a widely-used sentiment dictionary. If `highlighted = NULL`, words are selected randomly to highlight.
+
+```{r}
+textplot_terms(lss, highlighted = data_dictionary_LSD2015[1:2])
+```
+
+Based on the fitted model, we can now predict polarity scores of documents using `predict()`. It is best to work with the document-level data frame, which we will then add a new column for the predicted polarity scores.
+
+```{r}
+dat <- docvars(lss$data)
+dat$lss <- predict(lss)
+glimpse(dat)
+```
+
+Basically what we have is a data frame, where each row represents a single document (here, a news item from Sputnik with a timestamp). Each document also has a predicted polarity score based on the LSS model. 
+We can visualise this easily using `ggplot()`.
+But first, we need to smooth the scores using `smooth_lss()` (otherwise it is too rough to interpret).
+
+```{r}
+dat_smooth <- smooth_lss(dat, lss_var = "lss", date_var = "date")
+
+ggplot(dat_smooth, aes(x = date, y = fit)) + 
+  geom_line() +
+  geom_ribbon(
+    aes(ymin = fit - se.fit * 1.96, 
+        ymax = fit + se.fit * 1.96), 
+    alpha = 0.1
+  ) +
+  geom_vline(xintercept = as.Date("2022-02-24"), linetype = "dotted") +
+  scale_x_date(date_breaks = "months", date_labels = "%b %Y", name = NULL) +
+  labs(title = "Sentiment about Ukraine", x = "Date", y = "Sentiment") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+The plot shows that the sentiment of the articles about Ukraine became more negative in March but more positive in April. Zero on the Y-axis is the overall mean of the score; the dotted vertical line indicate the beginning of the war.
