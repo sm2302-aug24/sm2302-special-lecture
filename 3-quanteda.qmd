@@ -28,7 +28,6 @@ install.packages("quanteda.textplots")
 
 We will use the `{readtext}` package to read in different types of text data in these tutorials. 
 
-
 ```{r}
 #| eval: false
 install.packages("readtext")
@@ -43,6 +42,9 @@ Before beginning we need to load the libraries
 #| message: false
 library(tidyverse)
 library(quanteda)
+library(quanteda.textmodels)
+library(quanteda.textstats)
+library(quanteda.textplots)
 library(readtext)
 ```
 
@@ -302,8 +304,358 @@ docvars(corp) |>
 # dplyr, we can use it here.
 ```
 
+Another useful feature is the ability to change the unit of texts. For example, the UK Immigration 2010 data set is a corpus of 9 documents, where each document is a speech by the political party.  
+
+```{r}
+corp <- corpus(data_char_ukimmig2010)
+print(corp)
+```
+
+We can use `corpus_reshape()` to change the unit of texts. For example, we can change the unit of texts to sentences using the command below.
+
+```{r}
+corp_sent <- corpus_reshape(corp, to = "sentences")
+print(corp_sent)
+```
+
+The following code restores it back to the document level.
+
+```{r}
+corp_doc <- corpus_reshape(corp_sent, to = "documents")
+print(corp_doc)
+```
 
 
 ### Tokens
 
+`tokens()` segments texts in a corpus into tokens (words or sentences) by word boundaries. 
+By default, tokens() only removes separators (typically white spaces), but you can also remove punctuation and numbers.
+
+```{r}
+toks <- tokens(corp_immig)
+print(toks)
+toks_nopunct <- tokens(data_char_ukimmig2010, remove_punct = TRUE)
+print(toks_nopunct)
+```
+
+You can see how keywords are used in the actual contexts in a concordance view produced by `kwic()`.
+
+```{r}
+kw <- kwic(toks, pattern =  "immig*")
+head(kw, 10)
+```
+
+::: {.callout-note}
+
+1. If you want to find multi-word expressions, separate words by white space and wrap the character vector by `phrase()`, as follows:
+
+    ```r
+    kw_asylum <- kwic(toks, pattern = phrase("asylum seeker*"))
+    ```
+
+
+
+2. Texts do not always appear nicely in your R console, so you can use `View()` to see the keywords-in-context in an interactive HTML table.
+
+:::
+
+You can remove tokens that you are not interested in using `tokens_select()`. Usually we remove function words (grammatical words) that have little or no substantive meaning in pre-processing. `stopwords()` returns a pre-defined list of function words.
+
+```{r}
+toks_nostop <- tokens_select(
+  toks, 
+  pattern = stopwords("en"), 
+  selection = "remove"  # keep or remove
+)
+print(toks_nostop)
+```
+
+::: {.callout-note}
+
+The `stopwords()` function returns character vectors of stopwords for different languages, using the ISO-639-1 language codes. For **Malay**, use `stopwords("ms", source = "stopwords-iso")`. For Bruneian specific context, you may need to amend the stopwords yourselves.
+
+:::
+
+You can generate n-grams in any lengths from a tokens using `tokens_ngrams()`. N-grams are a contiguous sequence of n tokens from already tokenized text objects. So for example, in the phrase "natural language processing":
+
+- Unigram (1-gram): "natural", "language", "processing"
+- Bigram (2-gram): "natural language", "language processing"
+- Trigram (3-gram): "natural language processing"
+
+```{r}
+# tokens_ngrams() also supports skip to generate skip-grams.
+toks_ngram <- tokens_ngrams(toks_nopunct, n = 3, skip = 0)
+head(toks_ngram[[1]], 20)  # the first political party's trigrams
+```
+
 ### Document feature matrix
+
+`dfm()` constructs a document-feature matrix (DFM) from a tokens object.
+
+```{r}
+toks_inaug <- tokens(data_corpus_inaugural, remove_punct = TRUE)
+dfmat_inaug <- dfm(toks_inaug)
+print(dfmat_inaug)
+```
+
+Some useful functions to operate on DFMs are:
+
+1. `ndoc()`: returns the number of documents
+2. `nfeat()`: returns the number of features
+3. `docnames()`: returns the document names
+4. `featnames()`: returns the feature (column) names
+5. `topfeatures()`: returns the most frequent features
+6. `docvars()`: returns the document-level variables
+
+DFMs sometimes behaves like normal matrices too, so you can use `rowSums()` and `colSums()` to calculate marginals. 
+
+Most commonly perhaps, is you want to select some columns (i.e. features) from the DFM that satisfy a pattern. For instance,
+
+```{r}
+dfm_select(dfmat_inaug, pattern = "freedom")
+dfm_keep(dfmat_inaug, min_nchar = 5)
+```
+
+There is also `dfm_trim()` to remove features that are too frequent or too rare, based on frequencies.
+
+```{r}
+# Trim DFM containing features that occur less than 10 times in the corpus
+dfm_trim(dfmat_inaug, min_termfreq = 10)
+
+# Trim DFM containing features that occur in more than 10% of the documents
+dfm_trim(dfmat_inaug, max_docfreq = 0.1, docfreq_type = "prop")
+```
+
+
+## Statistical analysis
+
+### Simple frequency analysis
+
+Unlike `topfeatures()`, `textstat_frequency()` shows both term and document frequencies. You can also use the function to find the most frequent features within groups. Using the `download()` function from **quanteda.corpora**, you can retrieve a text corpus of tweets.
+
+
+```{r}
+#| cache: true
+corp_tweets <- download(url = "https://www.dropbox.com/s/846skn1i5elbnd2/data_corpus_sampletweets.rds?dl=1")
+```
+
+We can analyse the most frequent hashtags by applying `tokens_keep(pattern = "#*")` before creating a DFM.
+
+
+```{r}
+toks_tweets <- 
+  tokens(corp_tweets, remove_punct = TRUE) |>
+  tokens_keep(pattern = "#*")
+dfmat_tweets <- dfm(toks_tweets)
+
+tstat_freq <- textstat_frequency(dfmat_tweets, n = 5, groups = lang)
+head(tstat_freq, 20)
+```
+
+You can also plot the Twitter hashtag frequencies easily using `ggplot()`.
+
+
+```{r}
+dfmat_tweets |>
+  textstat_frequency(n = 15) |>
+  ggplot(aes(x = reorder(feature, frequency), y = frequency)) +
+  geom_point() +
+  coord_flip() +
+  labs(x = NULL, y = "Frequency") +
+  theme_bw()
+```
+
+Alternatively, you can create a word cloud of the 100 most common hashtags.
+
+
+```{r}
+set.seed(132)
+textplot_wordcloud(dfmat_tweets, max_words = 100)
+```
+
+Finally, it is possible to compare different groups within one Wordcloud. We must first create a dummy variable that indicates whether a tweet was posted in English or a different language. Afterwards, we can compare the most frequent hashtags of English and non-English tweets.
+
+
+```{r}
+# create document-level variable indicating whether tweet was in English or
+# other language
+corp_tweets$dummy_english <- 
+  factor(ifelse(corp_tweets$lang == "English", "English", "Not English"))
+
+# tokenize texts
+toks_tweets <- tokens(corp_tweets)
+
+# create a grouped dfm and compare groups
+dfmat_corp_language <- 
+  dfm(toks_tweets) |>
+  dfm_keep(pattern = "#*") |>
+  dfm_group(groups = dummy_english)
+
+# create wordcloud
+set.seed(132) # set seed for reproducibility
+textplot_wordcloud(dfmat_corp_language, comparison = TRUE, max_words = 200)
+```
+
+### Lexical diversity
+
+Lexical diversity is a measure of how varied the vocabulary in a text or speech is. It indicates the richness of language use by comparing the number of unique words (types) to the total number of words (tokens) in the text.  It is useful, for instance, for analysing speakers’ or writers’ linguistic skills, or the complexity of ideas expressed in documents.
+
+A common metric for lexical diversity is the Type-Token Ratio (TTR), calculated as:
+$$
+TTR = \frac{N_{\text{types}}}{N_{\text{tokens}}}
+$$
+
+```{r}
+toks_inaug <- tokens(data_corpus_inaugural)
+dfmat_inaug <- 
+  dfm(toks_inaug) |>
+  dfm_remove(pattern = stopwords("en"))  # similar to dfm_select()
+
+tstat_lexdiv <- textstat_lexdiv(dfmat_inaug)
+tail(tstat_lexdiv, 5)
+```
+
+We can prepare a plot using `ggplot()` as follows:
+
+```{r}
+plot_df <-
+  tstat_lexdiv |>
+  mutate(id = row_number())
+
+ggplot(plot_df, aes(id, TTR)) +
+  geom_line() +
+  scale_x_continuous(
+    breaks = plot_df$id,
+    labels = plot_df$document,
+    name = NULL
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+### Document/Feature similarity
+
+Document/feature similarity is a measure of how alike two documents or sets of features are based on their content. It quantifies the degree to which documents share similar terms, topics, or characteristics.
+
+`textstat_dist()` calculates similarities of documents or features for various measures. The output is compatible with R’s `dist()`, so hierarchical clustering can be performed without any transformation.
+
+```{r}
+toks_inaug <- tokens(data_corpus_inaugural)
+dfmat_inaug <- 
+  dfm(toks_inaug) |>
+  dfm_remove(pattern = stopwords("en"))  # similar to dfm_select()
+
+# Calculate document similarity
+dist_mat <- textstat_dist(dfmat_inaug)  # using Euclidean distance
+dist_mat[1:3, 1:3]
+```
+
+To plot this using `ggplot()`, we rely on the `{ggdendro}` package. 
+
+```{r}
+#| fig-height: 9
+clust <- hclust(as.dist(dist_mat))  # hierarchical clustering
+
+library(ggdendro)
+dendr <- dendro_data(clust)
+ggdendrogram(dendr, rotate = TRUE) 
+```
+
+
+### Feature co-occurence matrix
+
+A feature co-occurrence matrix (FCM) is a square matrix that counts the number of times two features co-occur in the same context, such as within the same document, sentence, or window of text. This is a special object in `{quanteda}`, but behaves similarly to a DFM. As an example, consider the following:
+
+```{r}
+tibble(
+  doc_id = 1:2,
+  text = c("I love Mathematics.", "Mathematics is awesome.")
+) |>
+  corpus() |>
+  tokens(remove_punct = TRUE) |>
+  fcm(context = "document")  # by default
+```
+
+Let's download the `data_corpus_guardian` corpus from the `{quanteda.corpora}` package. 
+
+```{r}
+#| cache: true
+# remotes::install_github("quanteda/quanteda.corpora")
+library(quanteda.corpora)
+corp_news <- download("data_corpus_guardian")
+```
+
+When a corpus is large, you have to select features of a DFM before constructing a FCM. In the example below, we clean up as follows:
+
+1. Remove all stopwords and punctuation characters. 
+2. Remove certain patterns that usually describe the publication time and date of articles. 
+3. Keep only terms that occur at least 100 times in the document-feature matrix.
+
+```{r}
+#| cache: true
+toks_news <- tokens(corp_news, remove_punct = TRUE)
+dfmat_news <- 
+  dfm(toks_news) |>
+  dfm_remove(pattern = c(stopwords("en"), "*-time", "updated-*", "gmt", "bst", "|")) |>
+  dfm_trim(min_termfreq = 100)
+
+topfeatures(dfmat_news)
+nfeat(dfmat_news)
+```
+
+To construct an FCM from a DFM (or a tokens object), use `fcm()`. You can visualise the FCM using a `textplot_network()` graph as follows:
+
+```{r}
+fcmat_news <- fcm(dfmat_news, context = "document")
+feat <- names(topfeatures(dfmat_news, 30))  # Top 30 features
+fcmat_news_select <- fcm_select(fcmat_news, pattern = feat, selection = "keep")
+dim(fcmat_news_select)
+
+set.seed(123)
+quanteda.textplots::textplot_network(fcmat_news_select)
+```
+
+
+## Scaling and classification
+
+In this section we apply mainly unsupervised learning models to textual data. 
+Scaling and classification aim to uncover hidden structures, relationships, and patterns within textual data by placing texts or words on latent scales (scaling) and grouping them into meaningful categories or themes (classification). This process transforms complex, high-dimensional text into more interpretable and actionable insights.
+
+### Wordfish
+
+Wordfish is a Poisson scaling model of one-dimensional document positions [@slapin2008scaling]. This model is used primarily for scaling political texts to position documents (like speeches or manifestos) on a latent dimension, often reflecting ideological or policy positions. The main objective is to identify the relative positioning of texts on a scale (e.g., left-right political spectrum) based on word frequencies.
+
+In this example, we will show how to apply Wordfish to the Irish budget speeches from 2010. First, we will create a document-feature matrix. Afterwards, we will run Wordfish.
+
+```{r}
+toks_irish <- tokens(data_corpus_irishbudget2010, remove_punct = TRUE)
+dfmat_irish <- dfm(toks_irish)
+
+# Run Wordfish model
+tmod_wf <- textmodel_wordfish(dfmat_irish, dir = c(6, 5))
+summary(tmod_wf)
+```
+
+The R output shows the results of the Wordfish model applied to Irish political texts, estimating the ideological positions of various politicians. Each politician is assigned a “theta” value, representing their placement on a latent scale; positive values indicate one end of the spectrum, while negative values indicate the opposite. 
+
+For example, Brian Lenihan (FF) has a high positive theta, suggesting a strong position on one side, while Joan Burton (LAB) has a negative theta, placing her on the other side. The model also provides feature scores for words (beta values), indicating their importance in distinguishing between these positions. Words with higher absolute beta values, such as “supplementary,” are key in differentiating the ideological content of the texts, while psi values reflect word frequency variance, contributing to the model’s differentiation of document positions.
+
+We can plot the results of a fitted scaling model using `textplot_scale1d()`.
+
+```{r}
+textplot_scale1d(tmod_wf)
+```
+
+The function also allows you to plot scores by a grouping variable, in this case the party affiliation of the speakers.
+
+```{r}
+textplot_scale1d(tmod_wf, groups = dfmat_irish$party)
+```
+
+
+### Topic models
+
+### Latent semantic scaling
+
+Hello

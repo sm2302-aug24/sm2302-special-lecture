@@ -19,5 +19,7 @@ format:
     css: styles.css
     toc: true
 
+bibliography: refs.bib
+
 
 
