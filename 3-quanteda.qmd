@@ -58,7 +58,6 @@ library(lubridate)
 library(ggdendro)
 ```
 
-
 ### Pre-formatted files
 
 If your text data is stored in a pre-formatted file where one column contains the text and additional columns might store document-level variables (e.g. year, author, or language), you can import this into R using `read_csv()`.
@@ -810,7 +809,7 @@ lss <- textmodel_lss(
   dfmt, 
   seeds = as.seedwords(data_dictionary_sentiment), 
   k = 300, 
-  cache = TRUE, 
+  # cache = TRUE, 
   include_data = TRUE, 
   group_data = TRUE
 )
