@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: "docs"
 
 execute:
   freeze: auto
@@ -15,8 +16,6 @@ website:
 
 format:
   html:
-    theme: cosmo
-    css: styles.css
     toc: true
 
 bibliography: refs.bib

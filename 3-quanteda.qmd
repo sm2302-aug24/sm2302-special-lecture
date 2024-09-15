@@ -40,6 +40,7 @@ Before beginning we need to load the libraries
 
 ```{r}
 #| message: false
+#| warning: false
 library(tidyverse)
 library(quanteda)
 library(quanteda.textmodels)
@@ -439,13 +440,30 @@ dfm_trim(dfmat_inaug, max_docfreq = 0.1, docfreq_type = "prop")
 
 ## Statistical analysis
 
+Note: If you have not installed `{quanteda.corpora}`, do so by running
+
+```r
+remotes::install_github("quanteda/quanteda.corpora")
+```
+
 ### Simple frequency analysis
 
-Unlike `topfeatures()`, `textstat_frequency()` shows both term and document frequencies. You can also use the function to find the most frequent features within groups. Using the `download()` function from **quanteda.corpora**, you can retrieve a text corpus of tweets.
+Unlike `topfeatures()`, `textstat_frequency()` shows both term and document frequencies. You can also use the function to find the most frequent features within groups. Using the `download()` function from `{quanteda.corpora}`, you can retrieve a text corpus of tweets.
 
 
 ```{r}
-#| cache: true
+#| include: false
+if (!file.exists("data/corp_tweets.RData")) {
+  corp_tweets <- quanteda.corpora::download(url = "https://www.dropbox.com/s/846skn1i5elbnd2/data_corpus_sampletweets.rds?dl=1")
+  save(corp_tweets, file = "data/corp_tweets.RData")
+} else {
+  load("data/corp_tweets.RData")
+}
+```
+
+
+```{r}
+#| eval: false
 corp_tweets <- quanteda.corpora::download(url = "https://www.dropbox.com/s/846skn1i5elbnd2/data_corpus_sampletweets.rds?dl=1")
 ```
 
@@ -590,10 +608,18 @@ tibble(
 Let's download the `data_corpus_guardian` corpus from the `{quanteda.corpora}` package. 
 
 ```{r}
-#| cache: true
-# remotes::install_github("quanteda/quanteda.corpora")
-library(quanteda.corpora)
-corp_news <- download("data_corpus_guardian")
+#| include: false
+if (!file.exists("data/corp_news.RData")) {
+  corp_news <- quanteda.corpora::download("data_corpus_guardian")
+  save(corp_news, file = "data/corp_news.RData")
+} else {
+  load("data/corp_news.Rdata")
+}
+```
+
+```{r}
+#| eval: false
+corp_news <- quanteda.corpora::download("data_corpus_guardian")
 ```
 
 When a corpus is large, you have to select features of a DFM before constructing a FCM. In the example below, we clean up as follows:
