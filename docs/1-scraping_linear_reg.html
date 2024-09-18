@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -66,7 +100,39 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -120,8 +186,34 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-scraping" id="toc-data-scraping" class="nav-link active" data-scroll-target="#data-scraping">Data scraping</a></li>
-  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression">Linear regression</a></li>
+  <li><a href="#ethics" id="toc-ethics" class="nav-link active" data-scroll-target="#ethics">Ethics</a></li>
+  <li><a href="#html-basics" id="toc-html-basics" class="nav-link" data-scroll-target="#html-basics">HTML basics</a>
+  <ul class="collapse">
+  <li><a href="#elements" id="toc-elements" class="nav-link" data-scroll-target="#elements">Elements</a></li>
+  <li><a href="#contents" id="toc-contents" class="nav-link" data-scroll-target="#contents">Contents</a></li>
+  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
+  </ul></li>
+  <li><a href="#reading-html-with-rvest" id="toc-reading-html-with-rvest" class="nav-link" data-scroll-target="#reading-html-with-rvest">Reading HTML with rvest</a></li>
+  <li><a href="#css-selectors" id="toc-css-selectors" class="nav-link" data-scroll-target="#css-selectors">CSS selectors</a></li>
+  <li><a href="#extracting-data" id="toc-extracting-data" class="nav-link" data-scroll-target="#extracting-data">Extracting data</a>
+  <ul class="collapse">
+  <li><a href="#text" id="toc-text" class="nav-link" data-scroll-target="#text">Text</a></li>
+  <li><a href="#attributes-1" id="toc-attributes-1" class="nav-link" data-scroll-target="#attributes-1">Attributes</a></li>
+  <li><a href="#tables" id="toc-tables" class="nav-link" data-scroll-target="#tables">Tables</a></li>
+  </ul></li>
+  <li><a href="#element-vs-elements" id="toc-element-vs-elements" class="nav-link" data-scroll-target="#element-vs-elements">Element vs elements</a></li>
+  <li><a href="#scraping-house-prices" id="toc-scraping-house-prices" class="nav-link" data-scroll-target="#scraping-house-prices">Scraping house prices</a></li>
+  <li><a href="#cleaning-using-llm" id="toc-cleaning-using-llm" class="nav-link" data-scroll-target="#cleaning-using-llm">Cleaning using LLM</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression">Linear regression</a>
+  <ul class="collapse">
+  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit">Model fit</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#predictions" id="toc-predictions" class="nav-link" data-scroll-target="#predictions">Predictions</a></li>
+  </ul></li>
+  <li><a href="#more-advanced-models" id="toc-more-advanced-models" class="nav-link" data-scroll-target="#more-advanced-models">More advanced models</a>
+  <ul class="collapse">
+  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests">Random forests</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -148,16 +240,788 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>For topic 1, we will cover linear regression. But before diving into that topic, we will talk about how to scrape data from the web.</p>
-<section id="data-scraping" class="level1">
-<h1>Data scraping</h1>
+<ul>
+<li>https://r4ds.hadley.nz/webscraping</li>
+</ul>
+<p>Libraries:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'rvest'
+
+The following object is masked from 'package:readr':
+
+    guess_encoding</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(polite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="ethics" class="level2">
+<h2 class="anchored" data-anchor-id="ethics">Ethics</h2>
+<p>Data scraping is the process of extracting data from websites. This can be done manually, but it is often done using a program. In this section, we will use the <code>rvest</code> package to scrape data from a website.</p>
+<p>When scraping car prices from sellers’ websites in Brunei, it’s important to consider legal and ethical aspects:</p>
+<ol type="1">
+<li><p><strong>Legal Considerations</strong>: If the data is public, non-personal, and factual, scraping is generally acceptable. However, laws vary by location. If the data is behind a login or used for commercial purposes, consulting a lawyer is advisable.</p></li>
+<li><p><strong>Terms of Service</strong>: Many websites prohibit scraping in their terms of service. In some regions, like the US, these terms may not be binding unless you explicitly agree to them (e.g., by creating an account). In Europe, these terms are often enforceable even without explicit consent.</p></li>
+<li><p><strong>Personally Identifiable Information</strong>: Avoid scraping data that includes personal information (names, contact details, etc.) due to strict privacy laws like the GDPR in Europe. Ethical concerns arise even if the data is public.</p></li>
+<li><p><strong>Copyright</strong>: Data like car prices is generally not protected by copyright, as it’s factual. However, if scraping includes original content (like descriptions or images), consider copyright laws and whether “fair use” applies.</p></li>
+</ol>
 </section>
-<section id="linear-regression" class="level1">
-<h1>Linear regression</h1>
+<section id="html-basics" class="level2">
+<h2 class="anchored" data-anchor-id="html-basics">HTML basics</h2>
+<p>HTML stands for “HyperText Markup Language” and looks like this:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Page title<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">h1</span><span class="ot"> id</span><span class="op">=</span><span class="st">'first'</span><span class="dt">&gt;</span>A heading<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Some text <span class="dv">&amp;amp;</span> <span class="dt">&lt;</span><span class="kw">b</span><span class="dt">&gt;</span>some bold text.<span class="dt">&lt;/</span><span class="kw">b</span><span class="dt">&gt;&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">'myimg.png'</span><span class="ot"> width</span><span class="op">=</span><span class="st">'100'</span><span class="ot"> height</span><span class="op">=</span><span class="st">'100'</span><span class="dt">&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>HTML has a hierarchical structure formed by <strong>elements</strong> which consist of a start tag (e.g.&nbsp;<code>&lt;tag&gt;</code>), optional <strong>attributes</strong> (<code>id='first'</code>), an end tag<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (like <code>&lt;/tag&gt;</code>), and <strong>contents</strong> (everything in between the start and end tag).</p>
+<p>Since <code>&lt;</code> and <code>&gt;</code> are used for start and end tags, you can’t write them directly. Instead you have to use the HTML <strong>escapes</strong> <code>&amp;gt;</code> (greater than) and <code>&amp;lt;</code> (less than). And since those escapes use <code>&amp;</code>, if you want a literal ampersand you have to escape it as <code>&amp;amp;</code>. There are a wide range of possible HTML escapes but you don’t need to worry about them too much because rvest automatically handles them for you.</p>
+<section id="elements" class="level3">
+<h3 class="anchored" data-anchor-id="elements">Elements</h3>
+<p>All up, there are over 100 HTML elements. Some of the most important are:</p>
+<ul>
+<li><p>Every HTML page must be in an <code>&lt;html&gt;</code> element, and it must have two children: <code>&lt;head&gt;</code>, which contains document metadata like the page title, and <code>&lt;body&gt;</code>, which contains the content you see in the browser.</p></li>
+<li><p>Block tags like <code>&lt;h1&gt;</code> (heading 1), <code>&lt;p&gt;</code> (paragraph), and <code>&lt;ol&gt;</code> (ordered list) form the overall structure of the page.</p></li>
+<li><p>Inline tags like <code>&lt;b&gt;</code> (bold), <code>&lt;i&gt;</code> (italics), and <code>&lt;a&gt;</code> (links) formats text inside block tags.</p></li>
+</ul>
+<p>If you encounter a tag that you’ve never seen before, you can find out what it does with a little googling. I recommend the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">MDN Web Docs</a> which are produced by Mozilla, the company that makes the Firefox web browser.</p>
+</section>
+<section id="contents" class="level3">
+<h3 class="anchored" data-anchor-id="contents">Contents</h3>
+<p>Most elements can have content in between their start and end tags. This content can either be text or more elements. For example, the following HTML contains paragraph of text, with one word in bold.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  Hi! My <span class="dt">&lt;</span><span class="kw">b</span><span class="dt">&gt;</span>name<span class="dt">&lt;/</span><span class="kw">b</span><span class="dt">&gt;</span> is Haziq.</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This renders as</p>
+<p>
+  Hi! My <b>name</b> is Haziq.
+</p>
+<p>The <strong>children</strong> of a node refers only to elements, so the <code>&lt;p&gt;</code> element above has one child, the <code>&lt;b&gt;</code> element. The <code>&lt;b&gt;</code> element has no children, but it does have contents (the text “name”).</p>
+<p>Conceptually, this can be represented as follows:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD;
+    P["&lt;p&gt; element"]
+    P -- "content" --&gt; T1["'Hi! My '"]
+    P --&gt; B["&amp;lt;b&amp;gt; element"]
+    P -- "content" --&gt; T2["' is Haziq.'"]
+    B -- "content" --&gt; T3["'name'"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Some elements, like <code>&lt;img&gt;</code> can’t have children. These elements depend solely on attributes for their behavior.</p>
+</section>
+<section id="attributes" class="level3">
+<h3 class="anchored" data-anchor-id="attributes">Attributes</h3>
+<p>Tags can have named <strong>attributes</strong> which look like <code>name1='value1' name2='value2'</code>. Two of the most important attributes are <code>id</code> and <code>class</code>, which are used in conjunction with CSS (Cascading Style Sheets) to control the visual appearance of the page. These are often useful when scraping data off a page.</p>
+</section>
+</section>
+<section id="reading-html-with-rvest" class="level2">
+<h2 class="anchored" data-anchor-id="reading-html-with-rvest">Reading HTML with rvest</h2>
+<p>You’ll usually start the scraping process with <code>read_html()</code>. This returns an <code>xml_document</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> object which you’ll then manipulate using rvest functions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"http://rvest.tidyverse.org/"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(html)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "xml_document" "xml_node"    </code></pre>
+</div>
+</div>
+<p>For examples and experimentation, rvest also includes a function that lets you create an <code>xml_document</code> from literal HTML:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">minimal_html</span>(<span class="st">"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;p&gt;This is a paragraph&lt;p&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;ul&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;li&gt;This is a bulleted list&lt;/li&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/ul&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{html_document}
+&lt;html&gt;
+[1] &lt;head&gt;\n&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8 ...
+[2] &lt;body&gt;\n&lt;p&gt;This is a paragraph&lt;/p&gt;\n&lt;p&gt;\n  &lt;/p&gt;\n&lt;ul&gt;\n&lt;li&gt;This is a bull ...</code></pre>
+</div>
+</div>
+<p>Regardless of how you get the HTML, you’ll need some way to identify the elements that contain the data you care about. rvest provides two options: CSS selectors and XPath expressions. Here I’ll focus on CSS selectors because they’re simpler but still sufficiently powerful for most scraping tasks.</p>
+</section>
+<section id="css-selectors" class="level2">
+<h2 class="anchored" data-anchor-id="css-selectors">CSS selectors</h2>
+<p>CSS is short for cascading style sheets, and is a tool for defining the visual styling of HTML documents. CSS includes a miniature language for selecting elements on a page called <strong>CSS selectors</strong>. CSS selectors define patterns for locating HTML elements, and are useful for scraping because they provide a concise way of describing which elements you want to extract.</p>
+<p>CSS selectors can be quite complex, but fortunately you only need the simplest for rvest, because you can also write R code for more complicated situations. The four most important selectors are:</p>
+<ul>
+<li><p><code>p</code>: selects all <code>&lt;p&gt;</code> elements.</p></li>
+<li><p><code>.title</code>: selects all elements with <code>class</code> “title”.</p></li>
+<li><p><code>p.special</code>: selects all <code>&lt;p&gt;</code> elements with <code>class</code> “special”.</p></li>
+<li><p><code>#title</code>: selects the element with the <code>id</code> attribute that equals “title”. Id attributes must be unique within a document, so this will only ever select a single element.</p></li>
+</ul>
+<p>If you want to learn more CSS selectors I recommend starting with the fun <a href="https://flukeout.github.io/">CSS dinner</a> tutorial and then referring to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors">MDN web docs</a>.</p>
+<p>Lets try out the most important selectors with a simple example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">minimal_html</span>(<span class="st">"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;h1&gt;This is a heading&lt;/h1&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;p id='first'&gt;This is a paragraph&lt;/p&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;p class='important'&gt;This is an important paragraph&lt;/p&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In rvest you can extract a single element with <code>html_element()</code> or all matching elements with <code>html_elements()</code>. Both functions take a document<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and a css selector:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">"h1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{html_node}
+&lt;h1&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">"p"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{xml_nodeset (2)}
+[1] &lt;p id="first"&gt;This is a paragraph&lt;/p&gt;
+[2] &lt;p class="important"&gt;This is an important paragraph&lt;/p&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">".important"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{xml_nodeset (1)}
+[1] &lt;p class="important"&gt;This is an important paragraph&lt;/p&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">"#first"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{xml_nodeset (1)}
+[1] &lt;p id="first"&gt;This is a paragraph&lt;/p&gt;</code></pre>
+</div>
+</div>
+<p>Selectors can also be combined in various ways using <strong>combinators</strong>. For example,The most important combinator is ” “, the <strong>descendant</strong> combination, because <code>p a</code> selects all <code>&lt;a&gt;</code> elements that are a child of a <code>&lt;p&gt;</code> element.</p>
+<p>If you don’t know exactly what selector you need, I highly recommend using <a href="https://rvest.tidyverse.org/articles/selectorgadget.html">SelectorGadget</a>, which lets you automatically generate the selector you need by supplying positive and negative examples in the browser.</p>
+</section>
+<section id="extracting-data" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-data">Extracting data</h2>
+<p>Now that you’ve got the elements you care about, you’ll need to get data out of them. You’ll usually get the data from either the text contents or an attribute. But, sometimes (if you’re lucky!), the data you need will be in an HTML table.</p>
+<section id="text" class="level3">
+<h3 class="anchored" data-anchor-id="text">Text</h3>
+<p>Use <code>html_text2()</code> to extract the plain text contents of an HTML element:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">minimal_html</span>(<span class="st">"</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;ol&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;li&gt;apple &amp;amp; pear&lt;/li&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;li&gt;banana&lt;/li&gt;</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;li&gt;pineapple&lt;/li&gt;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/ol&gt;</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">"li"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "apple &amp; pear" "banana"       "pineapple"   </code></pre>
+</div>
+</div>
+<p>Note that the escaped ampersand is automatically converted to <code>&amp;</code>; you’ll only ever see HTML escapes in the source HTML, not in the data returned by rvest.</p>
+<p>You might wonder why I used <code>html_text2()</code>, since it seems to give the same result as <code>html_text()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">"li"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "apple &amp; pear" "banana"       "pineapple"   </code></pre>
+</div>
+</div>
+<p>The main difference is how the two functions handle white space. In HTML, white space is largely ignored, and it’s the structure of the elements that defines how text is laid out. <code>html_text2()</code> does its best to follow the same rules, giving you something similar to what you’d see in the browser. Take this example which contains a bunch of white space that HTML ignores.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">minimal_html</span>(<span class="st">"&lt;body&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;p&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="st">  This is</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="st">  a</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="st">  paragraph.&lt;/p&gt;&lt;p&gt;This is another paragraph.</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="st">  It has two sentences.&lt;/p&gt;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>html_text2()</code> gives you what you expect: two paragraphs of text separated by a blank line.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_element</span>(<span class="st">"body"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text2</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>This is a paragraph.
+
+This is another paragraph. It has two sentences.</code></pre>
+</div>
+</div>
+<p>Whereas <code>html_text()</code> returns the garbled raw underlying text:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_element</span>(<span class="st">"body"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  
+  This is
+  a
+  paragraph.This is another paragraph.
+  
+  It has two sentences.</code></pre>
+</div>
+</div>
+</section>
+<section id="attributes-1" class="level3">
+<h3 class="anchored" data-anchor-id="attributes-1">Attributes</h3>
+<p>Attributes are used to record the destination of links (the <code>href</code> attribute of <code>&lt;a&gt;</code> elements) and the source of images (the <code>src</code> attribute of the <code>&lt;img&gt;</code> element):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">minimal_html</span>(<span class="st">"</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;p&gt;&lt;a href='https://en.wikipedia.org/wiki/Cat'&gt;cats&lt;/a&gt;&lt;/p&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;img src='https://cataas.com/cat' width='100' height='200'&gt;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The value of an attribute can be retrieved with <code>html_attr()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">"a"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">"href"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "https://en.wikipedia.org/wiki/Cat"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">"img"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">"src"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "https://cataas.com/cat"</code></pre>
+</div>
+</div>
+<p>Note that <code>html_attr()</code> always returns a string, so you may need to post-process with <code>as.integer()</code>/<code>readr::parse_integer()</code> or similar.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">"img"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">"width"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "100"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">"img"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">"width"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.integer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 100</code></pre>
+</div>
+</div>
+</section>
+<section id="tables" class="level3">
+<h3 class="anchored" data-anchor-id="tables">Tables</h3>
+<p>HTML tables are composed four main elements: <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code> (table row), <code>&lt;th&gt;</code> (table heading), and <code>&lt;td&gt;</code> (table data). Here’s a simple HTML table with two columns and three rows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">minimal_html</span>(<span class="st">"</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;table&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;tr&gt;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;th&gt;x&lt;/th&gt;</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;th&gt;y&lt;/th&gt;</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/tr&gt;</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;tr&gt;</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;td&gt;1.5&lt;/td&gt;</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;td&gt;2.7&lt;/td&gt;</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/tr&gt;</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;tr&gt;</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;td&gt;4.9&lt;/td&gt;</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;td&gt;1.3&lt;/td&gt;</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/tr&gt;</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;tr&gt;</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;td&gt;7.2&lt;/td&gt;</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;td&gt;8.1&lt;/td&gt;</span></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/tr&gt;</span></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/table&gt;</span></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Because tables are a common way to store data, rvest includes the handy <code>html_table()</code> which converts a table into a data frame:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_node</span>(<span class="st">"table"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+      x     y
+  &lt;dbl&gt; &lt;dbl&gt;
+1   1.5   2.7
+2   4.9   1.3
+3   7.2   8.1</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="element-vs-elements" class="level2">
+<h2 class="anchored" data-anchor-id="element-vs-elements">Element vs elements</h2>
+<p>When using rvest, your eventual goal is usually to build up a data frame, and you want each row to correspond some repeated unit on the HTML page. In this case, you should generally start by using <code>html_elements()</code> to select the elements that contain each observation then use <code>html_element()</code> to extract the variables from each observation. This guarantees that you’ll get the same number of values for each variable because <code>html_element()</code> always returns the same number of outputs as inputs.</p>
+<p>To illustrate this problem take a look at this simple example I constructed using a few entries from <code>dplyr::starwars</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">minimal_html</span>(<span class="st">"</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;ul&gt;</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;li&gt;&lt;b&gt;C-3PO&lt;/b&gt; is a &lt;i&gt;droid&lt;/i&gt; that weighs &lt;span class='weight'&gt;167 kg&lt;/span&gt;&lt;/li&gt;</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;li&gt;&lt;b&gt;R2-D2&lt;/b&gt; is a &lt;i&gt;droid&lt;/i&gt; that weighs &lt;span class='weight'&gt;96 kg&lt;/span&gt;&lt;/li&gt;</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;li&gt;&lt;b&gt;Yoda&lt;/b&gt; weighs &lt;span class='weight'&gt;66 kg&lt;/span&gt;&lt;/li&gt;</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;li&gt;&lt;b&gt;R4-P17&lt;/b&gt; is a &lt;i&gt;droid&lt;/i&gt;&lt;/li&gt;</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/ul&gt;</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you try to extract name, species, and weight directly, you end up with one vector of length four and two vectors of length three, and no way to align them:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">"b"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C-3PO"  "R2-D2"  "Yoda"   "R4-P17"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">"i"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "droid" "droid" "droid"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>html <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">".weight"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "167 kg" "96 kg"  "66 kg" </code></pre>
+</div>
+</div>
+<p>Instead, use <code>html_elements()</code> to find a element that corresponds to each character, then use <code>html_element()</code> to extract each variable for all observations:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>characters <span class="ot">&lt;-</span> html <span class="sc">|&gt;</span> <span class="fu">html_elements</span>(<span class="st">"li"</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>characters <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">"b"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C-3PO"  "R2-D2"  "Yoda"   "R4-P17"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>characters <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">"i"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "droid" "droid" NA      "droid"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>characters <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">".weight"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "167 kg" "96 kg"  "66 kg"  NA      </code></pre>
+</div>
+</div>
+<p><code>html_element()</code> automatically fills in <code>NA</code> when no elements match, keeping all of the variables aligned and making it easy to create a data frame:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> characters <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">"b"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text2</span>(),</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">species =</span> characters <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">"i"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text2</span>(),</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight =</span> characters <span class="sc">|&gt;</span> <span class="fu">html_element</span>(<span class="st">".weight"</span>) <span class="sc">|&gt;</span> <span class="fu">html_text2</span>()</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    name species weight
+1  C-3PO   droid 167 kg
+2  R2-D2   droid  96 kg
+3   Yoda    &lt;NA&gt;  66 kg
+4 R4-P17   droid   &lt;NA&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="scraping-house-prices" class="level2">
+<h2 class="anchored" data-anchor-id="scraping-house-prices">Scraping house prices</h2>
+<p>(LIVE DEMO)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is how you get read the HTML into R</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://www.bruhome.com/v3/buy.asp?p_=buy&amp;id=&amp;district=&amp;propose=&amp;property=&amp;price=&amp;location=&amp;mylist=128&amp;sort=&amp;display=&amp;offset=&amp;bedrooms=&amp;bathrooms=&amp;carpark="</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(url)</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the house prices</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>prices <span class="ot">&lt;-</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  html <span class="sc">|&gt;</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">".property-price"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text2</span>()</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>prices <span class="ot">&lt;-</span> </span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(prices, <span class="st">"[^0-9]"</span>) <span class="sc">|&gt;</span>  <span class="co"># Remove non-numeric characters</span></span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.integer</span>()</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Do same thing for number of beds, baths, location, and other remarks</span></span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>beds <span class="ot">&lt;-</span></span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>  html <span class="sc">|&gt;</span></span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">".property-bed"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text2</span>() <span class="sc">|&gt;</span></span>
+<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.integer</span>()</span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a>baths <span class="ot">&lt;-</span></span>
+<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a>  html <span class="sc">|&gt;</span></span>
+<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">".property-bath"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text2</span>() <span class="sc">|&gt;</span></span>
+<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.integer</span>()</span>
+<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a>location <span class="ot">&lt;-</span></span>
+<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a>  html <span class="sc">|&gt;</span></span>
+<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">".property-address"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text2</span>()</span>
+<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>remarks <span class="ot">&lt;-</span> </span>
+<span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a>  html <span class="sc">|&gt;</span></span>
+<span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">"div p .mt-3"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text2</span>()</span>
+<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a>remarks <span class="ot">&lt;-</span> <span class="fu">tail</span>(remarks, <span class="fu">length</span>(prices))</span>
+<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Put it all in a data frame</span></span>
+<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a>hsp_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb57-43"><a href="#cb57-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">price =</span> prices,</span>
+<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">beds =</span> beds,</span>
+<span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">baths =</span> baths,</span>
+<span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">location =</span> location,</span>
+<span id="cb57-47"><a href="#cb57-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">remarks =</span> remarks</span>
+<span id="cb57-48"><a href="#cb57-48" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Some pages require you to click a “load more” button to see all the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the links</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>properties <span class="ot">&lt;-</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  html <span class="sc">|&gt;</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_elements</span>(<span class="st">".property-link"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_attr</span>(<span class="st">"href"</span>)</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Suppose I have a function that can extract the info I want from a single page</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>extract_info <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  link <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"https://www.bruhome.com/v3/"</span>, properties[i])</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>  html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(link)</span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span></span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>    html <span class="sc">|&gt;</span></span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_elements</span>(<span class="st">"p"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text2</span>()</span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>  out[<span class="dv">1</span>]</span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Now what I could do is the following:</span></span>
+<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a><span class="co"># res &lt;- c()</span></span>
+<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a><span class="co"># for (i in seq_along(properties)) {</span></span>
+<span id="cb58-21"><a href="#cb58-21" aria-hidden="true" tabindex="-1"></a><span class="co">#   res[i] &lt;- extract_info(i)</span></span>
+<span id="cb58-22"><a href="#cb58-22" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb58-23"><a href="#cb58-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-24"><a href="#cb58-24" aria-hidden="true" tabindex="-1"></a><span class="co"># A better way:</span></span>
+<span id="cb58-25"><a href="#cb58-25" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
+<span id="cb58-26"><a href="#cb58-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">.x =</span> <span class="fu">seq_along</span>(properties),</span>
+<span id="cb58-27"><a href="#cb58-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">.f =</span> extract_info,</span>
+<span id="cb58-28"><a href="#cb58-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">.progress =</span> <span class="cn">TRUE</span></span>
+<span id="cb58-29"><a href="#cb58-29" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cleaning-using-llm" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-using-llm">Cleaning using LLM</h2>
+<p>ADVANCED TOPIC!!!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("AlbertRapp/tidychatmodels")</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidychatmodels)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">create_chat</span>(<span class="st">"ollama"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(<span class="st">"llama3.1"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_message</span>(<span class="st">'What is love? IN 10 WORDS.'</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">perform_chat</span>() </span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_chat</span>(chat)</span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Try to prime it to clean the data set</span></span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>clean_desc <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">create_chat</span>(<span class="st">"ollama"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(<span class="st">"llama3.1"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_message</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"</span></span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a><span class="st">    The following is a description of house for sale in Brunei obtained from the web site of the real estate company Bruhome. I would like you to extract the following information:</span></span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a><span class="st">    1. Built up area (usually in square feet) [NUMERIC]</span></span>
+<span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a><span class="st">    2. Type of house (whether it is detached, semi-detached, terrace, apartment, or other) [CHARACTER]</span></span>
+<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb59-22"><a href="#cb59-22" aria-hidden="true" tabindex="-1"></a><span class="st">  Please return semicolon separated values like this:</span></span>
+<span id="cb59-23"><a href="#cb59-23" aria-hidden="true" tabindex="-1"></a><span class="st">  2500; detached</span></span>
+<span id="cb59-24"><a href="#cb59-24" aria-hidden="true" tabindex="-1"></a><span class="st">  3000; semi-detached</span></span>
+<span id="cb59-25"><a href="#cb59-25" aria-hidden="true" tabindex="-1"></a><span class="st">  2000; terrace</span></span>
+<span id="cb59-26"><a href="#cb59-26" aria-hidden="true" tabindex="-1"></a><span class="st">  etc.</span></span>
+<span id="cb59-27"><a href="#cb59-27" aria-hidden="true" tabindex="-1"></a><span class="st">  NUMBERS SHOULD NOT CONTAIN comma (,) for thousands separator</span></span>
+<span id="cb59-28"><a href="#cb59-28" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb59-29"><a href="#cb59-29" aria-hidden="true" tabindex="-1"></a><span class="st">  Please only return these two values and nothing else. Do not return any other information. I only want these two values in your chat response.</span></span>
+<span id="cb59-30"><a href="#cb59-30" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb59-31"><a href="#cb59-31" aria-hidden="true" tabindex="-1"></a><span class="st">  NOTE: Some of these listings may be related to LAND or COMMERCIAL properties. In this case, please return NA for built up area, and 'commercial' or 'land' for type.</span></span>
+<span id="cb59-32"><a href="#cb59-32" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb59-33"><a href="#cb59-33" aria-hidden="true" tabindex="-1"></a><span class="st">  IF YOU DO NOT SEE ANY DESCRIPTION it may mean that the description is missing. In this case, return NA only.</span></span>
+<span id="cb59-34"><a href="#cb59-34" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb59-35"><a href="#cb59-35" aria-hidden="true" tabindex="-1"></a><span class="st">  IF YOU SEE MULTIPLE DESCRIPTIONS, please return the first one only.</span></span>
+<span id="cb59-36"><a href="#cb59-36" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb59-37"><a href="#cb59-37" aria-hidden="true" tabindex="-1"></a><span class="st">  ----------</span></span>
+<span id="cb59-38"><a href="#cb59-38" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb59-39"><a href="#cb59-39" aria-hidden="true" tabindex="-1"></a><span class="st">  {res[[i]]}</span></span>
+<span id="cb59-40"><a href="#cb59-40" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb59-41"><a href="#cb59-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">perform_chat</span>() <span class="sc">|&gt;</span></span>
+<span id="cb59-42"><a href="#cb59-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_chat</span>(<span class="at">silent =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb59-43"><a href="#cb59-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(role <span class="sc">==</span> <span class="st">"assistant"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb59-44"><a href="#cb59-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(message)</span>
+<span id="cb59-45"><a href="#cb59-45" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb59-46"><a href="#cb59-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-47"><a href="#cb59-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Now map it over the descriptions!</span></span>
+<span id="cb59-48"><a href="#cb59-48" aria-hidden="true" tabindex="-1"></a>cleaned_descriptions <span class="ot">&lt;-</span></span>
+<span id="cb59-49"><a href="#cb59-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(</span>
+<span id="cb59-50"><a href="#cb59-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">.x =</span> <span class="fu">seq_along</span>(res),</span>
+<span id="cb59-51"><a href="#cb59-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">.f =</span> clean_desc,</span>
+<span id="cb59-52"><a href="#cb59-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">.progress =</span> <span class="cn">TRUE</span></span>
+<span id="cb59-53"><a href="#cb59-53" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb59-54"><a href="#cb59-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-55"><a href="#cb59-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Now add to the hsp_df</span></span>
+<span id="cb59-56"><a href="#cb59-56" aria-hidden="true" tabindex="-1"></a>hsp_df<span class="sc">$</span>desc <span class="ot">&lt;-</span> <span class="fu">unlist</span>(cleaned_descriptions)</span>
+<span id="cb59-57"><a href="#cb59-57" aria-hidden="true" tabindex="-1"></a>hsp_df <span class="ot">&lt;-</span></span>
+<span id="cb59-58"><a href="#cb59-58" aria-hidden="true" tabindex="-1"></a>  hsp_df <span class="sc">|&gt;</span></span>
+<span id="cb59-59"><a href="#cb59-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb59-60"><a href="#cb59-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">desc =</span> <span class="fu">unlist</span>(res),</span>
+<span id="cb59-61"><a href="#cb59-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">cleaned_desc =</span> <span class="fu">unlist</span>(cleaned_descriptions)</span>
+<span id="cb59-62"><a href="#cb59-62" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb59-63"><a href="#cb59-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(cleaned_desc, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"sqft"</span>, <span class="st">"type"</span>), <span class="at">sep =</span> <span class="st">";"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb59-64"><a href="#cb59-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb59-65"><a href="#cb59-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">sqft =</span> <span class="fu">as.integer</span>(sqft),</span>
+<span id="cb59-66"><a href="#cb59-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">case_when</span>(</span>
+<span id="cb59-67"><a href="#cb59-67" aria-hidden="true" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">"detached"</span>, type, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="st">"detached"</span>,</span>
+<span id="cb59-68"><a href="#cb59-68" aria-hidden="true" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">"semi-detached"</span>, type, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="st">"semi-detached"</span>,</span>
+<span id="cb59-69"><a href="#cb59-69" aria-hidden="true" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">"terrace"</span>, type, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="st">"terrace"</span>,</span>
+<span id="cb59-70"><a href="#cb59-70" aria-hidden="true" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">"apartment"</span>, type, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="st">"apartment"</span>,</span>
+<span id="cb59-71"><a href="#cb59-71" aria-hidden="true" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">"land"</span>, type, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="st">"land"</span>,</span>
+<span id="cb59-72"><a href="#cb59-72" aria-hidden="true" tabindex="-1"></a>      <span class="fu">grepl</span>(<span class="st">"commercial"</span>, type, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">~</span> <span class="st">"commercial"</span>,</span>
+<span id="cb59-73"><a href="#cb59-73" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb59-74"><a href="#cb59-74" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb59-75"><a href="#cb59-75" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb59-76"><a href="#cb59-76" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(hsp_df, <span class="at">file =</span> <span class="st">"hsp_df.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression">Linear regression</h2>
+<p>In statistical modelling, the aim is to describe the relationship between one or more <strong>predictor variables</strong> (usually denoted <span class="math inline">\(x\)</span>) and a <strong>response variable</strong> (usually denoted <span class="math inline">\(y\)</span>). Mathematically, we can say <span class="math display">\[
+y = f(x) + \epsilon.
+\]</span> Here <span class="math inline">\(f\)</span> is some <em>regression</em> function that we want to estimate, and <span class="math inline">\(\epsilon\)</span> is an error term that captures the difference between the true relationship and our estimate.</p>
+<p>The simplest type of modelling is called <strong>linear regression</strong>, where we assume that the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is linear. That is, <span class="math display">\[
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_px_p + \epsilon.
+\]</span> When we ask software to estimate the <span class="math inline">\(\beta\)</span> coefficients, it will find the values that optimise a certain criterion (typically, one that yields the smallest error values). In R, you need to supply two things:</p>
+<ol type="1">
+<li>A formula that describes the relationship between the variables.</li>
+<li>The data frame that contains the variables.</li>
+</ol>
+<section id="model-fit" class="level3">
+<h3 class="anchored" data-anchor-id="model-fit">Model fit</h3>
+<p>Here’s an example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"hsp_df.RData"</span>)  <span class="co"># I saved this data set earlier and load it back</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"># First clean the data a bit</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>htypes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"detached"</span>, <span class="st">"semi-detached"</span>, <span class="st">"terrace"</span>, <span class="st">"apartment"</span>)</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>hsp_mod_df <span class="ot">&lt;-</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  hsp_df <span class="sc">|&gt;</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">%in%</span> htypes) <span class="sc">|&gt;</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">factor</span>(type, <span class="at">levels =</span> htypes),</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">priceK =</span> price <span class="sc">/</span> <span class="dv">1000</span>,  <span class="co"># Price in thousands</span></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">sqftK =</span> sqft <span class="sc">/</span> <span class="dv">1000</span>  <span class="co"># Square feet in thousands</span></span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(priceK, beds, baths, sqftK, type) <span class="sc">|&gt;</span></span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(priceK <span class="sc">~</span> beds <span class="sc">+</span> baths <span class="sc">+</span> sqftK <span class="sc">+</span> type, <span class="at">data =</span> hsp_mod_df)</span>
+<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = priceK ~ beds + baths + sqftK + type, data = hsp_mod_df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-122.637  -38.483   -2.603   32.274  165.839 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   -178.288     47.360  -3.765 0.000387 ***
+beds            75.147     16.837   4.463 3.70e-05 ***
+baths           44.832     10.470   4.282 6.92e-05 ***
+sqftK           -1.654      1.894  -0.873 0.386067    
+typeterrace    -41.525     20.878  -1.989 0.051350 .  
+typeapartment   62.151     34.485   1.802 0.076615 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 56.59 on 59 degrees of freedom
+Multiple R-squared:  0.7965,    Adjusted R-squared:  0.7792 
+F-statistic: 46.18 on 5 and 59 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<p>Here’s a breakdown of the key components to aid your understanding:</p>
+<ol type="1">
+<li><p><strong>Residuals</strong>: These represent the differences between the observed and predicted values of <code>priceK</code>. The five-number summary (Min, 1Q, Median, 3Q, Max) helps you understand the distribution of residuals. Ideally, the residuals should be symmetrically distributed around zero, indicating a good model fit.</p></li>
+<li><p><strong>Coefficients</strong>: This section shows the estimated effect (Estimate) of each predictor on <code>priceK</code>:</p>
+<ul>
+<li><strong>(Intercept)</strong>: The expected <code>priceK</code> when all predictors are zero. Here, it’s -178.288, but this value often doesn’t have a real-world interpretation if the predictor values can’t actually be zero.</li>
+<li><strong>beds</strong>: Each additional bedroom increases the expected <code>priceK</code> by about 75.15 (thousand).</li>
+<li><strong>baths</strong>: Each additional bathroom increases the expected <code>priceK</code> by about 44.83 (thousand).</li>
+<li><strong>sqftK</strong>: The effect of the square footage in thousands on <code>priceK</code>. Here, it’s not statistically significant (p-value = 0.386), meaning it doesn’t contribute much to predicting <code>priceK</code>.</li>
+<li><strong>type</strong>: This is a categorical variable with three levels. The coefficients for <code>typeterrace</code> and <code>typeapartment</code> are relative to the reference category (likely another property type not shown here, such as “detached house”). For example, <code>typeterrace</code> lowers the expected <code>priceK</code> by 41.53 (thousand) compared to the reference category.</li>
+</ul></li>
+<li><p><strong>Significance Codes</strong>: Indicators of statistical significance for each predictor:</p>
+<ul>
+<li><code>***</code> highly significant (p &lt; 0.001)</li>
+<li><code>**</code> significant (p &lt; 0.01)</li>
+<li><code>*</code> moderately significant (p &lt; 0.05)</li>
+<li><code>.</code> marginally significant (p &lt; 0.1)</li>
+<li>None of these symbols indicate non-significance.</li>
+</ul></li>
+<li><p><strong>Residual Standard Error</strong>: This is the standard deviation of the residuals. A smaller value suggests a better fit, as it indicates that the observed values are closer to the fitted values.</p></li>
+<li><p><strong>R-squared and Adjusted R-squared</strong>:</p>
+<ul>
+<li><strong>R-squared</strong> (0.7965) indicates that about 79.65% of the variability in <code>priceK</code> is explained by the model.</li>
+<li><strong>Adjusted R-squared</strong> (0.7792) is a modified version of R-squared that accounts for the number of predictors, providing a more accurate measure for models with multiple variables.</li>
+</ul></li>
+<li><p><strong>F-statistic</strong>: This tests whether at least one predictor variable is significantly related to the dependent variable. A p-value of &lt; 2.2e-16 indicates the model is highly significant.</p></li>
+</ol>
+<p><strong>Key Takeaway</strong>: The model shows that <code>beds</code> and <code>baths</code> significantly predict <code>priceK</code>, while <code>sqftK</code> does not have a significant effect. The <code>type</code> variable shows some variation, with <code>typeterrace</code> having a marginally significant negative effect on <code>priceK</code>. Overall, the model explains a large proportion of the variation in house prices.</p>
+</section>
+<section id="predictions" class="level3">
+<h3 class="anchored" data-anchor-id="predictions">Predictions</h3>
+<p>One of the main uses of a linear regression model is to make predictions. That is, given a set of predictor values (typically unseen data), we can estimate the response variable. In the context of the house price data, this means we can estimate the price of a house given its number of bedrooms, bathrooms, square footage, and type.</p>
+<p>First, let’s set up the data for a new house:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>new_house <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">beds =</span> <span class="dv">3</span>,</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">baths =</span> <span class="dv">2</span>,</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sqftK =</span> <span class="fl">2.5</span>,</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">factor</span>(<span class="st">"detached"</span>, <span class="at">levels =</span> htypes)</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then, to predict the price, we run the following command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> new_house, <span class="at">interval =</span> <span class="st">"prediction"</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr      upr
+1 132.6803 14.74783 250.6128</code></pre>
+</div>
+</div>
+<p>This also gives the 95% prediction interval, which is a range of values within which we expect the true price to fall with 95% confidence. What we can see is that the model predicts the price of the new house to be around 133,000 Brunei dollars, with a 95% prediction interval of approximately [15,000, 251,000] Brunei dollars.</p>
+<p>You might be wondering why the prediction interval is so wide. This is because the model is uncertain about the price of a new house, given the limited information we have. Generally, the more data you have, the narrower the prediction interval will be.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can get model predictions for the original data set by using the <code>predict()</code> without <code>newdata</code> argument. Alternatively, <code>fitted()</code> works too.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="more-advanced-models" class="level2">
+<h2 class="anchored" data-anchor-id="more-advanced-models">More advanced models</h2>
+<p>Linear regression is a simple and powerful tool, but it has its limitations. If you were more interested in predictions, then you might want to consider more advanced machine learning (ML) models. Here are a couple of suggestions:</p>
+<ol type="1">
+<li><p><strong>Random Forest</strong>: This is an ensemble learning method that builds multiple decision trees and merges them together to get a more accurate and stable prediction.</p></li>
+<li><p><strong>Gradient Boosting Machines (GBM)</strong>: GBM is another ensemble learning method that builds multiple decision trees sequentially, with each tree correcting the errors of the previous one.</p></li>
+<li><p><strong>Neural Networks</strong>: These are a set of algorithms that are designed to recognize patterns, with the ability to model complex relationships between inputs and outputs.</p></li>
+</ol>
+<section id="random-forests" class="level3">
+<h3 class="anchored" data-anchor-id="random-forests">Random forests</h3>
+<p>Random forests are popular because they are easy to use and generally provide good results. Here’s how you can fit a random forest model to the house price data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>randomForest 4.7-1.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Type rfNews() to see new features/changes/bug fixes.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'randomForest'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    combine</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggplot2':
+
+    margin</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>fit_rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(priceK <span class="sc">~</span> beds <span class="sc">+</span> baths <span class="sc">+</span> sqftK <span class="sc">+</span> type, <span class="at">data =</span> hsp_mod_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With random forests, you don’t really get “beta” coefficients. So there’s no point running <code>summary()</code>. Instead, it’s mainly used as a black box to obtain predicted values.</p>
+<p>Let’s compare the predictions from the random forest model to the linear regression model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">lm =</span> <span class="fu">predict</span>(fit),</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rf =</span> <span class="fu">predict</span>(fit_rf)</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(lm, rf)) <span class="sc">+</span></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>() <span class="sc">+</span></span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Linear regression"</span>,</span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Random forest"</span>,</span>
+<span id="cb72-11"><a href="#cb72-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Comparison of linear regression and random forest predictions"</span></span>
+<span id="cb72-12"><a href="#cb72-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb72-13"><a href="#cb72-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="1-scraping_linear_reg_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To see which model gives smaller errors, we can run the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>resid_lm <span class="ot">&lt;-</span> hsp_mod_df<span class="sc">$</span>priceK <span class="sc">-</span> <span class="fu">predict</span>(fit)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>resid_rf <span class="ot">&lt;-</span> hsp_mod_df<span class="sc">$</span>priceK <span class="sc">-</span> <span class="fu">predict</span>(fit_rf)</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Residual sum of squares</span></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(resid_lm <span class="sc">^</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 188934.9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(resid_rf <span class="sc">^</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 199870</code></pre>
+</div>
+</div>
+<p>In this case, the linear regression model has a smaller residual sum of squares, indicating that it fits the data better.</p>
+<p>Out of curiosity, let’s see the predictions for the new house using the random forest model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit_rf, <span class="at">newdata =</span> new_house, )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+229.5915 </code></pre>
+</div>
+</div>
+<p>Which seems very different to the <code>lm()</code> predictions.</p>
 
 
 </section>
+</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>A number of tags (including <code>&lt;p&gt;</code> and <code>&lt;li&gt;)</code> don’t require end tags, but I think it’s best to include them because it makes seeing the structure of the HTML a little easier.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This class comes from the <a href="https://xml2.r-lib.org">xml2</a> package. xml2 is a low-level package that rvest builds on top of.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Or another element, more on that shortly.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

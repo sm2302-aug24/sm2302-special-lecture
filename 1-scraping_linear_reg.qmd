@@ -4,6 +4,725 @@ title: "Data Scraping and Linear Regression"
 
 For topic 1, we will cover linear regression. But before diving into that topic, we will talk about how to scrape data from the web.
 
-# Data scraping
+- https://r4ds.hadley.nz/webscraping
 
-# Linear regression
+
+Libraries:
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(polite)
+```
+
+## Ethics 
+
+Data scraping is the process of extracting data from websites. This can be done manually, but it is often done using a program. In this section, we will use the `rvest` package to scrape data from a website.
+
+When scraping car prices from sellers’ websites in Brunei, it’s important to consider legal and ethical aspects:
+
+1.	**Legal Considerations**: If the data is public, non-personal, and factual, scraping is generally acceptable. However, laws vary by location. If the data is behind a login or used for commercial purposes, consulting a lawyer is advisable.
+	
+2.	**Terms of Service**: Many websites prohibit scraping in their terms of service. In some regions, like the US, these terms may not be binding unless you explicitly agree to them (e.g., by creating an account). In Europe, these terms are often enforceable even without explicit consent.
+
+3.	**Personally Identifiable Information**: Avoid scraping data that includes personal information (names, contact details, etc.) due to strict privacy laws like the GDPR in Europe. Ethical concerns arise even if the data is public.
+
+4.	**Copyright**: Data like car prices is generally not protected by copyright, as it’s factual. However, if scraping includes original content (like descriptions or images), consider copyright laws and whether “fair use” applies.
+
+## HTML basics
+
+HTML stands for "HyperText Markup Language" and looks like this:
+
+``` {.html}
+<html>
+<head>
+  <title>Page title</title>
+</head>
+<body>
+  <h1 id='first'>A heading</h1>
+  <p>Some text &amp; <b>some bold text.</b></p>
+  <img src='myimg.png' width='100' height='100'>
+</body>
+```
+
+HTML has a hierarchical structure formed by **elements** which consist of a start tag (e.g. `<tag>`), optional **attributes** (`id='first'`), an end tag[^1] (like `</tag>`), and **contents** (everything in between the start and end tag).
+
+[^1]: A number of tags (including `<p>` and `<li>)` don't require end tags, but I think it's best to include them because it makes seeing the structure of the HTML a little easier.
+
+Since `<` and `>` are used for start and end tags, you can't write them directly.
+Instead you have to use the HTML **escapes** `&gt;` (greater than) and `&lt;` (less than).
+And since those escapes use `&`, if you want a literal ampersand you have to escape it as `&amp;`.
+There are a wide range of possible HTML escapes but you don't need to worry about them too much because rvest automatically handles them for you.
+
+### Elements
+
+All up, there are over 100 HTML elements.
+Some of the most important are:
+
+-   Every HTML page must be in an `<html>` element, and it must have two children: `<head>`, which contains document metadata like the page title, and `<body>`, which contains the content you see in the browser.
+
+-   Block tags like `<h1>` (heading 1), `<p>` (paragraph), and `<ol>` (ordered list) form the overall structure of the page.
+
+-   Inline tags like `<b>` (bold), `<i>` (italics), and `<a>` (links) formats text inside block tags.
+
+If you encounter a tag that you've never seen before, you can find out what it does with a little googling.
+I recommend the [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML) which are produced by Mozilla, the company that makes the Firefox web browser.
+
+### Contents
+
+Most elements can have content in between their start and end tags.
+This content can either be text or more elements.
+For example, the following HTML contains paragraph of text, with one word in bold.
+
+```html
+<p>
+  Hi! My <b>name</b> is Haziq.
+</p>
+```
+
+This renders as
+
+```{=html}
+<p>
+  Hi! My <b>name</b> is Haziq.
+</p>
+```
+
+The **children** of a node refers only to elements, so the `<p>` element above has one child, the `<b>` element.
+The `<b>` element has no children, but it does have contents (the text "name").
+
+Conceptually, this can be represented as follows:
+
+```{mermaid}
+graph TD;
+    P["<p> element"]
+    P -- "content" --> T1["'Hi! My '"]
+    P --> B["&lt;b&gt; element"]
+    P -- "content" --> T2["' is Haziq.'"]
+    B -- "content" --> T3["'name'"]
+```
+
+
+Some elements, like `<img>` can't have children.
+These elements depend solely on attributes for their behavior.
+
+### Attributes
+
+Tags can have named **attributes** which look like `name1='value1' name2='value2'`.
+Two of the most important attributes are `id` and `class`, which are used in conjunction with CSS (Cascading Style Sheets) to control the visual appearance of the page.
+These are often useful when scraping data off a page.
+
+## Reading HTML with rvest
+
+You'll usually start the scraping process with `read_html()`.
+This returns an `xml_document`[^2] object which you'll then manipulate using rvest functions:
+
+[^2]: This class comes from the [xml2](https://xml2.r-lib.org) package.
+    xml2 is a low-level package that rvest builds on top of.
+
+```{r}
+html <- read_html("http://rvest.tidyverse.org/")
+class(html)
+```
+
+For examples and experimentation, rvest also includes a function that lets you create an `xml_document` from literal HTML:
+
+```{r}
+html <- minimal_html("
+  <p>This is a paragraph<p>
+  <ul>
+    <li>This is a bulleted list</li>
+  </ul>
+")
+html
+```
+
+Regardless of how you get the HTML, you'll need some way to identify the elements that contain the data you care about.
+rvest provides two options: CSS selectors and XPath expressions.
+Here I'll focus on CSS selectors because they're simpler but still sufficiently powerful for most scraping tasks.
+
+## CSS selectors
+
+CSS is short for cascading style sheets, and is a tool for defining the visual styling of HTML documents.
+CSS includes a miniature language for selecting elements on a page called **CSS selectors**.
+CSS selectors define patterns for locating HTML elements, and are useful for scraping because they provide a concise way of describing which elements you want to extract.
+
+CSS selectors can be quite complex, but fortunately you only need the simplest for rvest, because you can also write R code for more complicated situations.
+The four most important selectors are:
+
+-   `p`: selects all `<p>` elements.
+
+-   `.title`: selects all elements with `class` "title".
+
+-   `p.special`: selects all `<p>` elements with `class` "special".
+
+-   `#title`: selects the element with the `id` attribute that equals "title".
+    Id attributes must be unique within a document, so this will only ever select a single element.
+
+If you want to learn more CSS selectors I recommend starting with the fun [CSS dinner](https://flukeout.github.io/) tutorial and then referring to the [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors).
+
+Lets try out the most important selectors with a simple example:
+
+```{r}
+html <- minimal_html("
+  <h1>This is a heading</h1>
+  <p id='first'>This is a paragraph</p>
+  <p class='important'>This is an important paragraph</p>
+")
+```
+
+In rvest you can extract a single element with `html_element()` or all matching elements with `html_elements()`.
+Both functions take a document[^3] and a css selector:
+
+[^3]: Or another element, more on that shortly.
+
+```{r}
+html |> html_element("h1")
+html |> html_elements("p")
+html |> html_elements(".important")
+html |> html_elements("#first")
+```
+
+Selectors can also be combined in various ways using **combinators**.
+For example,The most important combinator is " ", the **descendant** combination, because `p a` selects all `<a>` elements that are a child of a `<p>` element.
+
+If you don't know exactly what selector you need, I highly recommend using [SelectorGadget](https://rvest.tidyverse.org/articles/selectorgadget.html), which lets you automatically generate the selector you need by supplying positive and negative examples in the browser.
+
+## Extracting data
+
+Now that you've got the elements you care about, you'll need to get data out of them.
+You'll usually get the data from either the text contents or an attribute.
+But, sometimes (if you're lucky!), the data you need will be in an HTML table.
+
+### Text
+
+Use `html_text2()` to extract the plain text contents of an HTML element:
+
+```{r}
+html <- minimal_html("
+  <ol>
+    <li>apple &amp; pear</li>
+    <li>banana</li>
+    <li>pineapple</li>
+  </ol>
+")
+html |> 
+  html_elements("li") |> 
+  html_text2()
+```
+
+Note that the escaped ampersand is automatically converted to `&`; you'll only ever see HTML escapes in the source HTML, not in the data returned by rvest.
+
+You might wonder why I used `html_text2()`, since it seems to give the same result as `html_text()`:
+
+```{r}
+html |> 
+  html_elements("li") |> 
+  html_text()
+```
+
+The main difference is how the two functions handle white space.
+In HTML, white space is largely ignored, and it's the structure of the elements that defines how text is laid out.
+`html_text2()` does its best to follow the same rules, giving you something similar to what you'd see in the browser.
+Take this example which contains a bunch of white space that HTML ignores.
+
+```{r}
+html <- minimal_html("<body>
+  <p>
+  This is
+  a
+  paragraph.</p><p>This is another paragraph.
+  
+  It has two sentences.</p>
+")
+
+```
+
+`html_text2()` gives you what you expect: two paragraphs of text separated by a blank line.
+
+```{r}
+html |> 
+  html_element("body") |> 
+  html_text2() |> 
+  cat()
+```
+
+Whereas `html_text()` returns the garbled raw underlying text:
+
+```{r}
+html |> 
+  html_element("body") |> 
+  html_text() |> 
+  cat()
+```
+
+### Attributes
+
+Attributes are used to record the destination of links (the `href` attribute of `<a>` elements) and the source of images (the `src` attribute of the `<img>` element):
+
+```{r}
+html <- minimal_html("
+  <p><a href='https://en.wikipedia.org/wiki/Cat'>cats</a></p>
+  <img src='https://cataas.com/cat' width='100' height='200'>
+")
+
+```
+
+The value of an attribute can be retrieved with `html_attr()`:
+
+```{r}
+html |> 
+  html_elements("a") |> 
+  html_attr("href")
+
+html |> 
+  html_elements("img") |> 
+  html_attr("src")
+```
+
+Note that `html_attr()` always returns a string, so you may need to post-process with `as.integer()`/`readr::parse_integer()` or similar.
+
+```{r}
+html |> 
+  html_elements("img") |> 
+  html_attr("width")
+
+html |> 
+  html_elements("img") |> 
+  html_attr("width") |> 
+  as.integer()
+```
+
+### Tables
+
+HTML tables are composed four main elements: `<table>`, `<tr>` (table row), `<th>` (table heading), and `<td>` (table data).
+Here's a simple HTML table with two columns and three rows:
+
+```{r}
+html <- minimal_html("
+  <table>
+    <tr>
+      <th>x</th>
+      <th>y</th>
+    </tr>
+    <tr>
+      <td>1.5</td>
+      <td>2.7</td>
+    </tr>
+    <tr>
+      <td>4.9</td>
+      <td>1.3</td>
+    </tr>
+    <tr>
+      <td>7.2</td>
+      <td>8.1</td>
+    </tr>
+  </table>
+  ")
+```
+
+Because tables are a common way to store data, rvest includes the handy `html_table()` which converts a table into a data frame:
+
+```{r}
+html |> 
+  html_node("table") |> 
+  html_table()
+```
+
+## Element vs elements
+
+When using rvest, your eventual goal is usually to build up a data frame, and you want each row to correspond some repeated unit on the HTML page.
+In this case, you should generally start by using `html_elements()` to select the elements that contain each observation then use `html_element()` to extract the variables from each observation.
+This guarantees that you'll get the same number of values for each variable because `html_element()` always returns the same number of outputs as inputs.
+
+To illustrate this problem take a look at this simple example I constructed using a few entries from `dplyr::starwars`:
+
+```{r}
+html <- minimal_html("
+  <ul>
+    <li><b>C-3PO</b> is a <i>droid</i> that weighs <span class='weight'>167 kg</span></li>
+    <li><b>R2-D2</b> is a <i>droid</i> that weighs <span class='weight'>96 kg</span></li>
+    <li><b>Yoda</b> weighs <span class='weight'>66 kg</span></li>
+    <li><b>R4-P17</b> is a <i>droid</i></li>
+  </ul>
+  ")
+```
+
+If you try to extract name, species, and weight directly, you end up with one vector of length four and two vectors of length three, and no way to align them:
+
+```{r}
+html |> html_elements("b") |> html_text2()
+html |> html_elements("i") |> html_text2()
+html |> html_elements(".weight") |> html_text2()
+```
+
+Instead, use `html_elements()` to find a element that corresponds to each character, then use `html_element()` to extract each variable for all observations:
+
+```{r}
+characters <- html |> html_elements("li")
+
+characters |> html_element("b") |> html_text2()
+characters |> html_element("i") |> html_text2()
+characters |> html_element(".weight") |> html_text2()
+```
+
+`html_element()` automatically fills in `NA` when no elements match, keeping all of the variables aligned and making it easy to create a data frame:
+
+```{r}
+data.frame(
+  name = characters |> html_element("b") |> html_text2(),
+  species = characters |> html_element("i") |> html_text2(),
+  weight = characters |> html_element(".weight") |> html_text2()
+)
+```
+
+## Scraping house prices
+
+(LIVE DEMO)
+
+```{r}
+#| eval: false
+# This is how you get read the HTML into R
+url <- "https://www.bruhome.com/v3/buy.asp?p_=buy&id=&district=&propose=&property=&price=&location=&mylist=128&sort=&display=&offset=&bedrooms=&bathrooms=&carpark="
+html <- read_html(url)
+
+# Extract the house prices
+prices <-
+  html |>
+  html_elements(".property-price") |>
+  html_text2()
+
+# Clean up
+prices <- 
+  str_remove_all(prices, "[^0-9]") |>  # Remove non-numeric characters
+  as.integer()
+
+# Do same thing for number of beds, baths, location, and other remarks
+beds <-
+  html |>
+  html_elements(".property-bed") |>
+  html_text2() |>
+  as.integer()
+
+baths <-
+  html |>
+  html_elements(".property-bath") |>
+  html_text2() |>
+  as.integer()
+
+location <-
+  html |>
+  html_elements(".property-address") |>
+  html_text2()
+
+remarks <- 
+  html |>
+  html_elements("div p .mt-3") |>
+  html_text2()
+
+remarks <- tail(remarks, length(prices))
+
+# Put it all in a data frame
+hsp_df <- tibble(
+  price = prices,
+  beds = beds,
+  baths = baths,
+  location = location,
+  remarks = remarks
+)
+```
+
+Some pages require you to click a "load more" button to see all the data.
+
+```{r}
+#| eval: false
+# Extract the links
+properties <-
+  html |>
+  html_elements(".property-link") |>
+  html_attr("href")
+
+# Suppose I have a function that can extract the info I want from a single page
+extract_info <- function(i) {
+  link <- paste0("https://www.bruhome.com/v3/", properties[i])
+  html <- read_html(link)
+  out <-
+    html |>
+    html_elements("p") |>
+    html_text2()
+  out[1]
+}
+
+# Now what I could do is the following:
+# res <- c()
+# for (i in seq_along(properties)) {
+#   res[i] <- extract_info(i)
+# }
+
+# A better way:
+res <- map(
+  .x = seq_along(properties),
+  .f = extract_info,
+  .progress = TRUE
+)
+```
+
+## Cleaning using LLM
+
+ADVANCED TOPIC!!!
+
+```{r}
+#| eval: false
+# remotes::install_github("AlbertRapp/tidychatmodels")
+library(tidychatmodels)
+
+chat <-
+  create_chat("ollama") |>
+  add_model("llama3.1") |>
+  add_message('What is love? IN 10 WORDS.') |> 
+  perform_chat() 
+
+extract_chat(chat)
+
+# Try to prime it to clean the data set
+clean_desc <- function(i) {
+  create_chat("ollama") |>
+  add_model("llama3.1") |>
+  add_message(glue::glue("
+    The following is a description of house for sale in Brunei obtained from the web site of the real estate company Bruhome. I would like you to extract the following information:
+    
+    1. Built up area (usually in square feet) [NUMERIC]
+    2. Type of house (whether it is detached, semi-detached, terrace, apartment, or other) [CHARACTER]
+  
+  Please return semicolon separated values like this:
+  2500; detached
+  3000; semi-detached
+  2000; terrace
+  etc.
+  NUMBERS SHOULD NOT CONTAIN comma (,) for thousands separator
+  
+  Please only return these two values and nothing else. Do not return any other information. I only want these two values in your chat response.
+  
+  NOTE: Some of these listings may be related to LAND or COMMERCIAL properties. In this case, please return NA for built up area, and 'commercial' or 'land' for type.
+  
+  IF YOU DO NOT SEE ANY DESCRIPTION it may mean that the description is missing. In this case, return NA only.
+  
+  IF YOU SEE MULTIPLE DESCRIPTIONS, please return the first one only.
+  
+  ----------
+  
+  {res[[i]]}
+  ")) |> 
+  perform_chat() |>
+  extract_chat(silent = TRUE) |>
+  filter(role == "assistant") |>
+  pull(message)
+}
+
+# Now map it over the descriptions!
+cleaned_descriptions <-
+  map(
+    .x = seq_along(res),
+    .f = clean_desc,
+    .progress = TRUE
+  )
+
+# Now add to the hsp_df
+hsp_df$desc <- unlist(cleaned_descriptions)
+hsp_df <-
+  hsp_df |>
+  mutate(
+    desc = unlist(res),
+    cleaned_desc = unlist(cleaned_descriptions)
+  ) |>
+  separate(cleaned_desc, into = c("sqft", "type"), sep = ";") |>
+  mutate(
+    sqft = as.integer(sqft),
+    type = case_when(
+      grepl("detached", type, ignore.case = TRUE) ~ "detached",
+      grepl("semi-detached", type, ignore.case = TRUE) ~ "semi-detached",
+      grepl("terrace", type, ignore.case = TRUE) ~ "terrace",
+      grepl("apartment", type, ignore.case = TRUE) ~ "apartment",
+      grepl("land", type, ignore.case = TRUE) ~ "land",
+      grepl("commercial", type, ignore.case = TRUE) ~ "commercial",
+      TRUE ~ NA
+    )
+  )
+save(hsp_df, file = "hsp_df.RData")
+```
+
+
+
+## Linear regression
+
+In statistical modelling, the aim is to describe the relationship between one or more **predictor variables** (usually denoted $x$) and a **response variable** (usually denoted $y$).
+Mathematically, we can say
+$$
+y = f(x) + \epsilon.
+$$
+Here $f$ is some *regression* function that we want to estimate, and $\epsilon$ is an error term that captures the difference between the true relationship and our estimate.
+
+The simplest type of modelling is called **linear regression**, where we assume that the relationship between $x$ and $y$ is linear.
+That is,
+$$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_px_p + \epsilon.
+$$
+When we ask software to estimate the $\beta$ coefficients, it will find the values that optimise a certain criterion (typically, one that yields the smallest error values).
+In R, you need to supply two things:
+
+1. A formula that describes the relationship between the variables.
+2. The data frame that contains the variables.
+
+### Model fit
+
+Here's an example:
+
+```{r}
+load("hsp_df.RData")  # I saved this data set earlier and load it back
+
+# First clean the data a bit
+htypes <- c("detached", "semi-detached", "terrace", "apartment")
+hsp_mod_df <-
+  hsp_df |>
+  filter(type %in% htypes) |>
+  mutate(
+    type = factor(type, levels = htypes),
+    priceK = price / 1000,  # Price in thousands
+    sqftK = sqft / 1000  # Square feet in thousands
+  ) |>
+  select(priceK, beds, baths, sqftK, type) |>
+  drop_na()
+
+fit <- lm(priceK ~ beds + baths + sqftK + type, data = hsp_mod_df)
+summary(fit)
+```
+
+### Interpretation
+
+Here's a breakdown of the key components to aid your understanding:
+
+1. **Residuals**: These represent the differences between the observed and predicted values of `priceK`. The five-number summary (Min, 1Q, Median, 3Q, Max) helps you understand the distribution of residuals. Ideally, the residuals should be symmetrically distributed around zero, indicating a good model fit.
+
+2. **Coefficients**: This section shows the estimated effect (Estimate) of each predictor on `priceK`:
+   - **(Intercept)**: The expected `priceK` when all predictors are zero. Here, it's -178.288, but this value often doesn't have a real-world interpretation if the predictor values can't actually be zero.
+   - **beds**: Each additional bedroom increases the expected `priceK` by about 75.15 (thousand).
+   - **baths**: Each additional bathroom increases the expected `priceK` by about 44.83 (thousand).
+   - **sqftK**: The effect of the square footage in thousands on `priceK`. Here, it's not statistically significant (p-value = 0.386), meaning it doesn't contribute much to predicting `priceK`.
+   - **type**: This is a categorical variable with three levels. The coefficients for `typeterrace` and `typeapartment` are relative to the reference category (likely another property type not shown here, such as "detached house"). For example, `typeterrace` lowers the expected `priceK` by 41.53 (thousand) compared to the reference category.
+
+3. **Significance Codes**: Indicators of statistical significance for each predictor:
+   - `***` highly significant (p < 0.001)
+   - `**` significant (p < 0.01)
+   - `*` moderately significant (p < 0.05)
+   - `.` marginally significant (p < 0.1)
+   - None of these symbols indicate non-significance.
+
+4. **Residual Standard Error**: This is the standard deviation of the residuals. A smaller value suggests a better fit, as it indicates that the observed values are closer to the fitted values.
+
+5. **R-squared and Adjusted R-squared**: 
+   - **R-squared** (0.7965) indicates that about 79.65% of the variability in `priceK` is explained by the model.
+   - **Adjusted R-squared** (0.7792) is a modified version of R-squared that accounts for the number of predictors, providing a more accurate measure for models with multiple variables.
+
+6. **F-statistic**: This tests whether at least one predictor variable is significantly related to the dependent variable. A p-value of < 2.2e-16 indicates the model is highly significant.
+
+**Key Takeaway**: The model shows that `beds` and `baths` significantly predict `priceK`, while `sqftK` does not have a significant effect. The `type` variable shows some variation, with `typeterrace` having a marginally significant negative effect on `priceK`. Overall, the model explains a large proportion of the variation in house prices.
+
+
+### Predictions
+
+One of the main uses of a linear regression model is to make predictions.
+That is, given a set of predictor values (typically unseen data), we can estimate the response variable.
+In the context of the house price data, this means we can estimate the price of a house given its number of bedrooms, bathrooms, square footage, and type.
+
+First, let's set up the data for a new house:
+
+```{r}
+new_house <- tibble(
+  beds = 3,
+  baths = 2,
+  sqftK = 2.5,
+  type = factor("detached", levels = htypes)
+)
+```
+
+Then, to predict the price, we run the following command:
+
+```{r}
+predict(fit, newdata = new_house, interval = "prediction", level = 0.95)
+```
+
+This also gives the 95% prediction interval, which is a range of values within which we expect the true price to fall with 95% confidence. 
+What we can see is that the model predicts the price of the new house to be around 133,000 Brunei dollars, with a 95% prediction interval of approximately [15,000,  251,000] Brunei dollars.
+
+You might be wondering why the prediction interval is so wide.
+This is because the model is uncertain about the price of a new house, given the limited information we have.
+Generally, the more data you have, the narrower the prediction interval will be.
+
+::: {.callout-note}
+You can get model predictions for the original data set by using the `predict()` without `newdata` argument. Alternatively, `fitted()` works too.
+:::
+
+## More advanced models
+
+Linear regression is a simple and powerful tool, but it has its limitations.
+If you were more interested in predictions, then you might want to consider more advanced machine learning (ML) models.
+Here are a couple of suggestions:
+
+1. **Random Forest**: This is an ensemble learning method that builds multiple decision trees and merges them together to get a more accurate and stable prediction.
+
+2. **Gradient Boosting Machines (GBM)**: GBM is another ensemble learning method that builds multiple decision trees sequentially, with each tree correcting the errors of the previous one.
+
+3. **Neural Networks**: These are a set of algorithms that are designed to recognize patterns, with the ability to model complex relationships between inputs and outputs.
+
+### Random forests
+
+Random forests are popular because they are easy to use and generally provide good results.
+Here's how you can fit a random forest model to the house price data:
+
+```{r}
+library(randomForest)
+
+fit_rf <- randomForest(priceK ~ beds + baths + sqftK + type, data = hsp_mod_df)
+```
+
+With random forests, you don't really get "beta" coefficients. So there's no point running `summary()`. 
+Instead, it's mainly used as a black box to obtain predicted values.
+
+Let's compare the predictions from the random forest model to the linear regression model:
+
+```{r}
+tibble(
+  lm = predict(fit),
+  rf = predict(fit_rf)
+) |>
+  ggplot(aes(lm, rf)) +
+  geom_point() +
+  geom_abline() +
+  labs(
+    x = "Linear regression",
+    y = "Random forest",
+    title = "Comparison of linear regression and random forest predictions"
+  ) +
+  theme_bw()
+```
+
+To see which model gives smaller errors, we can run the following code:
+
+```{r}
+resid_lm <- hsp_mod_df$priceK - predict(fit)
+resid_rf <- hsp_mod_df$priceK - predict(fit_rf)
+
+# Residual sum of squares
+sum(resid_lm ^ 2)
+sum(resid_rf ^ 2)
+```
+
+In this case, the linear regression model has a smaller residual sum of squares, indicating that it fits the data better.
+
+Out of curiosity, let's see the predictions for the new house using the random forest model:
+
+```{r}
+predict(fit_rf, newdata = new_house, )
+```
+
+Which seems very different to the `lm()` predictions.
