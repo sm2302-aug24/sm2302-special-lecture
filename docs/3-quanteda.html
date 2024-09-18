@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>SM-2302 Special Lectures - Quantitative analysis of textual data</title>
+<title>4&nbsp; Quantitative analysis of textual data – SM-2302 Special Lectures</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -84,21 +84,22 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./2-gis_data.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-79bb3942e891885f9f7af119cd221462.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-0fc701aa89f539aeeb882d74ca6374b9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -124,7 +125,7 @@ div.csl-indent {
 <script src="site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -157,82 +158,101 @@ window.Quarto = {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">SM-2302 Special Lectures</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./1-scraping_linear_reg.html"> 
-<span class="menu-text">Scraping and linear regression</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./2-gis_data.html"> 
-<span class="menu-text">Spatial data analysis</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./3-quanteda.html" aria-current="page"> 
-<span class="menu-text">Quantitative text analysis</span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./3-quanteda.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quantitative analysis of textual data</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">SM-2302 Special Lectures</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Welcome</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1-scraping_linear_reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Scraping and Linear Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2-gis_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geographical Information System (GIS) data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3-quanteda.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quantitative analysis of textual data</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#quantitative-data" id="toc-quantitative-data" class="nav-link" data-scroll-target="#quantitative-data">Quantitative data</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">4.1</span> Introduction</a></li>
+  <li><a href="#quantitative-data" id="toc-quantitative-data" class="nav-link" data-scroll-target="#quantitative-data"><span class="header-section-number">4.2</span> Quantitative data</a>
   <ul class="collapse">
-  <li><a href="#pre-formatted-files" id="toc-pre-formatted-files" class="nav-link" data-scroll-target="#pre-formatted-files">Pre-formatted files</a></li>
-  <li><a href="#multiple-text-files" id="toc-multiple-text-files" class="nav-link" data-scroll-target="#multiple-text-files">Multiple text files</a></li>
-  <li><a href="#json" id="toc-json" class="nav-link" data-scroll-target="#json">JSON</a></li>
-  <li><a href="#pdf" id="toc-pdf" class="nav-link" data-scroll-target="#pdf">PDF</a></li>
-  <li><a href="#microsoft-word" id="toc-microsoft-word" class="nav-link" data-scroll-target="#microsoft-word">Microsoft Word</a></li>
+  <li><a href="#pre-formatted-files" id="toc-pre-formatted-files" class="nav-link" data-scroll-target="#pre-formatted-files"><span class="header-section-number">4.2.1</span> Pre-formatted files</a></li>
+  <li><a href="#multiple-text-files" id="toc-multiple-text-files" class="nav-link" data-scroll-target="#multiple-text-files"><span class="header-section-number">4.2.2</span> Multiple text files</a></li>
+  <li><a href="#json" id="toc-json" class="nav-link" data-scroll-target="#json"><span class="header-section-number">4.2.3</span> JSON</a></li>
+  <li><a href="#pdf" id="toc-pdf" class="nav-link" data-scroll-target="#pdf"><span class="header-section-number">4.2.4</span> PDF</a></li>
+  <li><a href="#microsoft-word" id="toc-microsoft-word" class="nav-link" data-scroll-target="#microsoft-word"><span class="header-section-number">4.2.5</span> Microsoft Word</a></li>
   </ul></li>
-  <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow">Workflow</a>
+  <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow"><span class="header-section-number">4.3</span> Workflow</a>
   <ul class="collapse">
-  <li><a href="#corpus" id="toc-corpus" class="nav-link" data-scroll-target="#corpus">Corpus</a></li>
-  <li><a href="#tokens" id="toc-tokens" class="nav-link" data-scroll-target="#tokens">Tokens</a></li>
-  <li><a href="#document-feature-matrix" id="toc-document-feature-matrix" class="nav-link" data-scroll-target="#document-feature-matrix">Document feature matrix</a></li>
+  <li><a href="#corpus" id="toc-corpus" class="nav-link" data-scroll-target="#corpus"><span class="header-section-number">4.3.1</span> Corpus</a></li>
+  <li><a href="#tokens" id="toc-tokens" class="nav-link" data-scroll-target="#tokens"><span class="header-section-number">4.3.2</span> Tokens</a></li>
+  <li><a href="#document-feature-matrix" id="toc-document-feature-matrix" class="nav-link" data-scroll-target="#document-feature-matrix"><span class="header-section-number">4.3.3</span> Document feature matrix</a></li>
   </ul></li>
-  <li><a href="#statistical-analysis" id="toc-statistical-analysis" class="nav-link" data-scroll-target="#statistical-analysis">Statistical analysis</a>
+  <li><a href="#statistical-analysis" id="toc-statistical-analysis" class="nav-link" data-scroll-target="#statistical-analysis"><span class="header-section-number">4.4</span> Statistical analysis</a>
   <ul class="collapse">
-  <li><a href="#simple-frequency-analysis" id="toc-simple-frequency-analysis" class="nav-link" data-scroll-target="#simple-frequency-analysis">Simple frequency analysis</a></li>
-  <li><a href="#lexical-diversity" id="toc-lexical-diversity" class="nav-link" data-scroll-target="#lexical-diversity">Lexical diversity</a></li>
-  <li><a href="#documentfeature-similarity" id="toc-documentfeature-similarity" class="nav-link" data-scroll-target="#documentfeature-similarity">Document/Feature similarity</a></li>
-  <li><a href="#feature-co-occurence-matrix" id="toc-feature-co-occurence-matrix" class="nav-link" data-scroll-target="#feature-co-occurence-matrix">Feature co-occurence matrix</a></li>
+  <li><a href="#simple-frequency-analysis" id="toc-simple-frequency-analysis" class="nav-link" data-scroll-target="#simple-frequency-analysis"><span class="header-section-number">4.4.1</span> Simple frequency analysis</a></li>
+  <li><a href="#lexical-diversity" id="toc-lexical-diversity" class="nav-link" data-scroll-target="#lexical-diversity"><span class="header-section-number">4.4.2</span> Lexical diversity</a></li>
+  <li><a href="#documentfeature-similarity" id="toc-documentfeature-similarity" class="nav-link" data-scroll-target="#documentfeature-similarity"><span class="header-section-number">4.4.3</span> Document/Feature similarity</a></li>
+  <li><a href="#feature-co-occurence-matrix" id="toc-feature-co-occurence-matrix" class="nav-link" data-scroll-target="#feature-co-occurence-matrix"><span class="header-section-number">4.4.4</span> Feature co-occurence matrix</a></li>
   </ul></li>
-  <li><a href="#scaling-and-classification" id="toc-scaling-and-classification" class="nav-link" data-scroll-target="#scaling-and-classification">Scaling and classification</a>
+  <li><a href="#scaling-and-classification" id="toc-scaling-and-classification" class="nav-link" data-scroll-target="#scaling-and-classification"><span class="header-section-number">4.5</span> Scaling and classification</a>
   <ul class="collapse">
-  <li><a href="#wordfish" id="toc-wordfish" class="nav-link" data-scroll-target="#wordfish">Wordfish</a></li>
-  <li><a href="#topic-models" id="toc-topic-models" class="nav-link" data-scroll-target="#topic-models">Topic models</a></li>
-  <li><a href="#latent-semantic-scaling" id="toc-latent-semantic-scaling" class="nav-link" data-scroll-target="#latent-semantic-scaling">Latent semantic scaling</a></li>
+  <li><a href="#wordfish" id="toc-wordfish" class="nav-link" data-scroll-target="#wordfish"><span class="header-section-number">4.5.1</span> Wordfish</a></li>
+  <li><a href="#topic-models" id="toc-topic-models" class="nav-link" data-scroll-target="#topic-models"><span class="header-section-number">4.5.2</span> Topic models</a></li>
+  <li><a href="#latent-semantic-scaling" id="toc-latent-semantic-scaling" class="nav-link" data-scroll-target="#latent-semantic-scaling"><span class="header-section-number">4.5.3</span> Latent semantic scaling</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -242,7 +262,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quantitative analysis of textual data</h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quantitative analysis of textual data</span></h1>
 </div>
 
 
@@ -262,8 +282,8 @@ window.Quarto = {
 <ul>
 <li>https://tutorials.quanteda.io/introduction/</li>
 </ul>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="introduction" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">4.1</span> Introduction</h2>
 <p>There are several R packages used for quantitative text analysis, but we will focus specifically on the <code>{quanteda}</code> package. So, first install the package from CRAN:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"quanteda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -279,8 +299,8 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readtext"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="quantitative-data" class="level2">
-<h2 class="anchored" data-anchor-id="quantitative-data">Quantitative data</h2>
+<section id="quantitative-data" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="quantitative-data"><span class="header-section-number">4.2</span> Quantitative data</h2>
 <p>Before beginning we need to load the libraries</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -292,20 +312,17 @@ window.Quarto = {
 </div>
 <p>And these ones lates for the modelling section:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(seededlda)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'seededlda' was built under R version 4.4.1</code></pre>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(seededlda)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(LSX)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(LSX)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="pre-formatted-files" class="level3">
-<h3 class="anchored" data-anchor-id="pre-formatted-files">Pre-formatted files</h3>
+<section id="pre-formatted-files" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="pre-formatted-files"><span class="header-section-number">4.2.1</span> Pre-formatted files</h3>
 <p>If your text data is stored in a pre-formatted file where one column contains the text and additional columns might store document-level variables (e.g.&nbsp;year, author, or language), you can import this into R using <code>read_csv()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>path_data <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata/"</span>, <span class="at">package =</span> <span class="st">"readtext"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>dat_inaug <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">paste0</span>(path_data, <span class="st">"/csv/inaugCorpus.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>path_data <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata/"</span>, <span class="at">package =</span> <span class="st">"readtext"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dat_inaug <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">paste0</span>(path_data, <span class="st">"/csv/inaugCorpus.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 5 Columns: 4
 ── Column specification ────────────────────────────────────────────────────────
@@ -316,7 +333,7 @@ dbl (1): Year
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat_inaug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat_inaug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 5
 Columns: 4
@@ -329,8 +346,8 @@ $ FirstName &lt;chr&gt; "George", "George", "John", "Thomas", "Thomas"</code></p
 <p>The data set is about the inaugural speeches of the US presidents. So as we can see the data set is arranged in tabular form, with 5 rows and 4 columns. The columns are <code>texts</code>, <code>Year</code>, <code>President</code>, and <code>FirstName</code>.</p>
 <p>Alternatively, you can use the <code>{readtext}</code> package to import character (comma- or tab-separated) values. <code>{readtext}</code> reads files containing text, along with any associated document-level variables. As an example, consider the following tsv file:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tsv_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(path_data, <span class="st">"/tsv/dailsample.tsv"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">readLines</span>(tsv_file, <span class="at">n =</span> <span class="dv">4</span>), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)  <span class="co"># first 3 lines</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tsv_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(path_data, <span class="st">"/tsv/dailsample.tsv"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">readLines</span>(tsv_file, <span class="at">n =</span> <span class="dv">4</span>), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)  <span class="co"># first 3 lines</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>speechID    memberID    partyID constID title   date    member_name party_name  const_name  speech
 1   977 22  158 1. CEANN COMHAIRLE I gCOIR AN LAE.  1919-01-21  Count George Noble, Count Plunkett  Sinn Féin   Roscommon North Molaimse don Dáil Cathal Brugha, an Teachta ó Dhéisibh Phortláirge do bheith mar Cheann Comhairle againn indiu.
@@ -340,8 +357,8 @@ $ FirstName &lt;chr&gt; "George", "George", "John", "Thomas", "Thomas"</code></p
 </div>
 <p>The document itself in raw format is arranged in tabular form, separated by tabs. Each row contains a “document” (in this case, a speech) and the columns contain <strong>document-level</strong> variables. The column that contains the actual speech is named <code>speech</code>. To import this using <code>{readtext}</code>, you can use the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat_dail <span class="ot">&lt;-</span> <span class="fu">readtext</span>(tsv_file, <span class="at">text_field =</span> <span class="st">"speech"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat_dail)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dat_dail <span class="ot">&lt;-</span> <span class="fu">readtext</span>(tsv_file, <span class="at">text_field =</span> <span class="st">"speech"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat_dail)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 33
 Columns: 11
@@ -359,13 +376,13 @@ $ const_name  &lt;chr&gt; "Roscommon North", "Galway Connemara", "Waterford Coun
 </div>
 </div>
 </section>
-<section id="multiple-text-files" class="level3">
-<h3 class="anchored" data-anchor-id="multiple-text-files">Multiple text files</h3>
+<section id="multiple-text-files" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="multiple-text-files"><span class="header-section-number">4.2.2</span> Multiple text files</h3>
 <p>A second option to import data is to load multiple text files at once that are stored in the same folder or subfolders. Again, <code>path_data</code> is the location of sample files on your computer. Unlike the pre-formatted files, individual text files usually do not contain document-level variables. However, you can create document-level variables using the <code>{readtext}</code> package.</p>
 <p>The directory <code>/txt/UDHR</code> contains text files (“.txt”) of the Universal Declaration of Human Rights in 13 languages.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>path_udhr <span class="ot">&lt;-</span> <span class="fu">paste0</span>(path_data, <span class="st">"/txt/UDHR"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(path_udhr)  <span class="co"># list the files in this folder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>path_udhr <span class="ot">&lt;-</span> <span class="fu">paste0</span>(path_data, <span class="st">"/txt/UDHR"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(path_udhr)  <span class="co"># list the files in this folder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "UDHR_chinese.txt"    "UDHR_czech.txt"      "UDHR_danish.txt"    
  [4] "UDHR_english.txt"    "UDHR_french.txt"     "UDHR_georgian.txt"  
@@ -376,8 +393,8 @@ $ const_name  &lt;chr&gt; "Roscommon North", "Galway Connemara", "Waterford Coun
 </div>
 <p>Each one of these txt files contains the text of the UDHR in the specific language. For instance, to inspect what each one of these files contain, we do the following:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># just first 5 lines</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">readLines</span>(<span class="fu">file.path</span>(path_udhr, <span class="st">"UDHR_chinese.txt"</span>), <span class="at">n =</span> <span class="dv">5</span>), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># just first 5 lines</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">readLines</span>(<span class="fu">file.path</span>(path_udhr, <span class="st">"UDHR_chinese.txt"</span>), <span class="at">n =</span> <span class="dv">5</span>), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>世界人权宣言
 联合国大会一九四八年十二月十日第217A(III)号决议通过并颁布 1948 年 12 月 10 日， 联 合 国 大 会 通 过 并 颁 布《 世 界 人 权 宣 言》。 这 一 具 有 历 史 意 义 的《 宣 言》 颁 布 后， 大 会 要 求 所 有 会 员 国 广 为 宣 传， 并 且“ 不 分 国 家 或 领 土 的 政 治 地 位 , 主 要 在 各 级 学 校 和 其 他 教 育 机 构 加 以 传 播、 展 示、 阅 读 和 阐 述。” 《 宣 言 》 全 文 如 下： 序言 鉴于对人类家庭所有成员的固有尊严及其平等的和不移的权利的 承 认, 乃 是 世 界 自 由、 正 义 与 和 平 的 基 础, 鉴 于 对 人 权 的 无 视 和 侮 蔑 已 发 展 为 野 蛮 暴 行, 这 些 暴 行 玷 污 了 人 类 的 良 心, 而 一 个 人 人 享 有 言 论 和 信 仰 自 由 并 免 予 恐 惧 和 匮 乏 的 世 界 的 来 临, 已 被 宣 布 为 普 通 人 民 的 最 高 愿 望, 鉴 于 为 使 人 类 不 致 迫 不 得 已 铤 而 走 险 对 暴 政 和 压 迫 进 行 反 叛, 有 必 要 使 人 权 受 法 治 的 保 护, 鉴 于 有 必 要 促 进 各 国 间 友 好 关 系 的 发 展, 鉴于各联合国国家的人民已在联合国宪章中重申他们对基本人 权、 人 格 尊 严 和 价 值 以 及 男 女 平 等 权 利 的 信 念, 并 决 心 促 成 较 大 自 由 中 的 社 会 进 步 和 生 活 水 平 的 改 善, 鉴于各会员国业已誓愿同联合国合作以促进对人权和基本自由的 普 遍 尊 重 和 遵 行, 鉴于对这些权利和自由的普遍了解对于这个誓愿的充分实现具有 很 大 的 重 要 性, 因 此 现 在, 大 会, 发 布 这 一 世 界 人 权 宣 言 , 作 为 所 有 人 民 和 所 有 国 家 努 力 实 现 的 共 同 标 准, 以 期 每 一 个 人 和 社 会 机 构 经 常 铭 念 本 宣 言, 努 力 通 过 教 诲 和 教 育 促 进 对 权 利 和 自 由 的 尊 重, 并 通 过 国 家 的 和 国 际 的 渐 进 措 施, 使 这 些 权 利 和 自 由 在 各 会 员 国 本 身 人 民 及 在 其 管 辖 下 领 土 的 人 民 中 得 到 普 遍 和 有 效 的 承 认 和 遵 行; 第一条
@@ -387,8 +404,8 @@ $ const_name  &lt;chr&gt; "Roscommon North", "Galway Connemara", "Waterford Coun
 </div>
 <p>To import these files, you can use the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dat_udhr <span class="ot">&lt;-</span> <span class="fu">readtext</span>(path_udhr)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat_udhr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dat_udhr <span class="ot">&lt;-</span> <span class="fu">readtext</span>(path_udhr)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat_udhr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 13
 Columns: 2
@@ -411,8 +428,8 @@ Note
 </div>
 <p>Here’s another example of multiple text files. The directory <code>/txt/EU_manifestos</code> contains text files (“.txt”) of the European Union manifestos in different languages.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>path_eu <span class="ot">&lt;-</span> <span class="fu">paste0</span>(path_data, <span class="st">"/txt/EU_manifestos/"</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(path_eu)  <span class="co"># list the files in this folder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>path_eu <span class="ot">&lt;-</span> <span class="fu">paste0</span>(path_data, <span class="st">"/txt/EU_manifestos/"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(path_eu)  <span class="co"># list the files in this folder</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "EU_euro_2004_de_PSE.txt" "EU_euro_2004_de_V.txt"  
  [3] "EU_euro_2004_en_PSE.txt" "EU_euro_2004_en_V.txt"  
@@ -427,14 +444,14 @@ Note
 </div>
 <p>You can generate document-level variables based on the file names using the <code>docvarnames</code> and <code>docvarsfrom</code> argument. <code>dvsep = "_"</code> specifies the value separator in the filenames. <code>encoding = "ISO-8859-1"</code> determines character encodings of the texts. Notice how the document variables are nicely generated from the file names.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>dat_eu <span class="ot">&lt;-</span> <span class="fu">readtext</span>(</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> path_eu,</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">docvarsfrom =</span> <span class="st">"filenames"</span>, </span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">docvarnames =</span> <span class="fu">c</span>(<span class="st">"unit"</span>, <span class="st">"context"</span>, <span class="st">"year"</span>, <span class="st">"language"</span>, <span class="st">"party"</span>),</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">dvsep =</span> <span class="st">"_"</span>, </span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">encoding =</span> <span class="st">"ISO-8859-1"</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat_eu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>dat_eu <span class="ot">&lt;-</span> <span class="fu">readtext</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> path_eu,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">docvarsfrom =</span> <span class="st">"filenames"</span>, </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">docvarnames =</span> <span class="fu">c</span>(<span class="st">"unit"</span>, <span class="st">"context"</span>, <span class="st">"year"</span>, <span class="st">"language"</span>, <span class="st">"party"</span>),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">dvsep =</span> <span class="st">"_"</span>, </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">encoding =</span> <span class="st">"ISO-8859-1"</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat_eu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 17
 Columns: 7
@@ -448,8 +465,8 @@ $ party    &lt;chr&gt; "PSE", "V", "PSE", "V", "PSE", "V", "V", "PSE", "V", "V",
 </div>
 </div>
 </section>
-<section id="json" class="level3">
-<h3 class="anchored" data-anchor-id="json">JSON</h3>
+<section id="json" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="json"><span class="header-section-number">4.2.3</span> JSON</h3>
 <p>You can also read JSON files (.json) downloaded from the Twititer stream API. <a href="https://raw.githubusercontent.com/quanteda/tutorials.quanteda.io/master/content/data/twitter.json">twitter.json</a> is located in data directory of this tutorial package.</p>
 <p>The JSON file looks something like this</p>
 <pre><code>{"created_at":"Wed Jun 07 23:30:01 +0000 2017","id":872596537142116352,"id_str":"872596537142116352","text":"@EFC_Jayy UKIP","display_text_range":[10,14],
@@ -461,27 +478,27 @@ $ party    &lt;chr&gt; "PSE", "V", "PSE", "V", "PSE", "V", "V", "PSE", "V", "V",
 "place":null,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"entities":{"hashtags":[],"urls":[],"user_mentions":[{"screen_name":"EFC_Jayy","name":"\u274c\u274c\u274c","id":4556760676,"id_str":"4556760676","indices":[0,9]}],"symbols":[]},"favorited":false,"retweeted":false,"filter_level":"low","lang":"en","timestamp_ms":"1496878201171"}</code></pre>
 <p>It’s a little hard to parse, but luckily we just leave it to the <code>{readtext}</code> package to do the job for us.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dat_twitter <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">"../data/twitter.json"</span>, <span class="at">source =</span> <span class="st">"twitter"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dat_twitter <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="st">"../data/twitter.json"</span>, <span class="at">source =</span> <span class="st">"twitter"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The file comes with several metadata for each tweet, such as the number of retweets and likes, the username, time and time zone.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">names</span>(dat_twitter))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">names</span>(dat_twitter))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <pre><code>## [1] "doc_id"         "text"           "retweet_count"  "favorite_count"
 ## [5] "favorited"      "truncated"</code></pre>
 </section>
-<section id="pdf" class="level3">
-<h3 class="anchored" data-anchor-id="pdf">PDF</h3>
+<section id="pdf" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="pdf"><span class="header-section-number">4.2.4</span> PDF</h3>
 <p><code>readtext()</code> can also convert and read PDF (“.pdf”) files. The directory <code>/pdf/UDHR</code> contains PDF files of the Universal Declaration of Human Rights in 13 languages. Each file looks like this:</p>
 <p><img src="figures/udhr_sample.png" class="img-fluid"></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dat_udhr <span class="ot">&lt;-</span> <span class="fu">readtext</span>(</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(path_data, <span class="st">"/pdf/UDHR/*.pdf"</span>), </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">docvarsfrom =</span> <span class="st">"filenames"</span>, </span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">docvarnames =</span> <span class="fu">c</span>(<span class="st">"document"</span>, <span class="st">"language"</span>),</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sep =</span> <span class="st">"_"</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dat_udhr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dat_udhr <span class="ot">&lt;-</span> <span class="fu">readtext</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(path_data, <span class="st">"/pdf/UDHR/*.pdf"</span>), </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">docvarsfrom =</span> <span class="st">"filenames"</span>, </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">docvarnames =</span> <span class="fu">c</span>(<span class="st">"document"</span>, <span class="st">"language"</span>),</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sep =</span> <span class="st">"_"</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dat_udhr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>readtext object consisting of 11 documents and 2 docvars.
 # A data frame: 11 × 4
@@ -497,12 +514,12 @@ $ party    &lt;chr&gt; "PSE", "V", "PSE", "V", "PSE", "V", "V", "PSE", "V", "V",
 </div>
 </div>
 </section>
-<section id="microsoft-word" class="level3">
-<h3 class="anchored" data-anchor-id="microsoft-word">Microsoft Word</h3>
+<section id="microsoft-word" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="microsoft-word"><span class="header-section-number">4.2.5</span> Microsoft Word</h3>
 <p>Finally, <code>readtext()</code> can import Microsoft Word (“.doc” and “.docx”) files.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>dat_word <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="fu">paste0</span>(path_data, <span class="st">"/word/*.docx"</span>))</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dat_udhr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dat_word <span class="ot">&lt;-</span> <span class="fu">readtext</span>(<span class="fu">paste0</span>(path_data, <span class="st">"/word/*.docx"</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dat_udhr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>readtext object consisting of 11 documents and 2 docvars.
 # A data frame: 11 × 4
@@ -519,8 +536,8 @@ $ party    &lt;chr&gt; "PSE", "V", "PSE", "V", "PSE", "V", "V", "PSE", "V", "V",
 </div>
 </section>
 </section>
-<section id="workflow" class="level2">
-<h2 class="anchored" data-anchor-id="workflow">Workflow</h2>
+<section id="workflow" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="workflow"><span class="header-section-number">4.3</span> Workflow</h2>
 <p><code>{quanteda}</code> has three basic types of objects:</p>
 <ol type="1">
 <li><p>Corpus</p>
@@ -571,27 +588,27 @@ $ party    &lt;chr&gt; "PSE", "V", "PSE", "V", "PSE", "V", "V", "PSE", "V", "V",
 </div>
 </div>
 <p>For example, if character vectors are given to <code>dfm()</code>, it internally constructs corpus and tokens objects before creating a DFM.</p>
-<section id="corpus" class="level3">
-<h3 class="anchored" data-anchor-id="corpus">Corpus</h3>
+<section id="corpus" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="corpus"><span class="header-section-number">4.3.1</span> Corpus</h3>
 <p>You can create a corpus from various available sources:</p>
 <ol type="1">
 <li><p>A character vector consisting of one document per element</p></li>
 <li><p>A data frame consisting of a character vector for documents, and additional vectors for document-level variables</p></li>
 </ol>
-<section id="character-vector" class="level4">
-<h4 class="anchored" data-anchor-id="character-vector">Character vector</h4>
+<section id="character-vector" class="level4" data-number="4.3.1.1">
+<h4 data-number="4.3.1.1" class="anchored" data-anchor-id="character-vector"><span class="header-section-number">4.3.1.1</span> Character vector</h4>
 <p><code>data_char_ukimmig2010</code> is a named character vector and consists of sections of British election manifestos on immigration and asylum.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_char_ukimmig2010)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_char_ukimmig2010)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Named chr [1:9] "IMMIGRATION: AN UNPARALLELED CRISIS WHICH ONLY THE BNP CAN SOLVE. \n\n- At current immigration and birth rates,"| __truncated__ ...
  - attr(*, "names")= chr [1:9] "BNP" "Coalition" "Conservative" "Greens" ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>corp_immig <span class="ot">&lt;-</span> <span class="fu">corpus</span>(</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  data_char_ukimmig2010, </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">docvars =</span> <span class="fu">data.frame</span>(<span class="at">party =</span> <span class="fu">names</span>(data_char_ukimmig2010))</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corp_immig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>corp_immig <span class="ot">&lt;-</span> <span class="fu">corpus</span>(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  data_char_ukimmig2010, </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">docvars =</span> <span class="fu">data.frame</span>(<span class="at">party =</span> <span class="fu">names</span>(data_char_ukimmig2010))</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corp_immig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Corpus consisting of 9 documents and 1 docvar.
 BNP :
@@ -614,7 +631,7 @@ LibDem :
 
 [ reached max_ndoc ... 3 more documents ]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(corp_immig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(corp_immig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Corpus consisting of 9 documents, showing 9 documents:
 
@@ -631,24 +648,24 @@ LibDem :
 </div>
 </div>
 </section>
-<section id="data-frame" class="level4">
-<h4 class="anchored" data-anchor-id="data-frame">Data frame</h4>
+<section id="data-frame" class="level4" data-number="4.3.1.2">
+<h4 data-number="4.3.1.2" class="anchored" data-anchor-id="data-frame"><span class="header-section-number">4.3.1.2</span> Data frame</h4>
 <p>Using <code>read_csv()</code>, load an example file from <code>path_data</code> as a data frame called <code>dat_inaug</code>. Note that your file does not need to be formatted as <code>.csv</code>. You can build a <code>{quanteda}</code> corpus from any file format that R can import as a data frame (see, for instance, the <a href="https://cran.r-project.org/web/packages/rio/index.html"><strong>rio</strong></a> package for importing various files as data frames into R).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set path</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>path_data <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata/"</span>, <span class="at">package =</span> <span class="st">"readtext"</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># import csv file</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>dat_inaug <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">paste0</span>(path_data, <span class="st">"/csv/inaugCorpus.csv"</span>))</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dat_inaug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set path</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>path_data <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata/"</span>, <span class="at">package =</span> <span class="st">"readtext"</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># import csv file</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>dat_inaug <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">paste0</span>(path_data, <span class="st">"/csv/inaugCorpus.csv"</span>))</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dat_inaug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "texts"     "Year"      "President" "FirstName"</code></pre>
 </div>
 </div>
 <p>Construct a corpus from the “texts” column in <code>dat_inaug</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>corp_inaug <span class="ot">&lt;-</span> <span class="fu">corpus</span>(dat_inaug, <span class="at">text_field =</span> <span class="st">"texts"</span>)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corp_inaug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>corp_inaug <span class="ot">&lt;-</span> <span class="fu">corpus</span>(dat_inaug, <span class="at">text_field =</span> <span class="st">"texts"</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corp_inaug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Corpus consisting of 5 documents and 3 docvars.
 text1 :
@@ -668,12 +685,12 @@ text5 :
 </div>
 </div>
 </section>
-<section id="document-level-variables" class="level4">
-<h4 class="anchored" data-anchor-id="document-level-variables">Document-level variables</h4>
+<section id="document-level-variables" class="level4" data-number="4.3.1.3">
+<h4 data-number="4.3.1.3" class="anchored" data-anchor-id="document-level-variables"><span class="header-section-number">4.3.1.3</span> Document-level variables</h4>
 <p><code>{quanteda}</code>’s objects keep information associated with documents. They are called “document-level variables”, or “docvars”, and are accessed using <code>docvars()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>corp <span class="ot">&lt;-</span> data_corpus_inaugural</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">docvars</span>(corp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>corp <span class="ot">&lt;-</span> data_corpus_inaugural</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">docvars</span>(corp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Year  President FirstName                 Party
 1 1789 Washington    George                  none
@@ -686,14 +703,14 @@ text5 :
 </div>
 <p>If you want to extract individual elements of document variables, you can specify <code>field</code>. Or you could just subset it as you normally would a data.frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">docvars</span>(corp, <span class="at">field =</span> <span class="st">"Year"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">docvars</span>(corp, <span class="at">field =</span> <span class="st">"Year"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 1789 1793 1797 1801 1805 1809 1813 1817 1821 1825 1829 1833 1837 1841 1845
 [16] 1849 1853 1857 1861 1865 1869 1873 1877 1881 1885 1889 1893 1897 1901 1905
 [31] 1909 1913 1917 1921 1925 1929 1933 1937 1941 1945 1949 1953 1957 1961 1965
 [46] 1969 1973 1977 1981 1985 1989 1993 1997 2001 2005 2009 2013 2017 2021</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>corp<span class="sc">$</span>Year</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>corp<span class="sc">$</span>Year</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 1789 1793 1797 1801 1805 1809 1813 1817 1821 1825 1829 1833 1837 1841 1845
 [16] 1849 1853 1857 1861 1865 1869 1873 1877 1881 1885 1889 1893 1897 1901 1905
@@ -703,8 +720,8 @@ text5 :
 </div>
 <p>So that means assignments to <em>change</em> document-level variables will work as usual in R. For example, you can change the <code>Year</code> variable to a factor (if you wished). And since the output of a <code>docvars()</code> function is a data.frame, you could subset or filter as you would a data.frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">docvars</span>(corp) <span class="sc">|&gt;</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">1990</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">docvars</span>(corp) <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">1990</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Year President FirstName      Party
 1 1993   Clinton      Bill Democratic
@@ -716,13 +733,13 @@ text5 :
 7 2017     Trump Donald J. Republican
 8 2021     Biden Joseph R. Democratic</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># {quanteda} also provides corpus_subset() function, but since we learnt about</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dplyr, we can use it here.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># {quanteda} also provides corpus_subset() function, but since we learnt about</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dplyr, we can use it here.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Another useful feature is the ability to change the unit of texts. For example, the UK Immigration 2010 data set is a corpus of 9 documents, where each document is a speech by the political party.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>corp <span class="ot">&lt;-</span> <span class="fu">corpus</span>(data_char_ukimmig2010)</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>corp <span class="ot">&lt;-</span> <span class="fu">corpus</span>(data_char_ukimmig2010)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Corpus consisting of 9 documents.
 BNP :
@@ -748,8 +765,8 @@ LibDem :
 </div>
 <p>We can use <code>corpus_reshape()</code> to change the unit of texts. For example, we can change the unit of texts to sentences using the command below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>corp_sent <span class="ot">&lt;-</span> <span class="fu">corpus_reshape</span>(corp, <span class="at">to =</span> <span class="st">"sentences"</span>)</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corp_sent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>corp_sent <span class="ot">&lt;-</span> <span class="fu">corpus_reshape</span>(corp, <span class="at">to =</span> <span class="st">"sentences"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corp_sent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Corpus consisting of 206 documents.
 BNP.1 :
@@ -775,8 +792,8 @@ BNP.6 :
 </div>
 <p>The following code restores it back to the document level.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>corp_doc <span class="ot">&lt;-</span> <span class="fu">corpus_reshape</span>(corp_sent, <span class="at">to =</span> <span class="st">"documents"</span>)</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corp_doc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>corp_doc <span class="ot">&lt;-</span> <span class="fu">corpus_reshape</span>(corp_sent, <span class="at">to =</span> <span class="st">"documents"</span>)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corp_doc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Corpus consisting of 9 documents.
 BNP :
@@ -802,12 +819,12 @@ LibDem :
 </div>
 </section>
 </section>
-<section id="tokens" class="level3">
-<h3 class="anchored" data-anchor-id="tokens">Tokens</h3>
+<section id="tokens" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="tokens"><span class="header-section-number">4.3.2</span> Tokens</h3>
 <p><code>tokens()</code> segments texts in a corpus into tokens (words or sentences) by word boundaries. By default, tokens() only removes separators (typically white spaces), but you can also remove punctuation and numbers.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corp_immig)</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(toks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>toks <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corp_immig)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(toks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Tokens consisting of 9 documents and 1 docvar.
 BNP :
@@ -848,8 +865,8 @@ LibDem :
 
 [ reached max_ndoc ... 3 more documents ]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>toks_nopunct <span class="ot">&lt;-</span> <span class="fu">tokens</span>(data_char_ukimmig2010, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(toks_nopunct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>toks_nopunct <span class="ot">&lt;-</span> <span class="fu">tokens</span>(data_char_ukimmig2010, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(toks_nopunct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Tokens consisting of 9 documents.
 BNP :
@@ -893,8 +910,8 @@ LibDem :
 </div>
 <p>You can see how keywords are used in the actual contexts in a concordance view produced by <code>kwic()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>kw <span class="ot">&lt;-</span> <span class="fu">kwic</span>(toks, <span class="at">pattern =</span>  <span class="st">"immig*"</span>)</span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(kw, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>kw <span class="ot">&lt;-</span> <span class="fu">kwic</span>(toks, <span class="at">pattern =</span>  <span class="st">"immig*"</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(kw, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Keyword-in-context with 10 matches.                                                                 
    [BNP, 1]                                       | IMMIGRATION |
@@ -932,19 +949,19 @@ Note
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><p>If you want to find multi-word expressions, separate words by white space and wrap the character vector by <code>phrase()</code>, as follows:</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>kw_asylum <span class="ot">&lt;-</span> <span class="fu">kwic</span>(toks, <span class="at">pattern =</span> <span class="fu">phrase</span>(<span class="st">"asylum seeker*"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>kw_asylum <span class="ot">&lt;-</span> <span class="fu">kwic</span>(toks, <span class="at">pattern =</span> <span class="fu">phrase</span>(<span class="st">"asylum seeker*"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Texts do not always appear nicely in your R console, so you can use <code>View()</code> to see the keywords-in-context in an interactive HTML table.</p></li>
 </ol>
 </div>
 </div>
 <p>You can remove tokens that you are not interested in using <code>tokens_select()</code>. Usually we remove function words (grammatical words) that have little or no substantive meaning in pre-processing. <code>stopwords()</code> returns a pre-defined list of function words.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>toks_nostop <span class="ot">&lt;-</span> <span class="fu">tokens_select</span>(</span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  toks, </span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>), </span>
-<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">selection =</span> <span class="st">"remove"</span>  <span class="co"># keep or remove</span></span>
-<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(toks_nostop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>toks_nostop <span class="ot">&lt;-</span> <span class="fu">tokens_select</span>(</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  toks, </span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>), </span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">selection =</span> <span class="st">"remove"</span>  <span class="co"># keep or remove</span></span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(toks_nostop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Tokens consisting of 9 documents and 1 docvar.
 BNP :
@@ -1006,9 +1023,9 @@ Note
 <li>Trigram (3-gram): “natural language processing”</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tokens_ngrams() also supports skip to generate skip-grams.</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>toks_ngram <span class="ot">&lt;-</span> <span class="fu">tokens_ngrams</span>(toks_nopunct, <span class="at">n =</span> <span class="dv">3</span>, <span class="at">skip =</span> <span class="dv">0</span>)</span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(toks_ngram[[<span class="dv">1</span>]], <span class="dv">20</span>)  <span class="co"># the first political party's trigrams</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tokens_ngrams() also supports skip to generate skip-grams.</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>toks_ngram <span class="ot">&lt;-</span> <span class="fu">tokens_ngrams</span>(toks_nopunct, <span class="at">n =</span> <span class="dv">3</span>, <span class="at">skip =</span> <span class="dv">0</span>)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(toks_ngram[[<span class="dv">1</span>]], <span class="dv">20</span>)  <span class="co"># the first political party's trigrams</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "IMMIGRATION_AN_UNPARALLELED" "AN_UNPARALLELED_CRISIS"     
  [3] "UNPARALLELED_CRISIS_WHICH"   "CRISIS_WHICH_ONLY"          
@@ -1023,13 +1040,13 @@ Note
 </div>
 </div>
 </section>
-<section id="document-feature-matrix" class="level3">
-<h3 class="anchored" data-anchor-id="document-feature-matrix">Document feature matrix</h3>
+<section id="document-feature-matrix" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="document-feature-matrix"><span class="header-section-number">4.3.3</span> Document feature matrix</h3>
 <p><code>dfm()</code> constructs a document-feature matrix (DFM) from a tokens object.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>toks_inaug <span class="ot">&lt;-</span> <span class="fu">tokens</span>(data_corpus_inaugural, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>dfmat_inaug <span class="ot">&lt;-</span> <span class="fu">dfm</span>(toks_inaug)</span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dfmat_inaug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>toks_inaug <span class="ot">&lt;-</span> <span class="fu">tokens</span>(data_corpus_inaugural, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>dfmat_inaug <span class="ot">&lt;-</span> <span class="fu">dfm</span>(toks_inaug)</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dfmat_inaug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Document-feature matrix of: 59 documents, 9,419 features (91.89% sparse) and 4 docvars.
                  features
@@ -1063,7 +1080,7 @@ docs              among vicissitudes incident
 <p>DFMs sometimes behaves like normal matrices too, so you can use <code>rowSums()</code> and <code>colSums()</code> to calculate marginals.</p>
 <p>Most commonly perhaps, is you want to select some columns (i.e.&nbsp;features) from the DFM that satisfy a pattern. For instance,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dfm_select</span>(dfmat_inaug, <span class="at">pattern =</span> <span class="st">"freedom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dfm_select</span>(dfmat_inaug, <span class="at">pattern =</span> <span class="st">"freedom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Document-feature matrix of: 59 documents, 1 feature (38.98% sparse) and 4 docvars.
                  features
@@ -1076,7 +1093,7 @@ docs              freedom
   1809-Madison          1
 [ reached max_ndoc ... 53 more documents ]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dfm_keep</span>(dfmat_inaug, <span class="at">min_nchar =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dfm_keep</span>(dfmat_inaug, <span class="at">min_nchar =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Document-feature matrix of: 59 documents, 8,560 features (93.04% sparse) and 4 docvars.
                  features
@@ -1100,8 +1117,8 @@ docs              vicissitudes incident event could filled
 </div>
 <p>There is also <code>dfm_trim()</code> to remove features that are too frequent or too rare, based on frequencies.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trim DFM containing features that occur less than 10 times in the corpus</span></span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dfm_trim</span>(dfmat_inaug, <span class="at">min_termfreq =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trim DFM containing features that occur less than 10 times in the corpus</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dfm_trim</span>(dfmat_inaug, <span class="at">min_termfreq =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Document-feature matrix of: 59 documents, 1,524 features (68.93% sparse) and 4 docvars.
                  features
@@ -1122,8 +1139,8 @@ docs              among to life
   1809-Madison        0 61    1
 [ reached max_ndoc ... 53 more documents, reached max_nfeat ... 1,514 more features ]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trim DFM containing features that occur in more than 10% of the documents</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dfm_trim</span>(dfmat_inaug, <span class="at">max_docfreq =</span> <span class="fl">0.1</span>, <span class="at">docfreq_type =</span> <span class="st">"prop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trim DFM containing features that occur in more than 10% of the documents</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dfm_trim</span>(dfmat_inaug, <span class="at">max_docfreq =</span> <span class="fl">0.1</span>, <span class="at">docfreq_type =</span> <span class="st">"prop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Document-feature matrix of: 59 documents, 7,388 features (96.87% sparse) and 4 docvars.
                  features
@@ -1147,25 +1164,25 @@ docs              month summoned veneration fondest
 </div>
 </section>
 </section>
-<section id="statistical-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="statistical-analysis">Statistical analysis</h2>
+<section id="statistical-analysis" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="statistical-analysis"><span class="header-section-number">4.4</span> Statistical analysis</h2>
 <p>Note: If you have not installed <code>{quanteda.corpora}</code>, do so by running</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"quanteda/quanteda.corpora"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="simple-frequency-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="simple-frequency-analysis">Simple frequency analysis</h3>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"quanteda/quanteda.corpora"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="simple-frequency-analysis" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="simple-frequency-analysis"><span class="header-section-number">4.4.1</span> Simple frequency analysis</h3>
 <p>Unlike <code>topfeatures()</code>, <code>textstat_frequency()</code> shows both term and document frequencies. You can also use the function to find the most frequent features within groups. Using the <code>download()</code> function from <code>{quanteda.corpora}</code>, you can retrieve a text corpus of tweets.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>corp_tweets <span class="ot">&lt;-</span> quanteda.corpora<span class="sc">::</span><span class="fu">download</span>(<span class="at">url =</span> <span class="st">"https://www.dropbox.com/s/846skn1i5elbnd2/data_corpus_sampletweets.rds?dl=1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>corp_tweets <span class="ot">&lt;-</span> quanteda.corpora<span class="sc">::</span><span class="fu">download</span>(<span class="at">url =</span> <span class="st">"https://www.dropbox.com/s/846skn1i5elbnd2/data_corpus_sampletweets.rds?dl=1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can analyse the most frequent hashtags by applying <code>tokens_keep(pattern = "#*")</code> before creating a DFM.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>toks_tweets <span class="ot">&lt;-</span> </span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(corp_tweets, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_keep</span>(<span class="at">pattern =</span> <span class="st">"#*"</span>)</span>
-<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>dfmat_tweets <span class="ot">&lt;-</span> <span class="fu">dfm</span>(toks_tweets)</span>
-<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>tstat_freq <span class="ot">&lt;-</span> <span class="fu">textstat_frequency</span>(dfmat_tweets, <span class="at">n =</span> <span class="dv">5</span>, <span class="at">groups =</span> lang)</span>
-<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tstat_freq, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>toks_tweets <span class="ot">&lt;-</span> </span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(corp_tweets, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_keep</span>(<span class="at">pattern =</span> <span class="st">"#*"</span>)</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>dfmat_tweets <span class="ot">&lt;-</span> <span class="fu">dfm</span>(toks_tweets)</span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>tstat_freq <span class="ot">&lt;-</span> <span class="fu">textstat_frequency</span>(dfmat_tweets, <span class="at">n =</span> <span class="dv">5</span>, <span class="at">groups =</span> lang)</span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tstat_freq, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             feature frequency rank docfreq     group
 1           #twitter         1    1       1    Basque
@@ -1192,13 +1209,13 @@ docs              month summoned veneration fondest
 </div>
 <p>You can also plot the Twitter hashtag frequencies easily using <code>ggplot()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>dfmat_tweets <span class="sc">|&gt;</span></span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="at">n =</span> <span class="dv">15</span>) <span class="sc">|&gt;</span></span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(feature, frequency), <span class="at">y =</span> frequency)) <span class="sc">+</span></span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
-<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>dfmat_tweets <span class="sc">|&gt;</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="at">n =</span> <span class="dv">15</span>) <span class="sc">|&gt;</span></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(feature, frequency), <span class="at">y =</span> frequency)) <span class="sc">+</span></span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1209,8 +1226,8 @@ docs              month summoned veneration fondest
 </div>
 <p>Alternatively, you can create a word cloud of the 100 most common hashtags.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">132</span>)</span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dfmat_tweets, <span class="at">max_words =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">132</span>)</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dfmat_tweets, <span class="at">max_words =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1221,23 +1238,23 @@ docs              month summoned veneration fondest
 </div>
 <p>Finally, it is possible to compare different groups within one Wordcloud. We must first create a dummy variable that indicates whether a tweet was posted in English or a different language. Afterwards, we can compare the most frequent hashtags of English and non-English tweets.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create document-level variable indicating whether tweet was in English or</span></span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="co"># other language</span></span>
-<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>corp_tweets<span class="sc">$</span>dummy_english <span class="ot">&lt;-</span> </span>
-<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(<span class="fu">ifelse</span>(corp_tweets<span class="sc">$</span>lang <span class="sc">==</span> <span class="st">"English"</span>, <span class="st">"English"</span>, <span class="st">"Not English"</span>))</span>
-<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tokenize texts</span></span>
-<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a>toks_tweets <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corp_tweets)</span>
-<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create a grouped dfm and compare groups</span></span>
-<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a>dfmat_corp_language <span class="ot">&lt;-</span> </span>
-<span id="cb86-11"><a href="#cb86-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks_tweets) <span class="sc">|&gt;</span></span>
-<span id="cb86-12"><a href="#cb86-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_keep</span>(<span class="at">pattern =</span> <span class="st">"#*"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb86-13"><a href="#cb86-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(<span class="at">groups =</span> dummy_english)</span>
-<span id="cb86-14"><a href="#cb86-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-15"><a href="#cb86-15" aria-hidden="true" tabindex="-1"></a><span class="co"># create wordcloud</span></span>
-<span id="cb86-16"><a href="#cb86-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">132</span>) <span class="co"># set seed for reproducibility</span></span>
-<span id="cb86-17"><a href="#cb86-17" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dfmat_corp_language, <span class="at">comparison =</span> <span class="cn">TRUE</span>, <span class="at">max_words =</span> <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create document-level variable indicating whether tweet was in English or</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="co"># other language</span></span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>corp_tweets<span class="sc">$</span>dummy_english <span class="ot">&lt;-</span> </span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(<span class="fu">ifelse</span>(corp_tweets<span class="sc">$</span>lang <span class="sc">==</span> <span class="st">"English"</span>, <span class="st">"English"</span>, <span class="st">"Not English"</span>))</span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a><span class="co"># tokenize texts</span></span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>toks_tweets <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corp_tweets)</span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create a grouped dfm and compare groups</span></span>
+<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a>dfmat_corp_language <span class="ot">&lt;-</span> </span>
+<span id="cb84-11"><a href="#cb84-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks_tweets) <span class="sc">|&gt;</span></span>
+<span id="cb84-12"><a href="#cb84-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_keep</span>(<span class="at">pattern =</span> <span class="st">"#*"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb84-13"><a href="#cb84-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(<span class="at">groups =</span> dummy_english)</span>
+<span id="cb84-14"><a href="#cb84-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-15"><a href="#cb84-15" aria-hidden="true" tabindex="-1"></a><span class="co"># create wordcloud</span></span>
+<span id="cb84-16"><a href="#cb84-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">132</span>) <span class="co"># set seed for reproducibility</span></span>
+<span id="cb84-17"><a href="#cb84-17" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dfmat_corp_language, <span class="at">comparison =</span> <span class="cn">TRUE</span>, <span class="at">max_words =</span> <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1247,20 +1264,20 @@ docs              month summoned veneration fondest
 </div>
 </div>
 </section>
-<section id="lexical-diversity" class="level3">
-<h3 class="anchored" data-anchor-id="lexical-diversity">Lexical diversity</h3>
+<section id="lexical-diversity" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="lexical-diversity"><span class="header-section-number">4.4.2</span> Lexical diversity</h3>
 <p>Lexical diversity is a measure of how varied the vocabulary in a text or speech is. It indicates the richness of language use by comparing the number of unique words (types) to the total number of words (tokens) in the text. It is useful, for instance, for analysing speakers’ or writers’ linguistic skills, or the complexity of ideas expressed in documents.</p>
 <p>A common metric for lexical diversity is the Type-Token Ratio (TTR), calculated as: <span class="math display">\[
 TTR = \frac{N_{\text{types}}}{N_{\text{tokens}}}
 \]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>toks_inaug <span class="ot">&lt;-</span> <span class="fu">tokens</span>(data_corpus_inaugural)</span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>dfmat_inaug <span class="ot">&lt;-</span> </span>
-<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks_inaug) <span class="sc">|&gt;</span></span>
-<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_remove</span>(<span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>))  <span class="co"># similar to dfm_select()</span></span>
-<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>tstat_lexdiv <span class="ot">&lt;-</span> <span class="fu">textstat_lexdiv</span>(dfmat_inaug)</span>
-<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(tstat_lexdiv, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>toks_inaug <span class="ot">&lt;-</span> <span class="fu">tokens</span>(data_corpus_inaugural)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>dfmat_inaug <span class="ot">&lt;-</span> </span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks_inaug) <span class="sc">|&gt;</span></span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_remove</span>(<span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>))  <span class="co"># similar to dfm_select()</span></span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>tstat_lexdiv <span class="ot">&lt;-</span> <span class="fu">textstat_lexdiv</span>(dfmat_inaug)</span>
+<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(tstat_lexdiv, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     document       TTR
 55  2005-Bush 0.6176753
@@ -1272,20 +1289,20 @@ TTR = \frac{N_{\text{types}}}{N_{\text{tokens}}}
 </div>
 <p>We can prepare a plot using <code>ggplot()</code> as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span></span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>  tstat_lexdiv <span class="sc">|&gt;</span></span>
-<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>())</span>
-<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_df, <span class="fu">aes</span>(id, TTR)) <span class="sc">+</span></span>
-<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
-<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> plot_df<span class="sc">$</span>id,</span>
-<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> plot_df<span class="sc">$</span>document,</span>
-<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span></span>
-<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb89-12"><a href="#cb89-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb89-13"><a href="#cb89-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb89-14"><a href="#cb89-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  tstat_lexdiv <span class="sc">|&gt;</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>())</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_df, <span class="fu">aes</span>(id, TTR)) <span class="sc">+</span></span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> plot_df<span class="sc">$</span>id,</span>
+<span id="cb87-9"><a href="#cb87-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> plot_df<span class="sc">$</span>document,</span>
+<span id="cb87-10"><a href="#cb87-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span></span>
+<span id="cb87-11"><a href="#cb87-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb87-12"><a href="#cb87-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb87-13"><a href="#cb87-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb87-14"><a href="#cb87-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1295,19 +1312,19 @@ TTR = \frac{N_{\text{types}}}{N_{\text{tokens}}}
 </div>
 </div>
 </section>
-<section id="documentfeature-similarity" class="level3">
-<h3 class="anchored" data-anchor-id="documentfeature-similarity">Document/Feature similarity</h3>
+<section id="documentfeature-similarity" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="documentfeature-similarity"><span class="header-section-number">4.4.3</span> Document/Feature similarity</h3>
 <p>Document/feature similarity is a measure of how alike two documents or sets of features are based on their content. It quantifies the degree to which documents share similar terms, topics, or characteristics.</p>
 <p><code>textstat_dist()</code> calculates similarities of documents or features for various measures. The output is compatible with R’s <code>dist()</code>, so hierarchical clustering can be performed without any transformation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>toks_inaug <span class="ot">&lt;-</span> <span class="fu">tokens</span>(data_corpus_inaugural)</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>dfmat_inaug <span class="ot">&lt;-</span> </span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks_inaug) <span class="sc">|&gt;</span></span>
-<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_remove</span>(<span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>))  <span class="co"># similar to dfm_select()</span></span>
-<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate document similarity</span></span>
-<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="ot">&lt;-</span> <span class="fu">textstat_dist</span>(dfmat_inaug)  <span class="co"># using Euclidean distance</span></span>
-<span id="cb90-8"><a href="#cb90-8" aria-hidden="true" tabindex="-1"></a>dist_mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>toks_inaug <span class="ot">&lt;-</span> <span class="fu">tokens</span>(data_corpus_inaugural)</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>dfmat_inaug <span class="ot">&lt;-</span> </span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks_inaug) <span class="sc">|&gt;</span></span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_remove</span>(<span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>))  <span class="co"># similar to dfm_select()</span></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate document similarity</span></span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="ot">&lt;-</span> <span class="fu">textstat_dist</span>(dfmat_inaug)  <span class="co"># using Euclidean distance</span></span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>dist_mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>3 x 3 Matrix of class "dspMatrix"
                 1789-Washington 1793-Washington 1797-Adams
@@ -1318,11 +1335,11 @@ TTR = \frac{N_{\text{types}}}{N_{\text{tokens}}}
 </div>
 <p>To plot this using <code>ggplot()</code>, we rely on the <code>{ggdendro}</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>clust <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">as.dist</span>(dist_mat))  <span class="co"># hierarchical clustering</span></span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span>
-<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>dendr <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(clust)</span>
-<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdendrogram</span>(dendr, <span class="at">rotate =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>clust <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">as.dist</span>(dist_mat))  <span class="co"># hierarchical clustering</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>dendr <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(clust)</span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdendrogram</span>(dendr, <span class="at">rotate =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1332,17 +1349,17 @@ TTR = \frac{N_{\text{types}}}{N_{\text{tokens}}}
 </div>
 </div>
 </section>
-<section id="feature-co-occurence-matrix" class="level3">
-<h3 class="anchored" data-anchor-id="feature-co-occurence-matrix">Feature co-occurence matrix</h3>
+<section id="feature-co-occurence-matrix" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="feature-co-occurence-matrix"><span class="header-section-number">4.4.4</span> Feature co-occurence matrix</h3>
 <p>A feature co-occurrence matrix (FCM) is a square matrix that counts the number of times two features co-occur in the same context, such as within the same document, sentence, or window of text. This is a special object in <code>{quanteda}</code>, but behaves similarly to a DFM. As an example, consider the following:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">doc_id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">text =</span> <span class="fu">c</span>(<span class="st">"I love Mathematics."</span>, <span class="st">"Mathematics is awesome."</span>)</span>
-<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>() <span class="sc">|&gt;</span></span>
-<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fcm</span>(<span class="at">context =</span> <span class="st">"document"</span>)  <span class="co"># by default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">doc_id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">text =</span> <span class="fu">c</span>(<span class="st">"I love Mathematics."</span>, <span class="st">"Mathematics is awesome."</span>)</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>() <span class="sc">|&gt;</span></span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fcm</span>(<span class="at">context =</span> <span class="st">"document"</span>)  <span class="co"># by default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Feature co-occurrence matrix of: 5 by 5 features.
              features
@@ -1356,7 +1373,7 @@ features      I love Mathematics is awesome
 </div>
 <p>Let’s download the <code>data_corpus_guardian</code> corpus from the <code>{quanteda.corpora}</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>corp_news <span class="ot">&lt;-</span> quanteda.corpora<span class="sc">::</span><span class="fu">download</span>(<span class="st">"data_corpus_guardian"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>corp_news <span class="ot">&lt;-</span> quanteda.corpora<span class="sc">::</span><span class="fu">download</span>(<span class="st">"data_corpus_guardian"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>When a corpus is large, you have to select features of a DFM before constructing a FCM. In the example below, we clean up as follows:</p>
 <ol type="1">
@@ -1365,35 +1382,35 @@ features      I love Mathematics is awesome
 <li>Keep only terms that occur at least 100 times in the document-feature matrix.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>toks_news <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corp_news, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>dfmat_news <span class="ot">&lt;-</span> </span>
-<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks_news) <span class="sc">|&gt;</span></span>
-<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_remove</span>(<span class="at">pattern =</span> <span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>), <span class="st">"*-time"</span>, <span class="st">"updated-*"</span>, <span class="st">"gmt"</span>, <span class="st">"bst"</span>, <span class="st">"|"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(<span class="at">min_termfreq =</span> <span class="dv">100</span>)</span>
-<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb96-7"><a href="#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="fu">topfeatures</span>(dfmat_news)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>toks_news <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corp_news, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>dfmat_news <span class="ot">&lt;-</span> </span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks_news) <span class="sc">|&gt;</span></span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_remove</span>(<span class="at">pattern =</span> <span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>), <span class="st">"*-time"</span>, <span class="st">"updated-*"</span>, <span class="st">"gmt"</span>, <span class="st">"bst"</span>, <span class="st">"|"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(<span class="at">min_termfreq =</span> <span class="dv">100</span>)</span>
+<span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a><span class="fu">topfeatures</span>(dfmat_news)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      said     people        one        new       also         us        can 
      28413      11169       9884       8024       7901       7091       6972 
 government       year       last 
       6821       6570       6335 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nfeat</span>(dfmat_news)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nfeat</span>(dfmat_news)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4211</code></pre>
 </div>
 </div>
 <p>To construct an FCM from a DFM (or a tokens object), use <code>fcm()</code>. You can visualise the FCM using a <code>textplot_network()</code> graph as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>fcmat_news <span class="ot">&lt;-</span> <span class="fu">fcm</span>(dfmat_news, <span class="at">context =</span> <span class="st">"document"</span>)</span>
-<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>feat <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">topfeatures</span>(dfmat_news, <span class="dv">30</span>))  <span class="co"># Top 30 features</span></span>
-<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>fcmat_news_select <span class="ot">&lt;-</span> <span class="fu">fcm_select</span>(fcmat_news, <span class="at">pattern =</span> feat, <span class="at">selection =</span> <span class="st">"keep"</span>)</span>
-<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(fcmat_news_select)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>fcmat_news <span class="ot">&lt;-</span> <span class="fu">fcm</span>(dfmat_news, <span class="at">context =</span> <span class="st">"document"</span>)</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>feat <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">topfeatures</span>(dfmat_news, <span class="dv">30</span>))  <span class="co"># Top 30 features</span></span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>fcmat_news_select <span class="ot">&lt;-</span> <span class="fu">fcm_select</span>(fcmat_news, <span class="at">pattern =</span> feat, <span class="at">selection =</span> <span class="st">"keep"</span>)</span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(fcmat_news_select)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 30 30</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>quanteda.textplots<span class="sc">::</span><span class="fu">textplot_network</span>(fcmat_news_select)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>quanteda.textplots<span class="sc">::</span><span class="fu">textplot_network</span>(fcmat_news_select)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1404,26 +1421,25 @@ government       year       last
 </div>
 </section>
 </section>
-<section id="scaling-and-classification" class="level2">
-<h2 class="anchored" data-anchor-id="scaling-and-classification">Scaling and classification</h2>
+<section id="scaling-and-classification" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="scaling-and-classification"><span class="header-section-number">4.5</span> Scaling and classification</h2>
 <p>In this section we apply mainly unsupervised learning models to textual data. Scaling and classification aim to uncover hidden structures, relationships, and patterns within textual data by placing texts or words on latent scales (scaling) and grouping them into meaningful categories or themes (classification). This process transforms complex, high-dimensional text into more interpretable and actionable insights.</p>
-<section id="wordfish" class="level3">
-<h3 class="anchored" data-anchor-id="wordfish">Wordfish</h3>
+<section id="wordfish" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="wordfish"><span class="header-section-number">4.5.1</span> Wordfish</h3>
 <p>Wordfish is a Poisson scaling model of one-dimensional document positions <span class="citation" data-cites="slapin2008scaling">(<a href="#ref-slapin2008scaling" role="doc-biblioref">Slapin and Proksch 2008</a>)</span>. This model is used primarily for scaling political texts to position documents (like speeches or manifestos) on a latent dimension, often reflecting ideological or policy positions. The main objective is to identify the relative positioning of texts on a scale (e.g., left-right political spectrum) based on word frequencies.</p>
-<p>Let <span class="math inline">\(y_{ij}\)</span> be the count of word <span class="math inline">\(j\)</span> in document <span class="math inline">\(i\)</span>. Then assume <span class="math display">\[
-\begin{align}
+<p>Let <span class="math inline">\(y_{ij}\)</span> be the count of word <span class="math inline">\(j\)</span> in document <span class="math inline">\(i\)</span>. Then assume</p>
+<p><span class="math display">\[\begin{align}
 y_{ij} &amp;\sim \operatorname{Poi}(\lambda_{ij}) \\
 \log (\lambda_{ij}) &amp;= \psi_j +\beta_j \theta_i
-\end{align}
-\]</span></p>
+\end{align}\]</span></p>
 <p>In this example, we will show how to apply Wordfish to the Irish budget speeches from 2010. First, we will create a document-feature matrix. Afterwards, we will run Wordfish.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>toks_irish <span class="ot">&lt;-</span> <span class="fu">tokens</span>(data_corpus_irishbudget2010, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>dfmat_irish <span class="ot">&lt;-</span> <span class="fu">dfm</span>(toks_irish)</span>
-<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run Wordfish model</span></span>
-<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>tmod_wf <span class="ot">&lt;-</span> <span class="fu">textmodel_wordfish</span>(dfmat_irish, <span class="at">dir =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
-<span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tmod_wf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>toks_irish <span class="ot">&lt;-</span> <span class="fu">tokens</span>(data_corpus_irishbudget2010, <span class="at">remove_punct =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>dfmat_irish <span class="ot">&lt;-</span> <span class="fu">dfm</span>(toks_irish)</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run Wordfish model</span></span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>tmod_wf <span class="ot">&lt;-</span> <span class="fu">textmodel_wordfish</span>(dfmat_irish, <span class="at">dir =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tmod_wf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1465,7 +1481,7 @@ psi           -4.456       -1.357 0.9321</code></pre>
 <p>For example, Brian Lenihan (FF) has a high positive theta, suggesting a strong position on one side, while Joan Burton (LAB) has a negative theta, placing her on the other side. The model also provides feature scores for words (beta values), indicating their importance in distinguishing between these positions. Words with higher absolute beta values, such as “supplementary,” are key in differentiating the ideological content of the texts, while psi values reflect word frequency variance, contributing to the model’s differentiation of document positions.</p>
 <p>We can plot the results of a fitted scaling model using <code>textplot_scale1d()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_scale1d</span>(tmod_wf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_scale1d</span>(tmod_wf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1489,7 +1505,7 @@ Note
 </div>
 <p>The function also allows you to plot scores by a grouping variable, in this case the party affiliation of the speakers.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_scale1d</span>(tmod_wf, <span class="at">groups =</span> dfmat_irish<span class="sc">$</span>party)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_scale1d</span>(tmod_wf, <span class="at">groups =</span> dfmat_irish<span class="sc">$</span>party)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1500,13 +1516,13 @@ Note
 </div>
 <p>Finally, we can plot the estimated word positions and highlight certain features.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_scale1d</span>(</span>
-<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>  tmod_wf, </span>
-<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin =</span> <span class="st">"features"</span>, </span>
-<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">highlighted =</span> <span class="fu">c</span>(<span class="st">"government"</span>, <span class="st">"global"</span>, <span class="st">"children"</span>, </span>
-<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"bank"</span>, <span class="st">"economy"</span>, <span class="st">"the"</span>, <span class="st">"citizenship"</span>,</span>
-<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"productivity"</span>, <span class="st">"deficit"</span>)</span>
-<span id="cb107-7"><a href="#cb107-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_scale1d</span>(</span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>  tmod_wf, </span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin =</span> <span class="st">"features"</span>, </span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">highlighted =</span> <span class="fu">c</span>(<span class="st">"government"</span>, <span class="st">"global"</span>, <span class="st">"children"</span>, </span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"bank"</span>, <span class="st">"economy"</span>, <span class="st">"the"</span>, <span class="st">"citizenship"</span>,</span>
+<span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"productivity"</span>, <span class="st">"deficit"</span>)</span>
+<span id="cb105-7"><a href="#cb105-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1520,54 +1536,54 @@ Note
 <p>Therefore, words in the upper right (high beta, high psi) are influential and variably used, indicating key terms that may strongly differentiate between document positions. Words in the lower left (low beta, low psi) are less influential and consistently used, likely serving as common or neutral terms.</p>
 <p>The plot also helps identify which words are driving the distinctions in the latent scale and how their usage varies across documents.</p>
 </section>
-<section id="topic-models" class="level3">
-<h3 class="anchored" data-anchor-id="topic-models">Topic models</h3>
+<section id="topic-models" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="topic-models"><span class="header-section-number">4.5.2</span> Topic models</h3>
 <p>Topic models are statistical models used to identify the underlying themes or topics within a large collection of documents. They analyze word co-occurrences across documents to group words into topics, where each topic is a distribution over words, and each document is a mixture of these topics.</p>
 <p>A common topic model is Latent Dirichlet Allocation (LDA), which assumes that each document contains multiple topics in varying proportions. Topic models help uncover hidden semantic structures in text, making them useful for organizing, summarizing, and exploring large text datasets. In R, we use the <code>{seededlda}</code> package for LDA.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("seededlda")</span></span>
-<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(seededlda)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("seededlda")</span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(seededlda)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Back to the Guardian data, <code>corp_news</code>. We will select only news articles published in 2016 using <code>corpus_subset()</code> function and the <code>year()</code> function from the <code>{lubridate}</code> package</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>corp_news_2016 <span class="ot">&lt;-</span> <span class="fu">corpus_subset</span>(corp_news, <span class="fu">year</span>(date) <span class="sc">==</span> <span class="dv">2016</span>)</span>
-<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ndoc</span>(corp_news_2016)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>corp_news_2016 <span class="ot">&lt;-</span> <span class="fu">corpus_subset</span>(corp_news, <span class="fu">year</span>(date) <span class="sc">==</span> <span class="dv">2016</span>)</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ndoc</span>(corp_news_2016)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1959</code></pre>
 </div>
 </div>
 <p>Further, after removal of function words and punctuation in <code>dfm()</code>, we will only keep the top 20% of the most frequent features (<code>min_termfreq = 0.8</code>) that appear in less than 10% of all documents (<code>max_docfreq = 0.1</code>) using <code>dfm_trim()</code> to focus on common but distinguishing features.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create tokens</span></span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>toks_news <span class="ot">&lt;-</span> </span>
-<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(</span>
-<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a>    corp_news_2016, </span>
-<span id="cb111-5"><a href="#cb111-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb111-6"><a href="#cb111-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb111-7"><a href="#cb111-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_symbol =</span> <span class="cn">TRUE</span></span>
-<span id="cb111-8"><a href="#cb111-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb111-9"><a href="#cb111-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(</span>
-<span id="cb111-10"><a href="#cb111-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">pattern =</span> <span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>), <span class="st">"*-time"</span>, <span class="st">"updated-*"</span>, <span class="st">"gmt"</span>, <span class="st">"bst"</span>)</span>
-<span id="cb111-11"><a href="#cb111-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb111-12"><a href="#cb111-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-13"><a href="#cb111-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DFM</span></span>
-<span id="cb111-14"><a href="#cb111-14" aria-hidden="true" tabindex="-1"></a>dfmat_news <span class="ot">&lt;-</span> </span>
-<span id="cb111-15"><a href="#cb111-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks_news) <span class="sc">%&gt;%</span> </span>
-<span id="cb111-16"><a href="#cb111-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(</span>
-<span id="cb111-17"><a href="#cb111-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_termfreq =</span> <span class="fl">0.8</span>, </span>
-<span id="cb111-18"><a href="#cb111-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">termfreq_type =</span> <span class="st">"quantile"</span>,</span>
-<span id="cb111-19"><a href="#cb111-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.1</span>, </span>
-<span id="cb111-20"><a href="#cb111-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">docfreq_type =</span> <span class="st">"prop"</span></span>
-<span id="cb111-21"><a href="#cb111-21" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create tokens</span></span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>toks_news <span class="ot">&lt;-</span> </span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(</span>
+<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a>    corp_news_2016, </span>
+<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb109-6"><a href="#cb109-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb109-7"><a href="#cb109-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_symbol =</span> <span class="cn">TRUE</span></span>
+<span id="cb109-8"><a href="#cb109-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb109-9"><a href="#cb109-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(</span>
+<span id="cb109-10"><a href="#cb109-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">pattern =</span> <span class="fu">c</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>), <span class="st">"*-time"</span>, <span class="st">"updated-*"</span>, <span class="st">"gmt"</span>, <span class="st">"bst"</span>)</span>
+<span id="cb109-11"><a href="#cb109-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb109-12"><a href="#cb109-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-13"><a href="#cb109-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DFM</span></span>
+<span id="cb109-14"><a href="#cb109-14" aria-hidden="true" tabindex="-1"></a>dfmat_news <span class="ot">&lt;-</span> </span>
+<span id="cb109-15"><a href="#cb109-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks_news) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-16"><a href="#cb109-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(</span>
+<span id="cb109-17"><a href="#cb109-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_termfreq =</span> <span class="fl">0.8</span>, </span>
+<span id="cb109-18"><a href="#cb109-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">termfreq_type =</span> <span class="st">"quantile"</span>,</span>
+<span id="cb109-19"><a href="#cb109-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.1</span>, </span>
+<span id="cb109-20"><a href="#cb109-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">docfreq_type =</span> <span class="st">"prop"</span></span>
+<span id="cb109-21"><a href="#cb109-21" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The LDA is fitted using the code below. Note that <code>k = 10</code> specifies the number of topics to be discovered. This is an important parameter and you should try a variety of values and validate the outputs of your topic models thoroughly.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Takes a while to fit!</span></span>
-<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>tmod_lda <span class="ot">&lt;-</span> seededlda<span class="sc">::</span><span class="fu">textmodel_lda</span>(dfmat_news, <span class="at">k =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Takes a while to fit!</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>tmod_lda <span class="ot">&lt;-</span> seededlda<span class="sc">::</span><span class="fu">textmodel_lda</span>(dfmat_news, <span class="at">k =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can extract the most important terms for each topic from the model using <code>terms()</code>. Each column (<code>topic1</code>, <code>topic2</code>, etc.) lists words that frequently co-occur in the dataset, suggesting a common theme within each topic.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">terms</span>(tmod_lda, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">terms</span>(tmod_lda, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      topic1     topic2       topic3         topic4       topic5    topic6    
  [1,] "syria"    "labor"      "johnson"      "funding"    "son"     "officers"
@@ -1596,11 +1612,11 @@ Note
 <p>As an example, Topic 1 (“syria”, “refugees”, “isis”), is likely related to international conflicts, specifically around Syria and refugee crises. Topic 4 (“funding”, “housing”, “nhs”) is likely related to public services and social welfare issues, such as healthcare and housing. Each topic provides a distinct theme, derived from the words that frequently appear together in the corpus, helping to summarize and understand the main themes in the text.</p>
 <p>You can then obtain the most likely topics using topics() and save them as a document-level variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assign topic as a new document-level variable</span></span>
-<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>dfmat_news<span class="sc">$</span>topic <span class="ot">&lt;-</span> <span class="fu">topics</span>(tmod_lda)</span>
-<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a><span class="co"># cross-table of the topic frequency</span></span>
-<span id="cb115-5"><a href="#cb115-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfmat_news<span class="sc">$</span>topic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assign topic as a new document-level variable</span></span>
+<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>dfmat_news<span class="sc">$</span>topic <span class="ot">&lt;-</span> <span class="fu">topics</span>(tmod_lda)</span>
+<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a><span class="co"># cross-table of the topic frequency</span></span>
+<span id="cb113-5"><a href="#cb113-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfmat_news<span class="sc">$</span>topic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  topic1  topic2  topic3  topic4  topic5  topic6  topic7  topic8  topic9 topic10 
@@ -1609,43 +1625,43 @@ Note
 </div>
 <p>In the seeded LDA, you can pre-define topics in LDA using a dictionary of “seeded” words. For more information, see the <code>{seededlda}</code> package documentation.</p>
 </section>
-<section id="latent-semantic-scaling" class="level3">
-<h3 class="anchored" data-anchor-id="latent-semantic-scaling">Latent semantic scaling</h3>
+<section id="latent-semantic-scaling" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="latent-semantic-scaling"><span class="header-section-number">4.5.3</span> Latent semantic scaling</h3>
 <p>Latent Semantic Scaling (LSS) is a method used to place words or documents on a latent scale that represents an underlying dimension, such as sentiment, ideology, or any other semantic axis. The key idea is to use the co-occurrence patterns of words across documents to identify and position items along this hidden dimension.</p>
 <p>LSS is performed using the <code>{LSX}</code> package. In this example, we will apply LSS to the corpus of Sputnik articles about Ukraine. First, we prepare the data set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the RDS file directly from the URL</span></span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>corp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">url</span>(<span class="st">"https://www.dropbox.com/s/abme18nlrwxgmz8/data_corpus_sputnik2022.rds?dl=1"</span>))</span>
-<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>toks <span class="ot">&lt;-</span></span>
-<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a>  corp <span class="sc">|&gt;</span></span>
-<span id="cb117-6"><a href="#cb117-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus_reshape</span>(<span class="st">"sentences"</span>) <span class="sc">|&gt;</span>  <span class="co"># this is a must!</span></span>
-<span id="cb117-7"><a href="#cb117-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(</span>
-<span id="cb117-8"><a href="#cb117-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb117-9"><a href="#cb117-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb117-10"><a href="#cb117-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb117-11"><a href="#cb117-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_url =</span> <span class="cn">TRUE</span></span>
-<span id="cb117-12"><a href="#cb117-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb117-13"><a href="#cb117-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-14"><a href="#cb117-14" aria-hidden="true" tabindex="-1"></a>dfmt <span class="ot">&lt;-</span></span>
-<span id="cb117-15"><a href="#cb117-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks) <span class="sc">|&gt;</span></span>
-<span id="cb117-16"><a href="#cb117-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_remove</span>(<span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the RDS file directly from the URL</span></span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>corp <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">url</span>(<span class="st">"https://www.dropbox.com/s/abme18nlrwxgmz8/data_corpus_sputnik2022.rds?dl=1"</span>))</span>
+<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a>toks <span class="ot">&lt;-</span></span>
+<span id="cb115-5"><a href="#cb115-5" aria-hidden="true" tabindex="-1"></a>  corp <span class="sc">|&gt;</span></span>
+<span id="cb115-6"><a href="#cb115-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus_reshape</span>(<span class="st">"sentences"</span>) <span class="sc">|&gt;</span>  <span class="co"># this is a must!</span></span>
+<span id="cb115-7"><a href="#cb115-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(</span>
+<span id="cb115-8"><a href="#cb115-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_punct =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb115-9"><a href="#cb115-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb115-10"><a href="#cb115-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb115-11"><a href="#cb115-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_url =</span> <span class="cn">TRUE</span></span>
+<span id="cb115-12"><a href="#cb115-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb115-13"><a href="#cb115-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-14"><a href="#cb115-14" aria-hidden="true" tabindex="-1"></a>dfmt <span class="ot">&lt;-</span></span>
+<span id="cb115-15"><a href="#cb115-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>(toks) <span class="sc">|&gt;</span></span>
+<span id="cb115-16"><a href="#cb115-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_remove</span>(<span class="at">pattern =</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now to run an LSS model, run the following command:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>lss <span class="ot">&lt;-</span> <span class="fu">textmodel_lss</span>(</span>
-<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>  dfmt, </span>
-<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">seeds =</span> <span class="fu">as.seedwords</span>(data_dictionary_sentiment), </span>
-<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">300</span>, </span>
-<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cache = TRUE, </span></span>
-<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_data =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">group_data =</span> <span class="cn">TRUE</span></span>
-<span id="cb118-8"><a href="#cb118-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>lss <span class="ot">&lt;-</span> <span class="fu">textmodel_lss</span>(</span>
+<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>  dfmt, </span>
+<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">seeds =</span> <span class="fu">as.seedwords</span>(data_dictionary_sentiment), </span>
+<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">300</span>, </span>
+<span id="cb116-5"><a href="#cb116-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># cache = TRUE, </span></span>
+<span id="cb116-6"><a href="#cb116-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_data =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb116-7"><a href="#cb116-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">group_data =</span> <span class="cn">TRUE</span></span>
+<span id="cb116-8"><a href="#cb116-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Taking the DFM and the seed words as the only inputs, <code>textmodel_lss()</code> computes the <em>polarity</em> scores of all the words in the corpus based on their semantic similarity to the seed words. You usually do not need to change the value of <code>k</code> (300 by default).</p>
 <p>Let’s look at the output of the LSS model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1686,7 +1702,7 @@ Data Dimension:
 <p>Polarity scores in Latent Semantic Scaling (LSS) quantify how words or documents relate to a specific dimension (e.g., sentiment) based on predefined seed words. Seed words represent the extremes of this dimension (e.g., “good” vs.&nbsp;“bad”). LSS analyzes how other words co-occur with these seed words to assign a score.</p>
 <p>We can visualize the polarity of words using <code>textplot_terms()</code>. If you pass a dictionary to be highlighted, words are plotted in different colors. <code>data_dictionary_LSD2015</code> is a widely-used sentiment dictionary. If <code>highlighted = NULL</code>, words are selected randomly to highlight.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_terms</span>(lss, <span class="at">highlighted =</span> data_dictionary_LSD2015[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_terms</span>(lss, <span class="at">highlighted =</span> data_dictionary_LSD2015[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1697,9 +1713,9 @@ Data Dimension:
 </div>
 <p>Based on the fitted model, we can now predict polarity scores of documents using <code>predict()</code>. It is best to work with the document-level data frame, which we will then add a new column for the predicted polarity scores.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">docvars</span>(lss<span class="sc">$</span>data)</span>
-<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>lss <span class="ot">&lt;-</span> <span class="fu">predict</span>(lss)</span>
-<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">docvars</span>(lss<span class="sc">$</span>data)</span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>lss <span class="ot">&lt;-</span> <span class="fu">predict</span>(lss)</span>
+<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 8,063
 Columns: 5
@@ -1712,20 +1728,20 @@ $ lss  &lt;dbl&gt; 0.10093989, 0.99263241, -0.76609160, 0.15991318, 0.25420329, 
 </div>
 <p>Basically what we have is a data frame, where each row represents a single document (here, a news item from Sputnik with a timestamp). Each document also has a predicted polarity score based on the LSS model. We can visualise this easily using <code>ggplot()</code>. But first, we need to smooth the scores using <code>smooth_lss()</code> (otherwise it is too rough to interpret).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>dat_smooth <span class="ot">&lt;-</span> <span class="fu">smooth_lss</span>(dat, <span class="at">lss_var =</span> <span class="st">"lss"</span>, <span class="at">date_var =</span> <span class="st">"date"</span>)</span>
-<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_smooth, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> fit)) <span class="sc">+</span> </span>
-<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(</span>
-<span id="cb124-6"><a href="#cb124-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> fit <span class="sc">-</span> se.fit <span class="sc">*</span> <span class="fl">1.96</span>, </span>
-<span id="cb124-7"><a href="#cb124-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymax =</span> fit <span class="sc">+</span> se.fit <span class="sc">*</span> <span class="fl">1.96</span>), </span>
-<span id="cb124-8"><a href="#cb124-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.1</span></span>
-<span id="cb124-9"><a href="#cb124-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb124-10"><a href="#cb124-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-02-24"</span>), <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span></span>
-<span id="cb124-11"><a href="#cb124-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"months"</span>, <span class="at">date_labels =</span> <span class="st">"%b %Y"</span>, <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb124-12"><a href="#cb124-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sentiment about Ukraine"</span>, <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Sentiment"</span>) <span class="sc">+</span></span>
-<span id="cb124-13"><a href="#cb124-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb124-14"><a href="#cb124-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>dat_smooth <span class="ot">&lt;-</span> <span class="fu">smooth_lss</span>(dat, <span class="at">lss_var =</span> <span class="st">"lss"</span>, <span class="at">date_var =</span> <span class="st">"date"</span>)</span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_smooth, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> fit)) <span class="sc">+</span> </span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(</span>
+<span id="cb122-6"><a href="#cb122-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> fit <span class="sc">-</span> se.fit <span class="sc">*</span> <span class="fl">1.96</span>, </span>
+<span id="cb122-7"><a href="#cb122-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymax =</span> fit <span class="sc">+</span> se.fit <span class="sc">*</span> <span class="fl">1.96</span>), </span>
+<span id="cb122-8"><a href="#cb122-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.1</span></span>
+<span id="cb122-9"><a href="#cb122-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb122-10"><a href="#cb122-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2022-02-24"</span>), <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span></span>
+<span id="cb122-11"><a href="#cb122-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"months"</span>, <span class="at">date_labels =</span> <span class="st">"%b %Y"</span>, <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb122-12"><a href="#cb122-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sentiment about Ukraine"</span>, <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Sentiment"</span>) <span class="sc">+</span></span>
+<span id="cb122-13"><a href="#cb122-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb122-14"><a href="#cb122-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1737,15 +1753,15 @@ $ lss  &lt;dbl&gt; 0.10093989, 0.99263241, -0.76609160, 0.15991318, 0.25420329, 
 <p>The plot shows that the sentiment of the articles about Ukraine became more negative in March but more positive in April. Zero on the Y-axis is the overall mean of the score; the dotted vertical line indicate the beginning of the war.</p>
 
 
-
-</section>
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-slapin2008scaling" class="csl-entry" role="listitem">
 Slapin, Jonathan B., and Sven-Oliver Proksch. 2008. <span>“A <span>Scaling Model</span> for <span>Estimating Time-Series Party Positions</span> from <span>Texts</span>.”</span> <em>American Journal of Political Science</em> 52 (3): 705–22. <a href="https://doi.org/10.1111/j.1540-5907.2008.00338.x">https://doi.org/10.1111/j.1540-5907.2008.00338.x</a>.
 </div>
-</div></section></div></main> <!-- /main -->
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1781,18 +1797,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1824,7 +1829,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1859,7 +1904,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -2133,6 +2182,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./2-gis_data.html" class="pagination-link" aria-label="Geographical Information System (GIS) data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geographical Information System (GIS) data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

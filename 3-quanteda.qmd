@@ -663,12 +663,11 @@ Scaling and classification aim to uncover hidden structures, relationships, and 
 Wordfish is a Poisson scaling model of one-dimensional document positions [@slapin2008scaling]. This model is used primarily for scaling political texts to position documents (like speeches or manifestos) on a latent dimension, often reflecting ideological or policy positions. The main objective is to identify the relative positioning of texts on a scale (e.g., left-right political spectrum) based on word frequencies.
 
 Let $y_{ij}$ be the count of word $j$ in document $i$. Then assume 
-$$
+
 \begin{align}
 y_{ij} &\sim \operatorname{Poi}(\lambda_{ij}) \\
 \log (\lambda_{ij}) &= \psi_j +\beta_j \theta_i
 \end{align}
-$$
 
 In this example, we will show how to apply Wordfish to the Irish budget speeches from 2010. First, we will create a document-feature matrix. Afterwards, we will run Wordfish.
 

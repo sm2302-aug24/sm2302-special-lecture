@@ -1,22 +1,31 @@
 project:
-  type: website
+  type: book
   output-dir: "docs"
 
 execute:
   freeze: auto
 
-website:
+# website:
+#   title: "SM-2302 Special Lectures"
+#   navbar:
+#     left:
+#       - href: index.qmd
+#         text: Home
+#       - href: 1-scraping_linear_reg.qmd
+#         text: Scraping and linear regression
+#       - href: 2-gis_data.qmd
+#         text: Spatial data analysis
+#       - href: 3-quanteda.qmd
+#         text: Quantitative text analysis
+
+book:
   title: "SM-2302 Special Lectures"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - href: 1-scraping_linear_reg.qmd
-        text: Scraping and linear regression
-      - href: 2-gis_data.qmd
-        text: Spatial data analysis
-      - href: 3-quanteda.qmd
-        text: Quantitative text analysis
+  author: "Dr. Haziq Jamil"
+  chapters:
+    - index.qmd
+    - 1-scraping_linear_reg.qmd
+    - 2-gis_data.qmd
+    - 3-quanteda.qmd
 
 
 format:
@@ -24,7 +33,8 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
-
+  pdf:
+    documentclass: scrreprt
 
 bibliography: refs.bib
 

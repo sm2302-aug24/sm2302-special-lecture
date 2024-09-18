@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>SM-2302 Special Lectures - Data Scraping and Linear Regression</title>
+<title>2&nbsp; Data Scraping and Linear Regression – SM-2302 Special Lectures</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -64,21 +64,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./2-gis_data.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-79bb3942e891885f9f7af119cd221462.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-0fc701aa89f539aeeb882d74ca6374b9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -104,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -137,82 +139,101 @@ window.Quarto = {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">SM-2302 Special Lectures</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./1-scraping_linear_reg.html" aria-current="page"> 
-<span class="menu-text">Scraping and linear regression</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./2-gis_data.html"> 
-<span class="menu-text">Spatial data analysis</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./3-quanteda.html"> 
-<span class="menu-text">Quantitative text analysis</span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1-scraping_linear_reg.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Scraping and Linear Regression</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">SM-2302 Special Lectures</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Welcome</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1-scraping_linear_reg.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Scraping and Linear Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2-gis_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geographical Information System (GIS) data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3-quanteda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quantitative analysis of textual data</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ethics" id="toc-ethics" class="nav-link active" data-scroll-target="#ethics">Ethics</a></li>
-  <li><a href="#html-basics" id="toc-html-basics" class="nav-link" data-scroll-target="#html-basics">HTML basics</a>
+  <li><a href="#ethics" id="toc-ethics" class="nav-link active" data-scroll-target="#ethics"><span class="header-section-number">2.1</span> Ethics</a></li>
+  <li><a href="#html-basics" id="toc-html-basics" class="nav-link" data-scroll-target="#html-basics"><span class="header-section-number">2.2</span> HTML basics</a>
   <ul class="collapse">
-  <li><a href="#elements" id="toc-elements" class="nav-link" data-scroll-target="#elements">Elements</a></li>
-  <li><a href="#contents" id="toc-contents" class="nav-link" data-scroll-target="#contents">Contents</a></li>
-  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes">Attributes</a></li>
+  <li><a href="#elements" id="toc-elements" class="nav-link" data-scroll-target="#elements"><span class="header-section-number">2.2.1</span> Elements</a></li>
+  <li><a href="#contents" id="toc-contents" class="nav-link" data-scroll-target="#contents"><span class="header-section-number">2.2.2</span> Contents</a></li>
+  <li><a href="#attributes" id="toc-attributes" class="nav-link" data-scroll-target="#attributes"><span class="header-section-number">2.2.3</span> Attributes</a></li>
   </ul></li>
-  <li><a href="#reading-html-with-rvest" id="toc-reading-html-with-rvest" class="nav-link" data-scroll-target="#reading-html-with-rvest">Reading HTML with rvest</a></li>
-  <li><a href="#css-selectors" id="toc-css-selectors" class="nav-link" data-scroll-target="#css-selectors">CSS selectors</a></li>
-  <li><a href="#extracting-data" id="toc-extracting-data" class="nav-link" data-scroll-target="#extracting-data">Extracting data</a>
+  <li><a href="#reading-html-with-rvest" id="toc-reading-html-with-rvest" class="nav-link" data-scroll-target="#reading-html-with-rvest"><span class="header-section-number">2.3</span> Reading HTML with rvest</a></li>
+  <li><a href="#css-selectors" id="toc-css-selectors" class="nav-link" data-scroll-target="#css-selectors"><span class="header-section-number">2.4</span> CSS selectors</a></li>
+  <li><a href="#extracting-data" id="toc-extracting-data" class="nav-link" data-scroll-target="#extracting-data"><span class="header-section-number">2.5</span> Extracting data</a>
   <ul class="collapse">
-  <li><a href="#text" id="toc-text" class="nav-link" data-scroll-target="#text">Text</a></li>
-  <li><a href="#attributes-1" id="toc-attributes-1" class="nav-link" data-scroll-target="#attributes-1">Attributes</a></li>
-  <li><a href="#tables" id="toc-tables" class="nav-link" data-scroll-target="#tables">Tables</a></li>
+  <li><a href="#text" id="toc-text" class="nav-link" data-scroll-target="#text"><span class="header-section-number">2.5.1</span> Text</a></li>
+  <li><a href="#attributes-1" id="toc-attributes-1" class="nav-link" data-scroll-target="#attributes-1"><span class="header-section-number">2.5.2</span> Attributes</a></li>
+  <li><a href="#tables" id="toc-tables" class="nav-link" data-scroll-target="#tables"><span class="header-section-number">2.5.3</span> Tables</a></li>
   </ul></li>
-  <li><a href="#element-vs-elements" id="toc-element-vs-elements" class="nav-link" data-scroll-target="#element-vs-elements">Element vs elements</a></li>
-  <li><a href="#scraping-house-prices" id="toc-scraping-house-prices" class="nav-link" data-scroll-target="#scraping-house-prices">Scraping house prices</a></li>
-  <li><a href="#cleaning-using-llm" id="toc-cleaning-using-llm" class="nav-link" data-scroll-target="#cleaning-using-llm">Cleaning using LLM</a></li>
-  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression">Linear regression</a>
+  <li><a href="#element-vs-elements" id="toc-element-vs-elements" class="nav-link" data-scroll-target="#element-vs-elements"><span class="header-section-number">2.6</span> Element vs elements</a></li>
+  <li><a href="#scraping-house-prices" id="toc-scraping-house-prices" class="nav-link" data-scroll-target="#scraping-house-prices"><span class="header-section-number">2.7</span> Scraping house prices</a></li>
+  <li><a href="#cleaning-using-llm" id="toc-cleaning-using-llm" class="nav-link" data-scroll-target="#cleaning-using-llm"><span class="header-section-number">2.8</span> Cleaning using LLM</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">2.9</span> Linear regression</a>
   <ul class="collapse">
-  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit">Model fit</a></li>
-  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
-  <li><a href="#predictions" id="toc-predictions" class="nav-link" data-scroll-target="#predictions">Predictions</a></li>
+  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit"><span class="header-section-number">2.9.1</span> Model fit</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation"><span class="header-section-number">2.9.2</span> Interpretation</a></li>
+  <li><a href="#predictions" id="toc-predictions" class="nav-link" data-scroll-target="#predictions"><span class="header-section-number">2.9.3</span> Predictions</a></li>
   </ul></li>
-  <li><a href="#more-advanced-models" id="toc-more-advanced-models" class="nav-link" data-scroll-target="#more-advanced-models">More advanced models</a>
+  <li><a href="#more-advanced-models" id="toc-more-advanced-models" class="nav-link" data-scroll-target="#more-advanced-models"><span class="header-section-number">2.10</span> More advanced models</a>
   <ul class="collapse">
-  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests">Random forests</a></li>
+  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests"><span class="header-section-number">2.10.1</span> Random forests</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -222,7 +243,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data Scraping and Linear Regression</h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Scraping and Linear Regression</span></h1>
 </div>
 
 
@@ -269,8 +290,8 @@ The following object is masked from 'package:readr':
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(polite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="ethics" class="level2">
-<h2 class="anchored" data-anchor-id="ethics">Ethics</h2>
+<section id="ethics" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="ethics"><span class="header-section-number">2.1</span> Ethics</h2>
 <p>Data scraping is the process of extracting data from websites. This can be done manually, but it is often done using a program. In this section, we will use the <code>rvest</code> package to scrape data from a website.</p>
 <p>When scraping car prices from sellers’ websites in Brunei, it’s important to consider legal and ethical aspects:</p>
 <ol type="1">
@@ -280,8 +301,8 @@ The following object is masked from 'package:readr':
 <li><p><strong>Copyright</strong>: Data like car prices is generally not protected by copyright, as it’s factual. However, if scraping includes original content (like descriptions or images), consider copyright laws and whether “fair use” applies.</p></li>
 </ol>
 </section>
-<section id="html-basics" class="level2">
-<h2 class="anchored" data-anchor-id="html-basics">HTML basics</h2>
+<section id="html-basics" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="html-basics"><span class="header-section-number">2.2</span> HTML basics</h2>
 <p>HTML stands for “HyperText Markup Language” and looks like this:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
@@ -294,8 +315,8 @@ The following object is masked from 'package:readr':
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>HTML has a hierarchical structure formed by <strong>elements</strong> which consist of a start tag (e.g.&nbsp;<code>&lt;tag&gt;</code>), optional <strong>attributes</strong> (<code>id='first'</code>), an end tag<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (like <code>&lt;/tag&gt;</code>), and <strong>contents</strong> (everything in between the start and end tag).</p>
 <p>Since <code>&lt;</code> and <code>&gt;</code> are used for start and end tags, you can’t write them directly. Instead you have to use the HTML <strong>escapes</strong> <code>&amp;gt;</code> (greater than) and <code>&amp;lt;</code> (less than). And since those escapes use <code>&amp;</code>, if you want a literal ampersand you have to escape it as <code>&amp;amp;</code>. There are a wide range of possible HTML escapes but you don’t need to worry about them too much because rvest automatically handles them for you.</p>
-<section id="elements" class="level3">
-<h3 class="anchored" data-anchor-id="elements">Elements</h3>
+<section id="elements" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="elements"><span class="header-section-number">2.2.1</span> Elements</h3>
 <p>All up, there are over 100 HTML elements. Some of the most important are:</p>
 <ul>
 <li><p>Every HTML page must be in an <code>&lt;html&gt;</code> element, and it must have two children: <code>&lt;head&gt;</code>, which contains document metadata like the page title, and <code>&lt;body&gt;</code>, which contains the content you see in the browser.</p></li>
@@ -304,8 +325,8 @@ The following object is masked from 'package:readr':
 </ul>
 <p>If you encounter a tag that you’ve never seen before, you can find out what it does with a little googling. I recommend the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">MDN Web Docs</a> which are produced by Mozilla, the company that makes the Firefox web browser.</p>
 </section>
-<section id="contents" class="level3">
-<h3 class="anchored" data-anchor-id="contents">Contents</h3>
+<section id="contents" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="contents"><span class="header-section-number">2.2.2</span> Contents</h3>
 <p>Most elements can have content in between their start and end tags. This content can either be text or more elements. For example, the following HTML contains paragraph of text, with one word in bold.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  Hi! My <span class="dt">&lt;</span><span class="kw">b</span><span class="dt">&gt;</span>name<span class="dt">&lt;/</span><span class="kw">b</span><span class="dt">&gt;</span> is Haziq.</span>
@@ -335,13 +356,13 @@ The following object is masked from 'package:readr':
 </div>
 <p>Some elements, like <code>&lt;img&gt;</code> can’t have children. These elements depend solely on attributes for their behavior.</p>
 </section>
-<section id="attributes" class="level3">
-<h3 class="anchored" data-anchor-id="attributes">Attributes</h3>
+<section id="attributes" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="attributes"><span class="header-section-number">2.2.3</span> Attributes</h3>
 <p>Tags can have named <strong>attributes</strong> which look like <code>name1='value1' name2='value2'</code>. Two of the most important attributes are <code>id</code> and <code>class</code>, which are used in conjunction with CSS (Cascading Style Sheets) to control the visual appearance of the page. These are often useful when scraping data off a page.</p>
 </section>
 </section>
-<section id="reading-html-with-rvest" class="level2">
-<h2 class="anchored" data-anchor-id="reading-html-with-rvest">Reading HTML with rvest</h2>
+<section id="reading-html-with-rvest" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="reading-html-with-rvest"><span class="header-section-number">2.3</span> Reading HTML with rvest</h2>
 <p>You’ll usually start the scraping process with <code>read_html()</code>. This returns an <code>xml_document</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> object which you’ll then manipulate using rvest functions:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"http://rvest.tidyverse.org/"</span>)</span>
@@ -368,8 +389,8 @@ The following object is masked from 'package:readr':
 </div>
 <p>Regardless of how you get the HTML, you’ll need some way to identify the elements that contain the data you care about. rvest provides two options: CSS selectors and XPath expressions. Here I’ll focus on CSS selectors because they’re simpler but still sufficiently powerful for most scraping tasks.</p>
 </section>
-<section id="css-selectors" class="level2">
-<h2 class="anchored" data-anchor-id="css-selectors">CSS selectors</h2>
+<section id="css-selectors" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="css-selectors"><span class="header-section-number">2.4</span> CSS selectors</h2>
 <p>CSS is short for cascading style sheets, and is a tool for defining the visual styling of HTML documents. CSS includes a miniature language for selecting elements on a page called <strong>CSS selectors</strong>. CSS selectors define patterns for locating HTML elements, and are useful for scraping because they provide a concise way of describing which elements you want to extract.</p>
 <p>CSS selectors can be quite complex, but fortunately you only need the simplest for rvest, because you can also write R code for more complicated situations. The four most important selectors are:</p>
 <ul>
@@ -414,11 +435,11 @@ The following object is masked from 'package:readr':
 <p>Selectors can also be combined in various ways using <strong>combinators</strong>. For example,The most important combinator is ” “, the <strong>descendant</strong> combination, because <code>p a</code> selects all <code>&lt;a&gt;</code> elements that are a child of a <code>&lt;p&gt;</code> element.</p>
 <p>If you don’t know exactly what selector you need, I highly recommend using <a href="https://rvest.tidyverse.org/articles/selectorgadget.html">SelectorGadget</a>, which lets you automatically generate the selector you need by supplying positive and negative examples in the browser.</p>
 </section>
-<section id="extracting-data" class="level2">
-<h2 class="anchored" data-anchor-id="extracting-data">Extracting data</h2>
+<section id="extracting-data" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="extracting-data"><span class="header-section-number">2.5</span> Extracting data</h2>
 <p>Now that you’ve got the elements you care about, you’ll need to get data out of them. You’ll usually get the data from either the text contents or an attribute. But, sometimes (if you’re lucky!), the data you need will be in an HTML table.</p>
-<section id="text" class="level3">
-<h3 class="anchored" data-anchor-id="text">Text</h3>
+<section id="text" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="text"><span class="header-section-number">2.5.1</span> Text</h3>
 <p>Use <code>html_text2()</code> to extract the plain text contents of an HTML element:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">minimal_html</span>(<span class="st">"</span></span>
@@ -485,8 +506,8 @@ This is another paragraph. It has two sentences.</code></pre>
 </div>
 </div>
 </section>
-<section id="attributes-1" class="level3">
-<h3 class="anchored" data-anchor-id="attributes-1">Attributes</h3>
+<section id="attributes-1" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="attributes-1"><span class="header-section-number">2.5.2</span> Attributes</h3>
 <p>Attributes are used to record the destination of links (the <code>href</code> attribute of <code>&lt;a&gt;</code> elements) and the source of images (the <code>src</code> attribute of the <code>&lt;img&gt;</code> element):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">minimal_html</span>(<span class="st">"</span></span>
@@ -526,8 +547,8 @@ This is another paragraph. It has two sentences.</code></pre>
 </div>
 </div>
 </section>
-<section id="tables" class="level3">
-<h3 class="anchored" data-anchor-id="tables">Tables</h3>
+<section id="tables" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="tables"><span class="header-section-number">2.5.3</span> Tables</h3>
 <p>HTML tables are composed four main elements: <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code> (table row), <code>&lt;th&gt;</code> (table heading), and <code>&lt;td&gt;</code> (table data). Here’s a simple HTML table with two columns and three rows:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">minimal_html</span>(<span class="st">"</span></span>
@@ -567,8 +588,8 @@ This is another paragraph. It has two sentences.</code></pre>
 </div>
 </section>
 </section>
-<section id="element-vs-elements" class="level2">
-<h2 class="anchored" data-anchor-id="element-vs-elements">Element vs elements</h2>
+<section id="element-vs-elements" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="element-vs-elements"><span class="header-section-number">2.6</span> Element vs elements</h2>
 <p>When using rvest, your eventual goal is usually to build up a data frame, and you want each row to correspond some repeated unit on the HTML page. In this case, you should generally start by using <code>html_elements()</code> to select the elements that contain each observation then use <code>html_element()</code> to extract the variables from each observation. This guarantees that you’ll get the same number of values for each variable because <code>html_element()</code> always returns the same number of outputs as inputs.</p>
 <p>To illustrate this problem take a look at this simple example I constructed using a few entries from <code>dplyr::starwars</code>:</p>
 <div class="cell">
@@ -629,8 +650,8 @@ This is another paragraph. It has two sentences.</code></pre>
 </div>
 </div>
 </section>
-<section id="scraping-house-prices" class="level2">
-<h2 class="anchored" data-anchor-id="scraping-house-prices">Scraping house prices</h2>
+<section id="scraping-house-prices" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="scraping-house-prices"><span class="header-section-number">2.7</span> Scraping house prices</h2>
 <p>(LIVE DEMO)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is how you get read the HTML into R</span></span>
@@ -715,8 +736,8 @@ This is another paragraph. It has two sentences.</code></pre>
 <span id="cb58-29"><a href="#cb58-29" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="cleaning-using-llm" class="level2">
-<h2 class="anchored" data-anchor-id="cleaning-using-llm">Cleaning using LLM</h2>
+<section id="cleaning-using-llm" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="cleaning-using-llm"><span class="header-section-number">2.8</span> Cleaning using LLM</h2>
 <p>ADVANCED TOPIC!!!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("AlbertRapp/tidychatmodels")</span></span>
@@ -797,8 +818,8 @@ This is another paragraph. It has two sentences.</code></pre>
 <span id="cb59-76"><a href="#cb59-76" aria-hidden="true" tabindex="-1"></a><span class="co"># save(hsp_df, file = "data/hsp_df.RData")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="linear-regression" class="level2">
-<h2 class="anchored" data-anchor-id="linear-regression">Linear regression</h2>
+<section id="linear-regression" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">2.9</span> Linear regression</h2>
 <p>In statistical modelling, the aim is to describe the relationship between one or more <strong>predictor variables</strong> (usually denoted <span class="math inline">\(x\)</span>) and a <strong>response variable</strong> (usually denoted <span class="math inline">\(y\)</span>). Mathematically, we can say <span class="math display">\[
 y = f(x) + \epsilon.
 \]</span> Here <span class="math inline">\(f\)</span> is some <em>regression</em> function that we want to estimate, and <span class="math inline">\(\epsilon\)</span> is an error term that captures the difference between the true relationship and our estimate.</p>
@@ -809,8 +830,8 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_px_p + \epsilon.
 <li>A formula that describes the relationship between the variables.</li>
 <li>The data frame that contains the variables.</li>
 </ol>
-<section id="model-fit" class="level3">
-<h3 class="anchored" data-anchor-id="model-fit">Model fit</h3>
+<section id="model-fit" class="level3" data-number="2.9.1">
+<h3 data-number="2.9.1" class="anchored" data-anchor-id="model-fit"><span class="header-section-number">2.9.1</span> Model fit</h3>
 <p>Here’s an example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/hsp_df.RData"</span>)  <span class="co"># I saved this data set earlier and load it back</span></span>
@@ -856,8 +877,8 @@ F-statistic: 46.18 on 5 and 59 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="interpretation" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<section id="interpretation" class="level3" data-number="2.9.2">
+<h3 data-number="2.9.2" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">2.9.2</span> Interpretation</h3>
 <p>Here’s a breakdown of the key components to aid your understanding:</p>
 <ol type="1">
 <li><p><strong>Residuals</strong>: These represent the differences between the observed and predicted values of <code>priceK</code>. The five-number summary (Min, 1Q, Median, 3Q, Max) helps you understand the distribution of residuals. Ideally, the residuals should be symmetrically distributed around zero, indicating a good model fit.</p></li>
@@ -887,8 +908,8 @@ F-statistic: 46.18 on 5 and 59 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ol>
 <p><strong>Key Takeaway</strong>: The model shows that <code>beds</code> and <code>baths</code> significantly predict <code>priceK</code>, while <code>sqftK</code> does not have a significant effect. The <code>type</code> variable shows some variation, with <code>typeterrace</code> having a marginally significant negative effect on <code>priceK</code>. Overall, the model explains a large proportion of the variation in house prices.</p>
 </section>
-<section id="predictions" class="level3">
-<h3 class="anchored" data-anchor-id="predictions">Predictions</h3>
+<section id="predictions" class="level3" data-number="2.9.3">
+<h3 data-number="2.9.3" class="anchored" data-anchor-id="predictions"><span class="header-section-number">2.9.3</span> Predictions</h3>
 <p>One of the main uses of a linear regression model is to make predictions. That is, given a set of predictor values (typically unseen data), we can estimate the response variable. In the context of the house price data, this means we can estimate the price of a house given its number of bedrooms, bathrooms, square footage, and type.</p>
 <p>First, let’s set up the data for a new house:</p>
 <div class="cell">
@@ -924,16 +945,16 @@ Note
 </div>
 </section>
 </section>
-<section id="more-advanced-models" class="level2">
-<h2 class="anchored" data-anchor-id="more-advanced-models">More advanced models</h2>
+<section id="more-advanced-models" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="more-advanced-models"><span class="header-section-number">2.10</span> More advanced models</h2>
 <p>Linear regression is a simple and powerful tool, but it has its limitations. If you were more interested in predictions, then you might want to consider more advanced machine learning (ML) models. Here are a couple of suggestions:</p>
 <ol type="1">
 <li><p><strong>Random Forest</strong>: This is an ensemble learning method that builds multiple decision trees and merges them together to get a more accurate and stable prediction.</p></li>
 <li><p><strong>Gradient Boosting Machines (GBM)</strong>: GBM is another ensemble learning method that builds multiple decision trees sequentially, with each tree correcting the errors of the previous one.</p></li>
 <li><p><strong>Neural Networks</strong>: These are a set of algorithms that are designed to recognize patterns, with the ability to model complex relationships between inputs and outputs.</p></li>
 </ol>
-<section id="random-forests" class="level3">
-<h3 class="anchored" data-anchor-id="random-forests">Random forests</h3>
+<section id="random-forests" class="level3" data-number="2.10.1">
+<h3 data-number="2.10.1" class="anchored" data-anchor-id="random-forests"><span class="header-section-number">2.10.1</span> Random forests</h3>
 <p>Random forests are popular because they are easy to use and generally provide good results. Here’s how you can fit a random forest model to the house price data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -995,7 +1016,7 @@ Attaching package: 'randomForest'</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(resid_rf <span class="sc">^</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 204385.7</code></pre>
+<pre><code>[1] 200429.8</code></pre>
 </div>
 </div>
 <p>In this case, the linear regression model has a smaller residual sum of squares, indicating that it fits the data better.</p>
@@ -1003,8 +1024,8 @@ Attaching package: 'randomForest'</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit_rf, <span class="at">newdata =</span> new_house, )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       1 
-231.9267 </code></pre>
+<pre><code>      1 
+233.696 </code></pre>
 </div>
 </div>
 <p>Which seems very different to the <code>lm()</code> predictions.</p>
@@ -1012,16 +1033,16 @@ Attaching package: 'randomForest'</code></pre>
 
 </section>
 </section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
 <ol>
 <li id="fn1"><p>A number of tags (including <code>&lt;p&gt;</code> and <code>&lt;li&gt;)</code> don’t require end tags, but I think it’s best to include them because it makes seeing the structure of the HTML a little easier.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>This class comes from the <a href="https://xml2.r-lib.org">xml2</a> package. xml2 is a low-level package that rvest builds on top of.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Or another element, more on that shortly.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section></div></main> <!-- /main -->
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1057,18 +1078,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1100,7 +1110,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1135,7 +1185,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1409,6 +1463,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Welcome">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Welcome</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./2-gis_data.html" class="pagination-link" aria-label="Geographical Information System (GIS) data">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Geographical Information System (GIS) data</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
