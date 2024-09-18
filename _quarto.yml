@@ -21,11 +21,16 @@ execute:
 book:
   title: "SM-2302 Special Lectures"
   author: "Dr. Haziq Jamil"
+  date: today
   chapters:
     - index.qmd
-    - 1-scraping_linear_reg.qmd
-    - 2-gis_data.qmd
-    - 3-quanteda.qmd
+    - part: "Lectures"
+      chapters:
+      - 1-scraping_linear_reg.qmd
+      - 2-gis_data.qmd
+      - 3-quanteda.qmd
+  downloads: pdf
+  repo-url: https://github.com/sm2302-aug24/special-lectures
 
 
 format:
@@ -33,6 +38,7 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
+    code-link: true
   pdf:
     documentclass: scrreprt
 

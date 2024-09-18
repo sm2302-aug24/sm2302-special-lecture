@@ -1,6 +1,8 @@
 ---
-title: "Welcome"
+toc: false
 ---
+
+# Welcome {.unnumbered}
 
 The three topics for this year's special lectures are:
 
