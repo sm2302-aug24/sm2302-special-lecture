@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>SM-2302 Special Lectures - Data Scraping and Linear Regression</title>
+<title>SM-2302 Special Lectures - Geographical Information System (GIS) data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -67,6 +121,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -120,8 +203,22 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-scraping" id="toc-data-scraping" class="nav-link active" data-scroll-target="#data-scraping">Data scraping</a></li>
-  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression">Linear regression</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#multipoint-data" id="toc-multipoint-data" class="nav-link" data-scroll-target="#multipoint-data"><code>(MULTI)POINT</code> data</a>
+  <ul class="collapse">
+  <li><a href="#clean-up-the-point-data" id="toc-clean-up-the-point-data" class="nav-link" data-scroll-target="#clean-up-the-point-data">Clean up the point data</a></li>
+  <li><a href="#preliminary-plot-of-the-data" id="toc-preliminary-plot-of-the-data" class="nav-link" data-scroll-target="#preliminary-plot-of-the-data">Preliminary plot of the data</a></li>
+  <li><a href="#merge-with-the-study-data" id="toc-merge-with-the-study-data" class="nav-link" data-scroll-target="#merge-with-the-study-data">Merge with the study data</a></li>
+  </ul></li>
+  <li><a href="#line-data-multilinestring" id="toc-line-data-multilinestring" class="nav-link" data-scroll-target="#line-data-multilinestring">Line data (<code>(MULTI)LINESTRING</code>)</a>
+  <ul class="collapse">
+  <li><a href="#road-networks-in-belait-region" id="toc-road-networks-in-belait-region" class="nav-link" data-scroll-target="#road-networks-in-belait-region">Road networks in Belait region</a></li>
+  </ul></li>
+  <li><a href="#areal-data-multipolygons" id="toc-areal-data-multipolygons" class="nav-link" data-scroll-target="#areal-data-multipolygons">Areal data (<code>(MULTI)POLYGONS</code>)</a></li>
+  <li><a href="#openstreetmap-data" id="toc-openstreetmap-data" class="nav-link" data-scroll-target="#openstreetmap-data">OpenStreetMap data</a>
+  <ul class="collapse">
+  <li><a href="#example-how-to-get-all-the-schools-in-brunei" id="toc-example-how-to-get-all-the-schools-in-brunei" class="nav-link" data-scroll-target="#example-how-to-get-all-the-schools-in-brunei">EXAMPLE: How to get all the schools in Brunei</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -130,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data Scraping and Linear Regression</h1>
+<h1 class="title">Geographical Information System (GIS) data</h1>
 </div>
 
 
@@ -147,17 +244,1044 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>For topic 1, we will cover linear regression. But before diving into that topic, we will talk about how to scrape data from the web.</p>
-<section id="data-scraping" class="level1">
-<h1>Data scraping</h1>
+<p>Libraries needed:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("propertypricebn/bruneimap")</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bruneimap)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kernlab)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osrm)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>More info:</p>
+<ul>
+<li><a href="https://github.com/propertypricebn/bruneimap">https://github.com/propertypricebn/bruneimap</a></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>{bruneimap}</code> package contains the following data sets:</p>
+<ol type="1">
+<li><code>dis_sf</code>: Brunei districts geometries.</li>
+<li><code>mukim_sf</code>: Brunei mukim geometries.</li>
+<li><code>kpg_sf</code>: Brunei kampong geometries.</li>
+<li><code>brn_df</code>: Brunei outline geometries.</li>
+<li><code>bn_census2021</code>: Brunei 2021 census data.</li>
+</ol>
+</div>
+</div>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="What we'll learn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What we’ll learn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Types of GIS data and how these are handled in R.</li>
+<li>Difference between spatial and non-spatial data analysis.</li>
+<li>Importance of geocoding your data for spatial analysis.</li>
+</ul>
+</div>
+</div>
+<p>Roughly speaking, there are 4 types of GIS data.</p>
+<ol type="1">
+<li><strong>Points</strong>
+<ul>
+<li>Having <span class="math inline">\((X, Y)\)</span> coordinates (latitude, longitude, or projected coordinates, and are “zero-dimensional”.</li>
+<li>E.g. shopping malls, hospitals, outbreaks, etc.</li>
+</ul></li>
+<li><strong>Lines</strong>
+<ul>
+<li>A collection of points that form a path or a boundary. Has length.</li>
+<li>E.g. roads, rivers, pipelines, etc.</li>
+</ul></li>
+<li><strong>Polygons</strong>
+<ul>
+<li>A closed area made up of line segments or curves.</li>
+<li>E.g. countries, districts, buildings, etc.</li>
+</ul></li>
+<li><strong>Raster</strong>
+<ul>
+<li>Pixelated (or gridded) data where each pixel is associated with a geographical area and some measurement.</li>
+<li>E.g. satellite images, elevation data, etc.</li>
+</ul></li>
+</ol>
+<p>The first three are usually referred to as <em>vector data</em>. GIS data can be stored in various formats such as <code>.shp</code> or <code>.geojson</code>. The handling of GIS data (at least vector type data) is facilitated by the <code>{sf}</code> package <span class="citation" data-cites="pebesma2023spatial">(<a href="#ref-pebesma2023spatial" role="doc-biblioref">Pebesma and Bivand 2023</a>)</span> which uses the <em>simple features</em> standard.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>Simple features</em> refers to a formal standard (ISO 19125-1:2004) that describes how objects in the real world can be represented in computers, with emphasis on the spatial geometry of these objects.</p>
+</div>
+</div>
+<p>It’s helpful to think about the shape of this spatial data set. As an example, here’s a random slice of 10 kampong-level population data for Brunei:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  kpg_sf, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  bn_census2021, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">join_by</span>(id, kampong, mukim, district)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    kampong, district, population, geometry</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 10 features and 3 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: 114.4073 ymin: 4.31476 xmax: 115.1193 ymax: 4.996524
+Geodetic CRS:  WGS 84
+# A tibble: 10 × 4
+   kampong                  district     population                     geometry
+   &lt;chr&gt;                    &lt;chr&gt;             &lt;dbl&gt;                &lt;POLYGON [°]&gt;
+ 1 Kg. Ikas                 Tutong               92 ((114.803 4.861238, 114.802…
+ 2 Kg. Sungai Tali          Belait             1051 ((114.4262 4.657554, 114.42…
+ 3 Kg. Parit Amo            Temburong           227 ((115.1188 4.646732, 115.11…
+ 4 Kg. Simpang Tiga         Belait               NA ((114.4682 4.382654, 114.46…
+ 5 STKRJ Lambak Kiri        Brunei Muara       2296 ((114.944 4.995923, 114.944…
+ 6 Hutan Simpan Bukit Ladan Tutong               NA ((114.7998 4.656117, 114.79…
+ 7 Hutan Simpan Andulau     Tutong               NA ((114.6287 4.711252, 114.62…
+ 8 Paya Pekan Tutong        Tutong               NA ((114.6965 4.800737, 114.69…
+ 9 Kg. Binchaya             Tutong                6 ((114.5776 4.724263, 114.57…
+10 Kg. Lambak B             Brunei Muara       3760 ((114.9459 4.953047, 114.94…</code></pre>
+</div>
+</div>
+<p>Spatial data analysis must have these two components:</p>
+<ol type="1">
+<li>The study variables (in the above example, this is population data).</li>
+<li>GIS data regarding that study variable.</li>
+</ol>
+<p>If we only have 1 without 2, then it really is just a regular data analysis (stating the obvious). Adding the GIS data is a process called “geocoding” the data points.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In R, geocoding using <code>{tidyverse}</code> can be achieved using the <code>dplyr::left_join()</code> or similar <code>xxx_join()</code> family of functions.</p>
+</div>
+</div>
 </section>
-<section id="linear-regression" class="level1">
-<h1>Linear regression</h1>
+<section id="multipoint-data" class="level2">
+<h2 class="anchored" data-anchor-id="multipoint-data"><code>(MULTI)POINT</code> data</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="What we'll learn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What we’ll learn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Loading data sets in R using <code>readr::read_csv()</code>.</li>
+<li>Identifying data types and their implications.</li>
+</ul>
+</div>
+</div>
+<p>Use the data from <span class="citation" data-cites="jaafar2023data">Jaafar and Sukri (<a href="#ref-jaafar2023data" role="doc-biblioref">2023</a>)</span> on the physicochemical characteristics and texture classification of soil in Bornean tropical heath forests affected by exotic Acacia mangium. There are three datasets provided.</p>
+<ol type="1">
+<li>GIS data (<a href="https://en.wikipedia.org/wiki/World_Geodetic_System" title="World Geodetic System">WGS84</a> coordinates) of all study plots.</li>
+<li>Soil physicochemical property data. This contains details of soil physical, chemical, nutrient concentration of the three habits studied.</li>
+<li>Soil texture classification. Provides details on the classification of the soil texture in the habitats studied.</li>
+</ol>
+<p>We will first load the data sets in R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data sets</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>soil_gps <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/8389823/GPS - Revised.csv"</span>, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># IMPORTANT!!! The csv file has latin1 encoding as opposed to UTF-8</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">locale =</span> readr<span class="sc">::</span><span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">"latin1"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>soil_physico <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/8389823/Soil physicochemical properties.csv"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>soil_texture <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/8389823/Soil texture classification.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="clean-up-the-point-data" class="level3">
+<h3 class="anchored" data-anchor-id="clean-up-the-point-data">Clean up the point data</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="What we'll learn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What we’ll learn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Highlighting the need for cleaning and preprocessing data.</li>
+<li>Using <code>glimpse()</code> to peek at the data.</li>
+<li>Using <code>mutate()</code> to change stuff in the data set.</li>
+<li>Using <code>str()</code> to look at the structure of an R object.</li>
+</ul>
+</div>
+</div>
+<p>Let’s take a look at the point data set.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(soil_gps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 18
+Columns: 5
+$ Forest_type  &lt;chr&gt; "Kerangas", "Kerangas", "Kerangas", "Kerangas", "Kerangas…
+$ Habitat_type &lt;chr&gt; "Intact", "Intact", "Intact", "Intact", "Intact", "Intact…
+$ Plot_name    &lt;chr&gt; "KU1", "KU2", "KU3", "KU4", "KU5", "KU6", "KI1", "KI2", "…
+$ Latitude     &lt;chr&gt; "4° 35' 53.40\"N", "4° 35' 38.37\"N", "4° 35' 53.89\"N", …
+$ Longitude    &lt;chr&gt; "114° 30' 39.09\"E", "114° 31' 05.89\"E", "114° 30' 38.90…</code></pre>
+</div>
+</div>
+<p>The first three columns are essentially the identifiers of the plots (forest type, habitat type, and the unique identification code for the study plot). However, the latitude and longitude needs a bit of cleaning up, because it’s currently in character format. This needs to be in a formal Degree Minute Second <code>DMS</code> class that R can understand. For this we will use the <code>sp::char2dms()</code> function.</p>
+<p>As an example let’s take a look at the first latitude.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> soil_gps<span class="sc">$</span>Latitude[<span class="dv">1</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "4° 35' 53.40\"N"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert it using sp::char2dms() function</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> sp<span class="sc">::</span><span class="fu">char2dms</span>(x, <span class="at">chd =</span> <span class="st">"°"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4d35'53.4"N</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Formal class 'DMS' [package "sp"] with 5 slots
+  ..@ WS : logi FALSE
+  ..@ deg: int 4
+  ..@ min: int 35
+  ..@ sec: num 53.4
+  ..@ NS : logi TRUE</code></pre>
+</div>
+</div>
+<p>This is a special class that R understands as being a latitude from Earth. To convert it to decimal, we just do <code>as.numeric()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.598167</code></pre>
+</div>
+</div>
+<p>Now let’s do this for all the values in the <code>soil_gps</code> data. We will use the <code>dplyr::mutate()</code> function in a pipeline.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>soil_gps <span class="ot">&lt;-</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  soil_gps <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Latitude =</span> <span class="fu">as.numeric</span>(sp<span class="sc">::</span><span class="fu">char2dms</span>(Latitude, <span class="at">chd =</span> <span class="st">"°"</span>)),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Longitude =</span> <span class="fu">as.numeric</span>(sp<span class="sc">::</span><span class="fu">char2dms</span>(Longitude, <span class="at">chd =</span> <span class="st">"°"</span>))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>soil_gps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 5
+   Forest_type Habitat_type Plot_name Latitude Longitude
+   &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Kerangas    Intact       KU1           4.60      115.
+ 2 Kerangas    Intact       KU2           4.59      115.
+ 3 Kerangas    Intact       KU3           4.60      115.
+ 4 Kerangas    Intact       KU4           4.63      114.
+ 5 Kerangas    Intact       KU5           4.60      115.
+ 6 Kerangas    Intact       KU6           4.60      115.
+ 7 Kerangas    Invaded      KI1           4.59      115.
+ 8 Kerangas    Invaded      KI2           4.59      115.
+ 9 Kerangas    Invaded      KI3           4.59      115.
+10 Kerangas    Invaded      KI4           4.59      115.
+11 Kerangas    Invaded      KI5           4.59      115.
+12 Kerangas    Invaded      KI6           4.59      115.
+13 Kerangas    Plantation   AP1           4.59      115.
+14 Kerangas    Plantation   AP2           4.59      115.
+15 Kerangas    Plantation   AP3           4.59      115.
+16 Kerangas    Plantation   AP4           4.59      115.
+17 Kerangas    Plantation   AP5           4.59      115.
+18 Kerangas    Plantation   AP6           4.59      115.</code></pre>
+</div>
+</div>
+</section>
+<section id="preliminary-plot-of-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="preliminary-plot-of-the-data">Preliminary plot of the data</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="What we'll learn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What we’ll learn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Structure of a <code>ggplot()</code> (grammar of graphics).</li>
+<li>Using <code>geom_sf()</code> to plot the GIS data, and adding points using <code>geom_point()</code>.</li>
+</ul>
+</div>
+</div>
+<p>Using the data contained in the <code>{bruneimap}</code> package, we can plot the study areas on a map of Brunei. Use either the <code>brn_sf</code>, <code>dis_sf</code>, <code>mkm_sf</code> or <code>kpg_sf</code> data sets.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(brn_sf) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> soil_gps, <span class="fu">aes</span>(Longitude, Latitude)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2-gis_data_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can zoom in a bit… but we have to find out manually the correct bounding box. To do this, we can either:</p>
+<ol type="1">
+<li>Manually find the minimum and maximum values of the latitude and longitude.</li>
+<li>Convert the <code>soil_gps</code> data set to an <code>sf</code> object and use the <code>st_bbox()</code> function.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Manual way</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">xmin =</span> <span class="fu">min</span>(soil_gps<span class="sc">$</span>Longitude), <span class="at">xmax =</span> <span class="fu">max</span>(soil_gps<span class="sc">$</span>Longitude),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ymin =</span> <span class="fu">min</span>(soil_gps<span class="sc">$</span>Latitude), <span class="at">ymax =</span> <span class="fu">max</span>(soil_gps<span class="sc">$</span>Latitude)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      xmin       xmax       ymin       ymax 
+114.473356 114.529297   4.592817   4.630242 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using the sf object</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>soil_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(soil_gps, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Longitude"</span>, <span class="st">"Latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">st_bbox</span>(soil_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      xmin       ymin       xmax       ymax 
+114.473356   4.592817 114.529297   4.630242 </code></pre>
+</div>
+</div>
+<p>Now that we’ve found the bound box, we can plot better:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mkm_sf) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> dis_sf, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> soil_gps, <span class="fu">aes</span>(Longitude, Latitude)) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> soil_gps,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(Longitude, Latitude, <span class="at">label =</span> Plot_name),</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">box.padding =</span> <span class="fl">0.5</span>,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">max.overlaps =</span> <span class="dv">30</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">114.4</span>, <span class="fl">114.6</span>),</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">4.5</span>, <span class="fl">4.7</span>)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2-gis_data_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="merge-with-the-study-data" class="level3">
+<h3 class="anchored" data-anchor-id="merge-with-the-study-data">Merge with the study data</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="What we'll learn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What we’ll learn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Using <code>left_join()</code> to merge two data sets together.</li>
+<li>Using <code>geom_jitter()</code> to plot the study variables that are overlapping.</li>
+</ul>
+</div>
+</div>
+<p>Let’s take a look at the data set.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(soil_physico)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 144
+Columns: 16
+$ Habitat_type              &lt;chr&gt; "Intact", "Intact", "Intact", "Intact", "Int…
+$ Plot_name                 &lt;chr&gt; "KU1", "KU1", "KU1", "KU1", "KU1", "KU1", "K…
+$ Subplot_name              &lt;chr&gt; "A", "A", "B", "B", "C", "C", "D", "D", "A",…
+$ Soil_depth                &lt;chr&gt; "0-15", "30-50", "0-15", "30-50", "0-15", "3…
+$ Nitrogen                  &lt;dbl&gt; 0.617, 0.188, 0.663, 0.200, 0.465, 0.255, 0.…
+$ Phosphorus                &lt;dbl&gt; 0.248, 0.129, 0.259, 0.295, 0.172, 0.145, 0.…
+$ Magnesium                 &lt;dbl&gt; 0.000, 0.045, 0.054, 0.035, 0.079, 0.043, 0.…
+$ Calcium                   &lt;dbl&gt; 0.167, 0.187, 0.148, 0.113, 0.253, 0.229, 0.…
+$ Potassium                 &lt;dbl&gt; 0.059, 0.037, 0.054, 0.022, 0.098, 0.033, 0.…
+$ Exchangable_magnesium     &lt;dbl&gt; 0.009, 0.004, 0.007, 0.005, 0.029, 0.014, 0.…
+$ Exchangable_calcium       &lt;dbl&gt; 0.010, 0.009, 0.008, 0.009, 0.109, 0.041, 0.…
+$ Exchangable_potassium     &lt;dbl&gt; 0.101, 0.085, 0.092, 0.087, 0.101, 0.090, 0.…
+$ Available_phosphorus      &lt;dbl&gt; 0.012, 0.012, 0.013, 0.012, 0.013, 0.014, 0.…
+$ pH                        &lt;dbl&gt; 2.3, 2.7, 2.0, 2.0, 2.6, 2.5, 2.3, 2.1, 1.0,…
+$ Gravimetric_water_content &lt;dbl&gt; 5.911, 3.560, 10.860, 5.082, 6.963, 4.549, 5…
+$ Organic_matter            &lt;dbl&gt; 4.559, 1.399, 4.523, 2.309, 3.131, 2.209, 3.…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(soil_texture)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 144
+Columns: 8
+$ Habitat_type           &lt;chr&gt; "Intact", "Intact", "Intact", "Intact", "Intact…
+$ Plot_name              &lt;chr&gt; "KU1", "KU1", "KU1", "KU1", "KU2", "KU2", "KU2"…
+$ Subplot_name           &lt;chr&gt; "A", "B", "C", "D", "A", "B", "C", "D", "A", "B…
+$ Soil_depth             &lt;chr&gt; "0-15", "0-15", "0-15", "0-15", "0-15", "0-15",…
+$ Clay                   &lt;dbl&gt; 0.0, 0.0, 0.0, 0.0, 0.0, 2.5, 2.5, 2.5, 0.0, 2.…
+$ Silt                   &lt;dbl&gt; 2.5, 0.0, 0.0, 2.5, 0.0, 0.0, 2.5, 2.5, 7.5, 7.…
+$ Sand                   &lt;dbl&gt; 97.5, 100.0, 100.0, 97.5, 100.0, 97.5, 95.0, 95…
+$ Texture_classification &lt;chr&gt; "Sand", "Sand", "Sand", "Sand", "Sand", "Sand",…</code></pre>
+</div>
+</div>
+<p>The <code>soil_physico</code> and <code>soil_texture</code> data sets contain the same columns, so we might as well merge them together. We will use the <code>dplyr::left_join()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Actually I just want to merge these two together</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>soil_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  soil_physico,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  soil_texture,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">join_by</span>(Habitat_type, Plot_name, Subplot_name, Soil_depth)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>soil_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 144 × 20
+   Habitat_type Plot_name Subplot_name Soil_depth Nitrogen Phosphorus Magnesium
+   &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;        &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Intact       KU1       A            0-15          0.617      0.248     0    
+ 2 Intact       KU1       A            30-50         0.188      0.129     0.045
+ 3 Intact       KU1       B            0-15          0.663      0.259     0.054
+ 4 Intact       KU1       B            30-50         0.2        0.295     0.035
+ 5 Intact       KU1       C            0-15          0.465      0.172     0.079
+ 6 Intact       KU1       C            30-50         0.255      0.145     0.043
+ 7 Intact       KU1       D            0-15          0.285      0.225     0.052
+ 8 Intact       KU1       D            30-50         0.057      0.207     0.031
+ 9 Intact       KU2       A            0-15          0.37       0.135     0.038
+10 Intact       KU2       A            30-50         0.114      0.168     0.021
+# ℹ 134 more rows
+# ℹ 13 more variables: Calcium &lt;dbl&gt;, Potassium &lt;dbl&gt;,
+#   Exchangable_magnesium &lt;dbl&gt;, Exchangable_calcium &lt;dbl&gt;,
+#   Exchangable_potassium &lt;dbl&gt;, Available_phosphorus &lt;dbl&gt;, pH &lt;dbl&gt;,
+#   Gravimetric_water_content &lt;dbl&gt;, Organic_matter &lt;dbl&gt;, Clay &lt;dbl&gt;,
+#   Silt &lt;dbl&gt;, Sand &lt;dbl&gt;, Texture_classification &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>Once we’ve done that, the <code>soil_df</code> data set (the study variables) is actually missing the spatial data. We need to geocode it with the <code>soil_gps</code> data set. Again, <code>dplyr::left_join()</code> to the rescue!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>soil_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  soil_df, </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  soil_gps,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">join_by</span>(Habitat_type, Plot_name)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we’re in a position to plot the study variables on the map. Note that there are only 18 plots in the <code>soil_gps</code> data set, and each plot has repeated measurements. That means when we plot it, it will overlap and look like a single point. So a good thing to do is to jitter the point so it’s easier to see.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(kpg_sf) <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> soil_df, </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(Longitude, Latitude, <span class="at">col =</span> Nitrogen, <span class="at">size =</span> Nitrogen, </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">shape =</span> Habitat_type),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.001</span>, <span class="at">height =</span> <span class="fl">0.001</span>, <span class="at">alpha =</span> <span class="fl">0.7</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">114.46</span>, <span class="fl">114.54</span>),</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">4.58</span>, <span class="fl">4.64</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">size =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2-gis_data_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="line-data-multilinestring" class="level2">
+<h2 class="anchored" data-anchor-id="line-data-multilinestring">Line data (<code>(MULTI)LINESTRING</code>)</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="What we'll learn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What we’ll learn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>How to load spatial data sets using <code>sf::read_sf()</code> and editing the CRS using <code>sf::st_transform()</code>.</li>
+<li>How to filter data using <code>dplyr::filter()</code>.</li>
+<li>How to plot line data using <code>ggplot2::geom_sf()</code>.</li>
+</ul>
+</div>
+</div>
+<p>For this example, we’ll play with the road network shape file obtained from OpenStreetMaps. The data is in geojson format, so let’s import that into R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>brd <span class="ot">&lt;-</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_sf</span>(<span class="st">"data/hotosm_brn_roads_lines_geojson/hotosm_brn_roads_lines_geojson.geojson"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">4326</span>)  <span class="co"># SET THE CRS!!! (WGS84)</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(brd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 25,570
+Columns: 15
+$ name       &lt;chr&gt; "Simpang 393", "Simpang 405", NA, NA, NA, NA, "Lebuhraya Tu…
+$ `name:en`  &lt;chr&gt; NA, NA, NA, NA, NA, NA, "Tutong–Telisai Highway", NA, NA, N…
+$ highway    &lt;chr&gt; "residential", "residential", "service", "residential", "tr…
+$ surface    &lt;chr&gt; NA, NA, NA, NA, NA, "asphalt", "asphalt", NA, NA, NA, "asph…
+$ smoothness &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ width      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ lanes      &lt;chr&gt; NA, NA, NA, NA, NA, "1", "2", NA, NA, NA, "2", NA, NA, NA, …
+$ oneway     &lt;chr&gt; NA, NA, NA, NA, NA, "yes", "yes", NA, NA, NA, "no", "yes", …
+$ bridge     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ layer      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ source     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ `name:ms`  &lt;chr&gt; NA, NA, NA, NA, NA, NA, "Lebuhraya Tutong–Telisai", NA, NA,…
+$ osm_id     &lt;int&gt; 386886618, 481030903, 512405939, 664532755, 442044892, 6651…
+$ osm_type   &lt;chr&gt; "ways_line", "ways_line", "ways_line", "ways_line", "ways_l…
+$ geometry   &lt;LINESTRING [°]&gt; LINESTRING (114.6236 4.7910..., LINESTRING (114.…</code></pre>
+</div>
+</div>
+<p>There are 25,570 features in this data set, which may be a bit too much. Let’s try to focus on the major roads only. This information seems to be contained in the <code>highway</code> column. What’s in it?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(brd<span class="sc">$</span>highway)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     bridleway   construction       cycleway        footway  living_street 
+             1             28             73            898             10 
+      motorway  motorway_link           path     pedestrian        primary 
+           116            152            140             60            865 
+  primary_link    residential           road      secondary secondary_link 
+           332           9023              1            446             79 
+       service          steps       tertiary  tertiary_link          track 
+          9876             53            586             59            442 
+         trunk     trunk_link   unclassified 
+           460            310           1560 </code></pre>
+</div>
+</div>
+<p>According to this <a href="https://wiki.openstreetmap.org/wiki/OpenStreetMap_Carto/Lines">wiki</a>, In OpenStreetMap, the major roads of a road network are sorted on an importance scale, from motorway to quaternary road.</p>
+<p><img src="figures/osm_roads.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>brd_mjr <span class="ot">&lt;-</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  brd <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(highway <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"motorway"</span>, <span class="st">"trunk"</span>, <span class="st">"primary"</span>, <span class="st">"secondary"</span>)) </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>brd_mjr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 1887 features and 14 fields
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: 114.1906 ymin: 4.516642 xmax: 115.2021 ymax: 5.037115
+Geodetic CRS:  WGS 84
+# A tibble: 1,887 × 15
+   name     `name:en` highway surface smoothness width lanes oneway bridge layer
+ * &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;
+ 1 Lebuhra… Tutong–T… trunk   asphalt &lt;NA&gt;       &lt;NA&gt;  2     yes    &lt;NA&gt;   &lt;NA&gt; 
+ 2 Lebuhra… Tutong–T… trunk   asphalt &lt;NA&gt;       &lt;NA&gt;  3     yes    &lt;NA&gt;   &lt;NA&gt; 
+ 3 Jalan S… &lt;NA&gt;      primary asphalt &lt;NA&gt;       &lt;NA&gt;  2     yes    yes    1    
+ 4 Jalan S… &lt;NA&gt;      primary asphalt &lt;NA&gt;       &lt;NA&gt;  2     yes    &lt;NA&gt;   &lt;NA&gt; 
+ 5 Lebuh R… Seria–Be… trunk   asphalt &lt;NA&gt;       &lt;NA&gt;  2     yes    &lt;NA&gt;   &lt;NA&gt; 
+ 6 &lt;NA&gt;     &lt;NA&gt;      trunk   asphalt &lt;NA&gt;       &lt;NA&gt;  2     yes    &lt;NA&gt;   &lt;NA&gt; 
+ 7 &lt;NA&gt;     &lt;NA&gt;      primary asphalt &lt;NA&gt;       &lt;NA&gt;  1     yes    &lt;NA&gt;   &lt;NA&gt; 
+ 8 Lebuh R… Seria–Be… trunk   asphalt &lt;NA&gt;       &lt;NA&gt;  2     yes    yes    1    
+ 9 &lt;NA&gt;     &lt;NA&gt;      primary asphalt &lt;NA&gt;       &lt;NA&gt;  2     yes    &lt;NA&gt;   &lt;NA&gt; 
+10 Lebuhra… Telisai–… trunk   asphalt &lt;NA&gt;       &lt;NA&gt;  2     yes    &lt;NA&gt;   &lt;NA&gt; 
+# ℹ 1,877 more rows
+# ℹ 5 more variables: source &lt;chr&gt;, `name:ms` &lt;chr&gt;, osm_id &lt;int&gt;,
+#   osm_type &lt;chr&gt;, geometry &lt;LINESTRING [°]&gt;</code></pre>
+</div>
+</div>
+<p>And now a plot of these roads.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> brn_sf) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> brd_mjr, <span class="fu">aes</span>(<span class="at">col =</span> highway), <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_colour_viridis_d(option = "turbo")</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  ggsci<span class="sc">::</span><span class="fu">scale_colour_npg</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2-gis_data_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>With this, I asked ChatGPT what kind of spatial analyses can be done on this data set. It said, when paired with appropriate data, we can do things like:</p>
+<ol type="1">
+<li><strong>Network Connectivity Analysis</strong>
+<ul>
+<li>Assess reachability and identify disconnected road network components.</li>
+</ul></li>
+<li><strong>Accessibility and Service Area Analysis</strong>
+<ul>
+<li>Determine service areas and catchment areas for essential services.</li>
+</ul></li>
+<li><strong>Traffic Simulation and Management</strong>
+<ul>
+<li>Simulate traffic flow to identify bottlenecks and suggest optimal routing.</li>
+</ul></li>
+<li><strong>Environmental Impact Assessment</strong>
+<ul>
+<li>Estimate vehicular emissions and model noise pollution from roads.</li>
+</ul></li>
+<li><strong>Urban and Regional Planning</strong>
+<ul>
+<li>Examine land use compatibility and assess infrastructure development needs.</li>
+</ul></li>
+<li><strong>Safety Analysis</strong>
+<ul>
+<li>Identify accident hotspots and assess pedestrian safety.</li>
+</ul></li>
+<li><strong>Economic Analysis</strong>
+<ul>
+<li>Evaluate economic accessibility and the impact of road projects.</li>
+</ul></li>
+</ol>
+<p>Let’s pick one of these: Calculate the distance between the centroid of several regions and the major hospital in the Belait district. This analysis guides urban and healthcare planning by pinpointing areas with inadequate access to emergency services, enabling targeted infrastructure and service improvements.</p>
+<section id="road-networks-in-belait-region" class="level3">
+<h3 class="anchored" data-anchor-id="road-networks-in-belait-region">Road networks in Belait region</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="What we'll learn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What we’ll learn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Manipulating GIS data using <code>sf::st_intersection()</code> and the like. Useful for reorganising the spatial structure (without having to do this in QGIS or ArcGIS).</li>
+<li>Sampling points from a line data set.</li>
+<li>Calculating distances between points and lines using <code>{osrm}</code> package.</li>
+</ul>
+</div>
+</div>
+<p>First we “crop” the road network to the Belait region.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>brd_belait <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  brd,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dis_sf, name <span class="sc">==</span> <span class="st">"Belait"</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout
+all geometries</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(brd_belait) <span class="sc">+</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">filter</span>(dis_sf, name <span class="sc">==</span> <span class="st">"Belait"</span>), <span class="at">fill =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2-gis_data_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If we were to sample random points from the Belait polygon, we might get non-sensical areas like the extremely rural areas or forest reserves. So the idea is to sample random points from the road network itself. For this, we need a function that will get us a random point on the path itself.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>get_random_point <span class="ot">&lt;-</span> <span class="cf">function</span>(linestring) {</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  coords <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(linestring)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  samp_coord <span class="ot">&lt;-</span> coords[<span class="fu">sample</span>(<span class="fu">nrow</span>(coords), <span class="dv">1</span>), , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  samp_coord[, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">get_random_point</span>(brd_belait<span class="sc">$</span>geometry[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         X          Y         L1 
+114.241433   4.594193   1.000000 </code></pre>
+</div>
+</div>
+<p>Once we have this function, we need to <code>map()</code> this function onto each of the linestrings in the <code>brd_belait</code> data set. The resulting list of points is too large! So we will just sample 100 points (you can experiment with this number).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>random_points <span class="ot">&lt;-</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(brd_belait<span class="sc">$</span>geometry, get_random_point) <span class="sc">|&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">|&gt;</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What we have now is a data frame of 100 random points on the road network in the Belait district. We will use the <code>{osrm}</code> package to calculate the distance between these points and the Suri Seri Begawan Hospital in Kuala Belait. The output will be three things: 1) The duration (minutes); 2) The distance (km); and 3) a <code>LINESTRING</code> object that represents the path to get to the hospital. Unfortunately the <code>osrmRoute()</code> function is not vectorised, i.e.&nbsp;we have to do it one-by-one for each of the 100 points. Luckily, we can just make a <code>for</code> loop and store the results in a list.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>suriseri <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">114.198778</span>, <span class="fl">4.583444</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) {</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  res[[i]] <span class="ot">&lt;-</span> <span class="fu">osrmRoute</span>(<span class="at">src =</span> random_points[i, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">dst =</span> suriseri, <span class="at">overview =</span> <span class="st">"full"</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> </span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(res) <span class="sc">|&gt;</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>()</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 100 features and 4 fields
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: 114.1735 ymin: 4.43039 xmax: 114.7124 ymax: 4.70454
+Geodetic CRS:  WGS 84
+# A tibble: 100 × 5
+   src   dst   duration distance                                        geometry
+   &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;                                &lt;LINESTRING [°]&gt;
+ 1 1     dst      15.0     10.8  (114.2887 4.60486, 114.2887 4.60486, 114.2885 …
+ 2 1     dst       6.91     5.03 (114.2385 4.59257, 114.2384 4.59313, 114.2383 …
+ 3 1     dst       5.23     3.50 (114.2252 4.58684, 114.2252 4.58689, 114.2252 …
+ 4 1     dst      31.2     36.5  (114.464 4.65639, 114.4641 4.65643, 114.4642 4…
+ 5 1     dst      19.9     20.0  (114.324 4.60102, 114.324 4.60102, 114.3242 4.…
+ 6 1     dst       6.30     4.58 (114.235 4.59267, 114.2349 4.59327, 114.2348 4…
+ 7 1     dst      20.2     15.9  (114.315 4.60384, 114.3152 4.6034, 114.3137 4.…
+ 8 1     dst      11.8      8.13 (114.2626 4.59433, 114.2626 4.59433, 114.2626 …
+ 9 1     dst      11.8     10.7  (114.2673 4.56541, 114.2673 4.56541, 114.267 4…
+10 1     dst      33.8     37.2  (114.473 4.67402, 114.473 4.67402, 114.4734 4.…
+# ℹ 90 more rows</code></pre>
+</div>
+</div>
+<p>So with all that done, we can now plot the paths taken by the 100 random points to the hospital. The map gives us an indication of which areas are underserved by the hospital, and can guide urban and healthcare planning by pinpointing areas with inadequate access to emergency services, enabling targeted infrastructure and service improvements.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(res) <span class="sc">+</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># geom_point(data = random_points, aes(x = X, y = Y), col = "red") +</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">filter</span>(kpg_sf, district <span class="sc">==</span> <span class="st">"Belait"</span>), <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">col =</span> duration), <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">x =</span> suriseri[<span class="dv">1</span>], <span class="at">y =</span> suriseri[<span class="dv">2</span>], <span class="at">col =</span> <span class="st">"red3"</span>, <span class="at">pch =</span> <span class="st">"X"</span>, </span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_c</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2-gis_data_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Improving the analysis</p>
+<ul>
+<li>Weight analysis by populous areas. Outcalls to hospitals can be modelled using a Poisson distribution with the population as the rate parameter.</li>
+<li>Use a more sophisticated routing algorithm that accounts for traffic conditions and road quality (am vs pm, weekends vs weekdays, etc.).</li>
+<li>Simpler to analyse at the kampong or mukim level?</li>
+</ul>
+</section>
+</section>
+<section id="areal-data-multipolygons" class="level2">
+<h2 class="anchored" data-anchor-id="areal-data-multipolygons">Areal data (<code>(MULTI)POLYGONS</code>)</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="What we'll learn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What we’ll learn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Represent statistical data using colour mapping symbology (choropleth)</li>
+<li>Use <code>ggplot2::geom_label()</code> or <code>ggrepel::geom_label_repel()</code> to add labels to the map</li>
+<li>Using a binned colour scale, e.g.&nbsp;<code>ggplot2::geom_scale_fill_viridis_b()</code></li>
+</ul>
+</div>
+</div>
+<p>When your study data is made up a finite number of non-overlapping areas, then you can represent them as polygons in R. This is the case for the kampong and mukim data in Brunei. As an example, let us look at the population of each kampong in Brunei. This dataset comes from the 2021 Brunei Census data <span class="citation" data-cites="deps2022population">(<a href="#ref-deps2022population" role="doc-biblioref">DEPS 2022</a>)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(bn_census2021)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 365
+Columns: 11
+$ id           &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 15, 16, 17, 18, 19, 2…
+$ kampong      &lt;chr&gt; "Kg. Biang", "Kg. Amo", "Kg. Sibut", "Kg. Sumbiling Baru"…
+$ mukim        &lt;chr&gt; "Mukim Amo", "Mukim Amo", "Mukim Amo", "Mukim Amo", "Muki…
+$ district     &lt;chr&gt; "Temburong", "Temburong", "Temburong", "Temburong", "Temb…
+$ population   &lt;dbl&gt; 75, 394, 192, 91, 108, 143, 199, 123, 95, 90, 92, 2427, 4…
+$ pop_male     &lt;dbl&gt; 46, 218, 98, 48, 60, 68, 115, 65, 52, 46, 73, 1219, 252, …
+$ pop_female   &lt;dbl&gt; 29, 176, 94, 43, 48, 75, 84, 58, 43, 44, 19, 1208, 150, 2…
+$ pop_bruneian &lt;dbl&gt; 37, 280, 174, 55, 57, 64, 114, 88, 63, 35, 37, 1557, 235,…
+$ pop_pr       &lt;dbl&gt; 33, 83, 17, 24, 41, 64, 64, 28, 29, 32, 2, 179, 3, 67, 32…
+$ household    &lt;dbl&gt; 13, 83, 37, 23, 23, 23, 38, 26, 26, 23, 14, 517, 76, 691,…
+$ occ_liv_q    &lt;dbl&gt; 13, 62, 27, 16, 22, 21, 37, 22, 12, 23, 14, 492, 71, 681,…</code></pre>
+</div>
+</div>
+<p>Each row of the data refers to a kampong-level observation. While there are unique identifiers to this (<code>id</code>, <code>kampong</code>, <code>mukim</code>, <code>district</code>), we would still need to geocode this data set so that we can do fun things like plot it on a map. Let’s use (again) <code>left_join()</code> to do this.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>bn_pop_sf <span class="ot">&lt;-</span> </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    kpg_sf, </span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    bn_census2021, </span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">join_by</span>(id, kampong, mukim, district)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Great. Let’s take a look at the population column. It would be very interesting to see where most of the 440,704 people of Brunei live!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bn_pop_sf) <span class="sc">+</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> population)) <span class="sc">+</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">na.value =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2-gis_data_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As expected, there are “hotspots” of population in the Brunei-Muara district, and to a lesser extent in the Belait district. We can make this graph a bit better by binning the population values. It seems to be dominated by a lot of these low value colours. Let’s take a look at this further by inspecting a histogram.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bn_pop_sf) <span class="sc">+</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(population), <span class="at">binwidth =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 75 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2-gis_data_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So maybe we can bin the population into 4 categories: &lt; 100, 101-1000, 1001-10000, and 10000+. For this we directly use the <code>scale_fill_viridis_b()</code> and adjust the breaks. Otherwise we would have to <code>cut()</code> the population column and then use <code>scale_fill_manual()</code>. We also added the names of the top 10 most populous kampongs to the map using <code>ggrepel::geom_label_repel()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>kpg_labels_sf <span class="ot">&lt;-</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  bn_pop_sf <span class="sc">|&gt;</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(population)) <span class="sc">|&gt;</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>bn_pop_sf <span class="sc">|&gt;</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filter(population &gt; 50) |&gt;</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> population), <span class="at">col =</span> <span class="cn">NA</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> kpg_sf, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_label_repel</span>(</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> kpg_labels_sf,</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> kampong, <span class="at">geometry =</span> geometry),</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"sf_coordinates"</span>,</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">box.padding =</span> <span class="dv">1</span>,</span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">max.overlaps =</span> <span class="cn">Inf</span></span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_b</span>(</span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Population"</span>,</span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.value =</span> <span class="cn">NA</span>,</span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span>comma,</span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">20000</span>)</span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># limits = c(0, 12000)</span></span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2-gis_data_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="openstreetmap-data" class="level2">
+<h2 class="anchored" data-anchor-id="openstreetmap-data">OpenStreetMap data</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="What we'll learn">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What we’ll learn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>How to scrape OpenStreetMap data using the <code>{osmdata}</code> package.</li>
+</ul>
+</div>
+</div>
+<p>The <code>{osmdata}</code> package is a very useful tool for scraping OpenStreetMap data. It allows you to download data from OpenStreetMap and convert it into an <code>sf</code> object. The package is built on top of the <code>osmdata</code> API, which is a wrapper around the Overpass API. The Overpass API is a read-only API that allows you to query OpenStreetMap data. Conveniently, we do not need an API key.</p>
+<section id="example-how-to-get-all-the-schools-in-brunei" class="level3">
+<h3 class="anchored" data-anchor-id="example-how-to-get-all-the-schools-in-brunei">EXAMPLE: How to get all the schools in Brunei</h3>
+<p>When we go to https://www.openstreetmap.org/ website, we can search for some key terms. For example, if we search for “Sekolah Rendah Kiarong”, we see the following:</p>
+<p><img src="figures/sr_kiarong.png" class="img-fluid"></p>
+<p>Highlighted in red is the polygon that represents the school. Furthermore, we have some information in the “Tags” section such as:</p>
+<ul>
+<li><code>addr:place</code> = Kiarong</li>
+<li><code>addr:street</code> = Jalan Datu Ratna</li>
+<li><code>alt_name</code> = Sekolah Rendah Kiarong</li>
+<li><code>alt_name:en</code> = Kiarong Primary School</li>
+<li><code>amenity</code> = school</li>
+<li>etc.</li>
+</ul>
+<p>The <code>{osmdata}</code> package allows us to query this information. To replicate this ‘GUI’ experience using code, we do the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opq</span>(<span class="st">"brunei"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_osm_feature</span>(</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">key =</span> <span class="st">"name"</span>, </span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="st">"Sekolah Rendah Datu Ratna Haji Muhammad Jaafar"</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osmdata_sf</span>()</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(q)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Object of class 'osmdata' with:
+                 $bbox : 4.002508,113.017925,6.546584,115.3635623
+        $overpass_call : The call submitted to the overpass API
+                 $meta : metadata including timestamp and version numbers
+           $osm_points : 'sf' Simple Features Collection with 16 points
+            $osm_lines : NULL
+         $osm_polygons : 'sf' Simple Features Collection with 1 polygons
+       $osm_multilines : NULL
+    $osm_multipolygons : NULL</code></pre>
+</div>
+</div>
+<p>It has found the school. To extract the information, let’s look at the <code>$osm_polygons</code> entry:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(q<span class="sc">$</span>osm_polygons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1
+Columns: 10
+$ osm_id        &lt;chr&gt; "309023494"
+$ name          &lt;chr&gt; "Sekolah Rendah Datu Ratna Haji Muhammad Jaafar"
+$ `addr:place`  &lt;chr&gt; "Kiarong"
+$ `addr:street` &lt;chr&gt; "Jalan Datu Ratna"
+$ alt_name      &lt;chr&gt; "Sekolah Rendah Kiarong"
+$ `alt_name:en` &lt;chr&gt; "Kiarong Primary School"
+$ amenity       &lt;chr&gt; "school"
+$ `name:en`     &lt;chr&gt; "Datu Ratna Haji Muhammad Jaafar Primary School"
+$ source        &lt;chr&gt; "Bing; survey"
+$ geometry      &lt;POLYGON [°]&gt; POLYGON ((114.9125 4.892252...</code></pre>
+</div>
+</div>
+<p>Let’s plot it!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># warning: false</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">filter</span>(kpg_sf, mukim <span class="sc">==</span> <span class="st">"Mukim Gadong B"</span>)) <span class="sc">+</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> kampong, <span class="at">geometry =</span> geometry),</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"sf_coordinates"</span>,</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">box.padding =</span> <span class="dv">1</span>,</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">max.overlaps =</span> <span class="cn">Inf</span></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> q<span class="sc">$</span>osm_polygons, <span class="at">fill =</span> <span class="st">"red3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not
+give correct results for longitude/latitude data</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2-gis_data_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can query based on amenity type as well. For example, to get all the schools in Brunei:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bounding box for Brunei Muara</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>bm_sf <span class="ot">&lt;-</span> <span class="fu">filter</span>(kpg_sf, district <span class="sc">==</span> <span class="st">"Brunei Muara"</span>)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>bm_bbox <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(bm_sf)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opq</span>(bm_bbox) <span class="sc">|&gt;</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_osm_feature</span>(</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">key =</span> <span class="st">"amenity"</span>, </span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="st">"school"</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osmdata_sf</span>()</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(q)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Object of class 'osmdata' with:
+                 $bbox : 4.72903834429411,114.771346735899,5.04587807206061,115.138720231749
+        $overpass_call : The call submitted to the overpass API
+                 $meta : metadata including timestamp and version numbers
+           $osm_points : 'sf' Simple Features Collection with 1321 points
+            $osm_lines : NULL
+         $osm_polygons : 'sf' Simple Features Collection with 153 polygons
+       $osm_multilines : NULL
+    $osm_multipolygons : 'sf' Simple Features Collection with 1 multipolygons</code></pre>
+</div>
+</div>
+<p>Almost always it is a good idea to look at the polygons, instead of the points. In any case, you can always find the centroid of the polygons if you wanted to plot point data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>schools_sf <span class="ot">&lt;-</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  q<span class="sc">$</span>osm_polygons <span class="sc">|&gt;</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span>  <span class="co"># these two lines convert to tibble-like object</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(osm_id, name) <span class="sc">|&gt;</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_centroid</span>()  <span class="co"># obtains X,Y coordinates of centroids</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(schools_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 138 features and 2 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 114.7891 ymin: 4.730341 xmax: 115.1303 ymax: 5.036068
+Geodetic CRS:  WGS 84
+# A tibble: 138 × 3
+   osm_id    name                                                 geometry
+ * &lt;chr&gt;     &lt;chr&gt;                                             &lt;POINT [°]&gt;
+ 1 45517438  Sekolah Rendah Haji Tarif                  (114.9321 4.88012)
+ 2 45768022  Sekolah Menengah Awang Semaun             (114.9389 4.876925)
+ 3 45820441  Sekolah Rendah Pengiran Anak Puteri Besar (114.9397 4.874045)
+ 4 45820563  Pehin Dato Jamil Primary School           (114.9473 4.873318)
+ 5 157197463 Sekolah Ugama Pengiran Muda Abdul Malik … (114.8709 4.848966)
+ 6 157489516 Sekolah Rendah Dato Marsal                (114.9576 4.961157)
+ 7 167974917 Chung Hwa Middle School                   (114.9445 4.894822)
+ 8 167974963 Sekolah Rendah Pusar Ulak                 (114.9358 4.896647)
+ 9 167974968 St. Andrew’s School                       (114.9372 4.896313)
+10 260696860 Jerudong International School             (114.8793 4.969056)
+# ℹ 128 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> bm_sf, <span class="fu">aes</span>(<span class="at">fill =</span> mukim), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> schools_sf, <span class="at">size =</span> <span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2-gis_data_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From here…</p>
+<ul>
+<li>Visit the <a href="https://wiki.openstreetmap.org/wiki/Key:amenity?uselang=en-GB">OSM Wiki</a> to see what other amenities you can query.</li>
+<li>Clearly not limited to schools – clinics, shops, movie theatres, …</li>
+<li>Combine with the road data from <code>{osrm}</code> to calculate distances between schools and hospitals, for example.</li>
+</ul>
+
 
 
 </section>
+</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-deps2022population" class="csl-entry" role="listitem">
+DEPS. 2022. <span>“The <span>Population</span> and <span>Housing Census Report</span> (<span>BPP</span>) 2021: <span>Demographic</span>, <span>Household</span> and <span>Housing Characteristics</span>.”</span> <span>Department of Economic Planning and Statistics, Ministry of Finance and Economy, Brunei Darussalam</span>.
+</div>
+<div id="ref-jaafar2023data" class="csl-entry" role="listitem">
+Jaafar, Salwana Md, and Rahayu Sukmaria Sukri. 2023. <span>“Data on the Physicochemical Characteristics and Texture Classification of Soil in <span>Bornean</span> Tropical Heath Forests Affected by Exotic <span>Acacia</span> Mangium.”</span> <em>Data in Brief</em> 51 (December). <a href="https://doi.org/10.1016/j.dib.2023.109670">https://doi.org/10.1016/j.dib.2023.109670</a>.
+</div>
+<div id="ref-pebesma2023spatial" class="csl-entry" role="listitem">
+Pebesma, Edzer, and Roger Bivand. 2023. <em>Spatial <span>Data Science</span>: <span>With Applications</span> in <span>R</span></em>. 1st ed. New York: <span>Chapman and Hall/CRC</span>. <a href="https://doi.org/10.1201/9780429459016">https://doi.org/10.1201/9780429459016</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

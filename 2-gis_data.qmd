@@ -1,9 +1,593 @@
 ---
-title: "Data Scraping and Linear Regression"
+title: "Geographical Information System (GIS) data"
+editor_options: 
+  chunk_output_type: console
 ---
 
-For topic 1, we will cover linear regression. But before diving into that topic, we will talk about how to scrape data from the web.
+Libraries needed:
 
-# Data scraping
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+# remotes::install_github("propertypricebn/bruneimap")
+library(bruneimap)
+library(ggrepel)
+library(kernlab)
+library(osrm)
+library(osmdata)
+```
 
-# Linear regression
+More info: 
+
+- [https://github.com/propertypricebn/bruneimap](https://github.com/propertypricebn/bruneimap)
+
+::: {.callout-note}
+The `{bruneimap}` package contains the following data sets:
+
+1. `dis_sf`: Brunei districts geometries.
+2. `mukim_sf`: Brunei mukim geometries.
+3. `kpg_sf`: Brunei kampong geometries.
+5. `brn_df`: Brunei outline geometries.
+4. `bn_census2021`: Brunei 2021 census data.
+:::
+
+## Introduction
+
+::: {.callout-tip title="What we'll learn"}
+-   Types of GIS data and how these are handled in R.
+-   Difference between spatial and non-spatial data analysis.
+-   Importance of geocoding your data for spatial analysis.
+:::
+
+Roughly speaking, there are 4 types of GIS data.
+
+1.  **Points**
+    -   Having $(X, Y)$ coordinates (latitude, longitude, or projected coordinates, and are "zero-dimensional".
+    -   E.g. shopping malls, hospitals, outbreaks, etc.
+2.  **Lines**
+    -   A collection of points that form a path or a boundary. Has length.
+    -   E.g. roads, rivers, pipelines, etc.
+3.  **Polygons**
+    -   A closed area made up of line segments or curves.
+    -   E.g. countries, districts, buildings, etc.
+4.  **Raster**
+    -   Pixelated (or gridded) data where each pixel is associated with a geographical area and some measurement.
+    -   E.g. satellite images, elevation data, etc.
+
+The first three are usually referred to as *vector data*. GIS data can be stored in various formats such as `.shp` or `.geojson`. The handling of GIS data (at least vector type data) is facilitated by the `{sf}` package [@pebesma2023spatial] which uses the *simple features* standard.
+
+::: callout-note
+*Simple features* refers to a formal standard (ISO 19125-1:2004) that describes how objects in the real world can be represented in computers, with emphasis on the spatial geometry of these objects.
+:::
+
+It's helpful to think about the shape of this spatial data set. As an example, here's a random slice of 10 kampong-level population data for Brunei:
+
+```{r}
+left_join(
+  kpg_sf, 
+  bn_census2021, 
+  join_by(id, kampong, mukim, district)
+) |>
+  select(
+    kampong, district, population, geometry
+  ) |>
+  slice_sample(n = 10)
+```
+
+Spatial data analysis must have these two components:
+
+1.  The study variables (in the above example, this is population data).
+2.  GIS data regarding that study variable.
+
+If we only have 1 without 2, then it really is just a regular data analysis (stating the obvious). Adding the GIS data is a process called "geocoding" the data points.
+
+::: callout-note
+In R, geocoding using `{tidyverse}` can be achieved using the `dplyr::left_join()` or similar `xxx_join()` family of functions.
+:::
+
+## `(MULTI)POINT` data
+
+::: {.callout-tip title="What we'll learn"}
+-   Loading data sets in R using `readr::read_csv()`.
+-   Identifying data types and their implications.
+:::
+
+Use the data from @jaafar2023data on the physicochemical characteristics and texture classification of soil in Bornean tropical heath forests affected by exotic Acacia mangium. There are three datasets provided.
+
+1.  GIS data ([WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System "World Geodetic System") coordinates) of all study plots.
+2.  Soil physicochemical property data. This contains details of soil physical, chemical, nutrient concentration of the three habits studied.
+3.  Soil texture classification. Provides details on the classification of the soil texture in the habitats studied.
+
+We will first load the data sets in R.
+
+```{r}
+#| message: false
+# Load the data sets
+soil_gps <- read_csv(
+  "data/8389823/GPS - Revised.csv", 
+  # IMPORTANT!!! The csv file has latin1 encoding as opposed to UTF-8
+  locale = readr::locale(encoding = "latin1")
+)
+  
+soil_physico <- read_csv("data/8389823/Soil physicochemical properties.csv")
+soil_texture <- read_csv("data/8389823/Soil texture classification.csv")
+```
+
+### Clean up the point data
+
+::: {.callout-tip title="What we'll learn"}
+-   Highlighting the need for cleaning and preprocessing data.
+-   Using `glimpse()` to peek at the data.
+-   Using `mutate()` to change stuff in the data set.
+-   Using `str()` to look at the structure of an R object.
+:::
+
+Let's take a look at the point data set.
+
+```{r}
+#| code-fold: false
+glimpse(soil_gps)
+```
+
+The first three columns are essentially the identifiers of the plots (forest type, habitat type, and the unique identification code for the study plot). However, the latitude and longitude needs a bit of cleaning up, because it's currently in character format. This needs to be in a formal Degree Minute Second `DMS` class that R can understand. For this we will use the `sp::char2dms()` function.
+
+As an example let's take a look at the first latitude.
+
+```{r}
+#| code-fold: false
+x <- soil_gps$Latitude[1]
+x
+
+# convert it using sp::char2dms() function
+x <- sp::char2dms(x, chd = "°")
+x
+str(x)
+```
+
+This is a special class that R understands as being a latitude from Earth. To convert it to decimal, we just do `as.numeric()`:
+
+```{r}
+#| code-fold: false
+as.numeric(x)
+```
+
+Now let's do this for all the values in the `soil_gps` data. We will use the `dplyr::mutate()` function in a pipeline.
+
+```{r}
+soil_gps <-
+  soil_gps |>
+  mutate(
+    Latitude = as.numeric(sp::char2dms(Latitude, chd = "°")),
+    Longitude = as.numeric(sp::char2dms(Longitude, chd = "°"))
+  )
+soil_gps
+```
+
+### Preliminary plot of the data
+
+::: {.callout-tip title="What we'll learn"}
+-   Structure of a `ggplot()` (grammar of graphics).
+-   Using `geom_sf()` to plot the GIS data, and adding points using `geom_point()`.
+:::
+
+Using the data contained in the `{bruneimap}` package, we can plot the study areas on a map of Brunei. Use either the `brn_sf`, `dis_sf`, `mkm_sf` or `kpg_sf` data sets.
+
+```{r}
+ggplot(brn_sf) +
+  geom_sf() +
+  geom_point(data = soil_gps, aes(Longitude, Latitude)) 
+```
+
+We can zoom in a bit... but we have to find out manually the correct bounding box.
+To do this, we can either:
+
+1. Manually find the minimum and maximum values of the latitude and longitude.
+2. Convert the `soil_gps` data set to an `sf` object and use the `st_bbox()` function.
+
+```{r}
+# Manual way
+c(
+  xmin = min(soil_gps$Longitude), xmax = max(soil_gps$Longitude),
+  ymin = min(soil_gps$Latitude), ymax = max(soil_gps$Latitude)
+)
+
+# Using the sf object
+soil_sf <- st_as_sf(soil_gps, coords = c("Longitude", "Latitude"), crs = 4326)
+st_bbox(soil_sf)
+```
+
+Now that we've found the bound box, we can plot better:
+
+```{r}
+#| warning: false
+
+ggplot(mkm_sf) +
+  geom_sf() +
+  geom_sf(data = dis_sf, fill = NA, col = "black", linewidth = 1) +
+  geom_point(data = soil_gps, aes(Longitude, Latitude)) +
+  geom_text_repel(
+    data = soil_gps,
+    aes(Longitude, Latitude, label = Plot_name),
+    box.padding = 0.5,
+    max.overlaps = 30
+  ) +
+  coord_sf(
+    xlim = c(114.4, 114.6),
+    ylim = c(4.5, 4.7)
+  )
+```
+
+### Merge with the study data
+
+::: {.callout-tip title="What we'll learn"}
+-   Using `left_join()` to merge two data sets together.
+-   Using `geom_jitter()` to plot the study variables that are overlapping.
+:::
+
+Let's take a look at the data set.
+
+```{r}
+#| code-fold: false
+glimpse(soil_physico)
+glimpse(soil_texture)
+```
+
+The `soil_physico` and `soil_texture` data sets contain the same columns, so we might as well merge them together. We will use the `dplyr::left_join()` function.
+
+```{r}
+# Actually I just want to merge these two together
+soil_df <- left_join(
+  soil_physico,
+  soil_texture,
+  by = join_by(Habitat_type, Plot_name, Subplot_name, Soil_depth)
+)
+soil_df
+```
+
+Once we've done that, the `soil_df` data set (the study variables) is actually missing the spatial data. We need to geocode it with the `soil_gps` data set. Again, `dplyr::left_join()` to the rescue!
+
+```{r}
+soil_df <- left_join(
+  soil_df, 
+  soil_gps,
+  by = join_by(Habitat_type, Plot_name)
+)
+```
+
+Now we're in a position to plot the study variables on the map. Note that there are only 18 plots in the `soil_gps` data set, and each plot has repeated measurements. That means when we plot it, it will overlap and look like a single point. So a good thing to do is to jitter the point so it's easier to see.
+
+```{r}
+ggplot(kpg_sf) +
+  geom_sf(fill = NA) +
+  geom_jitter(
+    data = soil_df, 
+    aes(Longitude, Latitude, col = Nitrogen, size = Nitrogen, 
+        shape = Habitat_type),
+    width = 0.001, height = 0.001, alpha = 0.7
+  ) +
+  coord_sf(
+    xlim = c(114.46, 114.54),
+    ylim = c(4.58, 4.64)
+  ) +
+  scale_color_viridis_c() +
+  guides(size = "none")
+```
+
+
+## Line data (`(MULTI)LINESTRING`)
+
+::: {.callout-tip title="What we'll learn"}
+-   How to load spatial data sets using `sf::read_sf()` and editing the CRS using `sf::st_transform()`.
+-   How to filter data using `dplyr::filter()`.
+-   How to plot line data using `ggplot2::geom_sf()`.
+:::
+
+For this example, we'll play with the road network shape file obtained from OpenStreetMaps. The data is in geojson format, so let's import that into R.
+
+```{r}
+brd <- 
+  read_sf("data/hotosm_brn_roads_lines_geojson/hotosm_brn_roads_lines_geojson.geojson") |>
+  st_transform(4326)  # SET THE CRS!!! (WGS84)
+glimpse(brd)
+```
+
+There are 25,570 features in this data set, which may be a bit too much. Let's try to focus on the major roads only. This information seems to be contained in the `highway` column. What's in it?
+
+```{r}
+table(brd$highway)
+```
+
+According to this [wiki](https://wiki.openstreetmap.org/wiki/OpenStreetMap_Carto/Lines), In OpenStreetMap, the major roads of a road network are sorted on an importance scale, from motorway to quaternary road.
+
+![](figures/osm_roads.png)
+
+```{r}
+brd_mjr <- 
+  brd |>
+  filter(highway %in% c("motorway", "trunk", "primary", "secondary")) 
+brd_mjr
+```
+
+And now a plot of these roads.
+
+```{r}
+ggplot() +
+  geom_sf(data = brn_sf) +
+  geom_sf(data = brd_mjr, aes(col = highway), size = 0.5) +
+  # scale_colour_viridis_d(option = "turbo")
+  ggsci::scale_colour_npg()
+```
+
+With this, I asked ChatGPT what kind of spatial analyses can be done on this data set. It said, when paired with appropriate data, we can do things like:
+
+1.  **Network Connectivity Analysis**
+    -   Assess reachability and identify disconnected road network components.
+2.  **Accessibility and Service Area Analysis**
+    -   Determine service areas and catchment areas for essential services.
+3.  **Traffic Simulation and Management**
+    -   Simulate traffic flow to identify bottlenecks and suggest optimal routing.
+4.  **Environmental Impact Assessment**
+    -   Estimate vehicular emissions and model noise pollution from roads.
+5.  **Urban and Regional Planning**
+    -   Examine land use compatibility and assess infrastructure development needs.
+6.  **Safety Analysis**
+    -   Identify accident hotspots and assess pedestrian safety.
+7.  **Economic Analysis**
+    -   Evaluate economic accessibility and the impact of road projects.
+
+Let's pick one of these: Calculate the distance between the centroid of several regions and the major hospital in the Belait district. This analysis guides urban and healthcare planning by pinpointing areas with inadequate access to emergency services, enabling targeted infrastructure and service improvements.
+
+### Road networks in Belait region
+
+::: {.callout-tip title="What we'll learn"}
+-   Manipulating GIS data using `sf::st_intersection()` and the like. Useful for reorganising the spatial structure (without having to do this in QGIS or ArcGIS).
+-   Sampling points from a line data set.
+-   Calculating distances between points and lines using `{osrm}` package.
+:::
+
+First we "crop" the road network to the Belait region.
+
+```{r}
+brd_belait <- st_intersection(
+  brd,
+  filter(dis_sf, name == "Belait")
+)
+
+ggplot(brd_belait) +
+  geom_sf() +
+  geom_sf(data = filter(dis_sf, name == "Belait"), fill = NA)
+```
+
+If we were to sample random points from the Belait polygon, we might get non-sensical areas like the extremely rural areas or forest reserves. So the idea is to sample random points from the road network itself. For this, we need a function that will get us a random point on the path itself.
+
+```{r}
+get_random_point <- function(linestring) {
+  coords <- st_coordinates(linestring)
+  samp_coord <- coords[sample(nrow(coords), 1), , drop = FALSE]
+  samp_coord[, 1:3]
+}
+get_random_point(brd_belait$geometry[1])
+```
+
+Once we have this function, we need to `map()` this function onto each of the linestrings in the `brd_belait` data set. The resulting list of points is too large! So we will just sample 100 points (you can experiment with this number).
+
+```{r}
+random_points <-
+  map(brd_belait$geometry, get_random_point) |>
+  bind_rows() |>
+  slice_sample(n = 100)
+```
+
+What we have now is a data frame of 100 random points on the road network in the Belait district. We will use the `{osrm}` package to calculate the distance between these points and the Suri Seri Begawan Hospital in Kuala Belait. The output will be three things: 1) The duration (minutes); 2) The distance (km); and 3) a `LINESTRING` object that represents the path to get to the hospital. Unfortunately the `osrmRoute()` function is not vectorised, i.e. we have to do it one-by-one for each of the 100 points. Luckily, we can just make a `for` loop and store the results in a list.
+
+```{r}
+#| cache: true
+suriseri <- c(114.198778, 4.583444)
+
+res <- list()
+for (i in 1:100) {
+  res[[i]] <- osrmRoute(src = random_points[i, 1:2], dst = suriseri, overview = "full")
+}
+res <- 
+  bind_rows(res) |>
+  as_tibble() |>
+  st_as_sf()
+res
+```
+
+So with all that done, we can now plot the paths taken by the 100 random points to the hospital. The map gives us an indication of which areas are underserved by the hospital, and can guide urban and healthcare planning by pinpointing areas with inadequate access to emergency services, enabling targeted infrastructure and service improvements.
+
+```{r}
+ggplot(res) +
+  # geom_point(data = random_points, aes(x = X, y = Y), col = "red") +
+  geom_sf(data = filter(kpg_sf, district == "Belait"), fill = NA) +
+  geom_sf(aes(col = duration), linewidth = 1.2, alpha = 0.7) +
+  geom_point(x = suriseri[1], y = suriseri[2], col = "red3", pch = "X", 
+             size = 3) +
+  scale_colour_viridis_c() 
+```
+
+Improving the analysis
+
+-   Weight analysis by populous areas. Outcalls to hospitals can be modelled using a Poisson distribution with the population as the rate parameter.
+-   Use a more sophisticated routing algorithm that accounts for traffic conditions and road quality (am vs pm, weekends vs weekdays, etc.).
+-   Simpler to analyse at the kampong or mukim level?
+
+
+## Areal data (`(MULTI)POLYGONS`)
+
+::: {.callout-tip title="What we'll learn"}
+-   Represent statistical data using colour mapping symbology (choropleth)
+-   Use `ggplot2::geom_label()` or `ggrepel::geom_label_repel()` to add labels to the map
+-   Using a binned colour scale, e.g. `ggplot2::geom_scale_fill_viridis_b()`
+:::
+
+When your study data is made up a finite number of non-overlapping areas, then you can represent them as polygons in R. This is the case for the kampong and mukim data in Brunei. As an example, let us look at the population of each kampong in Brunei. This dataset comes from the 2021 Brunei Census data [@deps2022population]
+
+```{r}
+glimpse(bn_census2021)
+```
+
+Each row of the data refers to a kampong-level observation. While there are unique identifiers to this (`id`, `kampong`, `mukim`, `district`), we would still need to geocode this data set so that we can do fun things like plot it on a map. Let's use (again) `left_join()` to do this.
+
+```{r}
+bn_pop_sf <- 
+  left_join(
+    kpg_sf, 
+    bn_census2021, 
+    by = join_by(id, kampong, mukim, district)
+  )
+```
+
+Great. Let's take a look at the population column. It would be very interesting to see where most of the `r scales::comma(sum(bn_pop_sf$population, na.rm = TRUE))` people of Brunei live!
+
+```{r}
+ggplot(bn_pop_sf) +
+  geom_sf(aes(fill = population)) +
+  scale_fill_viridis_c(na.value = NA)
+```
+
+As expected, there are "hotspots" of population in the Brunei-Muara district, and to a lesser extent in the Belait district. We can make this graph a bit better by binning the population values. It seems to be dominated by a lot of these low value colours. Let's take a look at this further by inspecting a histogram.
+
+```{r}
+ggplot(bn_pop_sf) +
+  geom_histogram(aes(population), binwidth = 100)
+```
+
+So maybe we can bin the population into 4 categories: \< 100, 101-1000, 1001-10000, and 10000+. For this we directly use the `scale_fill_viridis_b()` and adjust the breaks. Otherwise we would have to `cut()` the population column and then use `scale_fill_manual()`. We also added the names of the top 10 most populous kampongs to the map using `ggrepel::geom_label_repel()`.
+
+```{r}
+#| warning: false
+kpg_labels_sf <-
+  bn_pop_sf |>
+  arrange(desc(population)) |>
+  slice_head(n = 10)
+
+bn_pop_sf |>
+  # filter(population > 50) |>
+  ggplot() +
+  geom_sf(aes(fill = population), col = NA, alpha = 0.8) +
+  geom_sf(data = kpg_sf, fill = NA, col = "black") +
+  ggrepel::geom_label_repel(
+    data = kpg_labels_sf,
+    aes(label = kampong, geometry = geometry),
+    stat = "sf_coordinates",
+    inherit.aes = FALSE,
+    box.padding = 1,
+    size = 2,
+    max.overlaps = Inf
+  ) +
+  scale_fill_viridis_b(
+    name = "Population",
+    na.value = NA,
+    labels = scales::comma,
+    breaks = c(0, 100, 1000, 10000, 20000)
+    # limits = c(0, 12000)
+  ) +
+  theme_bw()
+```
+
+## OpenStreetMap data
+
+::: {.callout-tip title="What we'll learn"}
+-   How to scrape OpenStreetMap data using the `{osmdata}` package.
+:::
+
+The `{osmdata}` package is a very useful tool for scraping OpenStreetMap data. It allows you to download data from OpenStreetMap and convert it into an `sf` object. The package is built on top of the `osmdata` API, which is a wrapper around the Overpass API. The Overpass API is a read-only API that allows you to query OpenStreetMap data. Conveniently, we do not need an API key.
+
+### EXAMPLE: How to get all the schools in Brunei
+
+When we go to https://www.openstreetmap.org/ website, we can search for some key terms. For example, if we search for "Sekolah Rendah Kiarong", we see the following:
+
+![](figures/sr_kiarong.png)
+
+Highlighted in red is the polygon that represents the school. Furthermore, we have some information in the "Tags" section such as:
+
+- `addr:place` = Kiarong
+- `addr:street` = Jalan Datu Ratna
+- `alt_name` = Sekolah Rendah Kiarong
+- `alt_name:en` = Kiarong Primary School
+- `amenity` = school
+- etc.
+
+The `{osmdata}` package allows us to query this information. To replicate this 'GUI' experience using code, we do the following:
+
+```{r}
+#| cache: true
+q <-
+  opq("brunei") |>
+  add_osm_feature(
+    key = "name", 
+    value = "Sekolah Rendah Datu Ratna Haji Muhammad Jaafar"
+  ) |>
+  osmdata_sf()
+print(q)
+```
+
+It has found the school. To extract the information, let's look at the `$osm_polygons` entry:
+
+```{r}
+glimpse(q$osm_polygons)
+```
+
+Let's plot it!
+
+```{r}
+# warning: false
+ggplot(filter(kpg_sf, mukim == "Mukim Gadong B")) +
+  geom_sf() +
+  geom_label_repel(
+    aes(label = kampong, geometry = geometry),
+    stat = "sf_coordinates",
+    inherit.aes = FALSE,
+    box.padding = 1,
+    size = 3,
+    max.overlaps = Inf
+  ) +
+  geom_sf(data = q$osm_polygons, fill = "red3")
+```
+
+We can query based on amenity type as well. For example, to get all the schools in Brunei:
+
+```{r}
+#| cache: true
+# Bounding box for Brunei Muara
+bm_sf <- filter(kpg_sf, district == "Brunei Muara")
+bm_bbox <- st_bbox(bm_sf)
+
+q <-
+  opq(bm_bbox) |>
+  add_osm_feature(
+    key = "amenity", 
+    value = "school"
+  ) |>
+  osmdata_sf()
+print(q)
+```
+
+
+Almost always it is a good idea to look at the polygons, instead of the points. In any case, you can always find the centroid of the polygons if you wanted to plot point data.
+
+```{r}
+#| warning: false
+schools_sf <-
+  q$osm_polygons |>
+  as_tibble() |>  # these two lines convert to tibble-like object
+  st_as_sf() |> 
+  select(osm_id, name) |>
+  drop_na() |>
+  st_centroid()  # obtains X,Y coordinates of centroids
+
+print(schools_sf)
+
+ggplot() +
+  geom_sf(data = bm_sf, aes(fill = mukim), alpha = 0.3) +
+  geom_sf(data = schools_sf, size = 2) 
+```
+
+From here...
+
+- Visit the [OSM Wiki](https://wiki.openstreetmap.org/wiki/Key:amenity?uselang=en-GB) to see what other amenities you can query.
+- Clearly not limited to schools -- clinics, shops, movie theatres, ...
+- Combine with the road data from `{osrm}` to calculate distances between schools and hospitals, for example.

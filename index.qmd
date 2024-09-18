@@ -2,6 +2,12 @@
 title: "Welcome"
 ---
 
-More info soon. 
+The three topics for this year's special lectures are:
 
-Test changes.
+1. Web scraping and modelling
+2. GIS and spatial data
+3. Quantitative text analysis
+
+You will find the lecture notes and materials for each topic by clicking on the menu button. These lectures are meant to be more "hands-on" than the previous R1-4 lectures, so be prepared to get your hands dirty with some code!
+
+You may also browse the GitHub repo for the special lecture notes. In particular, you will find `.qmd` files, which you can open in RStudio. Best to clone the repo to your local computers and open the `special-lectures.Rproj` file in RStudio. You will find the source code exactly as it is displayed in the html files. You can also turn on "visual" mode in RStudio to see a friendlier version of the `.qmd` files.

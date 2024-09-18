@@ -548,7 +548,7 @@ hsp_df <-
       TRUE ~ NA
     )
   )
-save(hsp_df, file = "hsp_df.RData")
+# save(hsp_df, file = "data/hsp_df.RData")
 ```
 
 
@@ -578,7 +578,7 @@ In R, you need to supply two things:
 Here's an example:
 
 ```{r}
-load("hsp_df.RData")  # I saved this data set earlier and load it back
+load("data/hsp_df.RData")  # I saved this data set earlier and load it back
 
 # First clean the data a bit
 htypes <- c("detached", "semi-detached", "terrace", "apartment")

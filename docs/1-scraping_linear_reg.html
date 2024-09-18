@@ -794,7 +794,7 @@ This is another paragraph. It has two sentences.</code></pre>
 <span id="cb59-73"><a href="#cb59-73" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
 <span id="cb59-74"><a href="#cb59-74" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb59-75"><a href="#cb59-75" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb59-76"><a href="#cb59-76" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(hsp_df, <span class="at">file =</span> <span class="st">"hsp_df.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-76"><a href="#cb59-76" aria-hidden="true" tabindex="-1"></a><span class="co"># save(hsp_df, file = "data/hsp_df.RData")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="linear-regression" class="level2">
@@ -813,7 +813,7 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_px_p + \epsilon.
 <h3 class="anchored" data-anchor-id="model-fit">Model fit</h3>
 <p>Here’s an example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"hsp_df.RData"</span>)  <span class="co"># I saved this data set earlier and load it back</span></span>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/hsp_df.RData"</span>)  <span class="co"># I saved this data set earlier and load it back</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"># First clean the data a bit</span></span>
 <span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>htypes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"detached"</span>, <span class="st">"semi-detached"</span>, <span class="st">"terrace"</span>, <span class="st">"apartment"</span>)</span>
@@ -995,7 +995,7 @@ Attaching package: 'randomForest'</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(resid_rf <span class="sc">^</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 199870</code></pre>
+<pre><code>[1] 204385.7</code></pre>
 </div>
 </div>
 <p>In this case, the linear regression model has a smaller residual sum of squares, indicating that it fits the data better.</p>
@@ -1004,7 +1004,7 @@ Attaching package: 'randomForest'</code></pre>
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit_rf, <span class="at">newdata =</span> new_house, )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       1 
-229.5915 </code></pre>
+231.9267 </code></pre>
 </div>
 </div>
 <p>Which seems very different to the <code>lm()</code> predictions.</p>
