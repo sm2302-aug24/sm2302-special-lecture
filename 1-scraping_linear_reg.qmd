@@ -1,5 +1,7 @@
 ---
 title: "Data Scraping and Linear Regression"
+editor_options: 
+  chunk_output_type: console
 ---
 
 For topic 1, we will cover linear regression. But before diving into that topic, we will talk about how to scrape data from the web.
@@ -12,7 +14,7 @@ Libraries:
 ```{r}
 library(tidyverse)
 library(rvest)
-library(polite)
+library(polite)  # not to be used
 ```
 
 ## Ethics 
