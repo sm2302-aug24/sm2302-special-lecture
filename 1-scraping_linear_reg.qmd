@@ -728,3 +728,5 @@ predict(fit_rf, newdata = new_house, )
 ```
 
 Which seems very different to the `lm()` predictions.
+
+## References {.unnumbered}

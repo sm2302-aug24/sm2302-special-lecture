@@ -89,7 +89,10 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-79bb3942e891885f9f7af119cd221462.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0fc701aa89f539aeeb882d74ca6374b9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0fc701aa89f539aeeb882d74ca6374b9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -254,6 +257,7 @@ window.Quarto = {
   <li><a href="#latent-semantic-scaling" id="toc-latent-semantic-scaling" class="nav-link" data-scroll-target="#latent-semantic-scaling"><span class="header-section-number">3.5.3</span> Latent semantic scaling</a></li>
   </ul>
 </li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -481,7 +485,7 @@ $ party    &lt;chr&gt; "PSE", "V", "PSE", "V", "PSE", "V", "V", "PSE", "V", "V",
 </section><section id="pdf" class="level3" data-number="3.2.4"><h3 data-number="3.2.4" class="anchored" data-anchor-id="pdf">
 <span class="header-section-number">3.2.4</span> PDF</h3>
 <p><code><a href="https://rdrr.io/pkg/readtext/man/readtext.html">readtext()</a></code> can also convert and read PDF (“.pdf”) files. The directory <code>/pdf/UDHR</code> contains PDF files of the Universal Declaration of Human Rights in 13 languages. Each file looks like this:</p>
-<p><img src="figures/udhr_sample.png" class="img-fluid"></p>
+<p><a href="figures/udhr_sample.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="figures/udhr_sample.png" class="img-fluid"></a></p>
 <div class="cell">
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dat_udhr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/readtext/man/readtext.html">readtext</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">path_data</span>, <span class="st">"/pdf/UDHR/*.pdf"</span><span class="op">)</span>, </span>
@@ -1213,7 +1217,7 @@ docs              month summoned veneration fondest
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="3-quanteda_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="3-quanteda_files/figure-html/unnamed-chunk-38-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="3-quanteda_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1224,7 +1228,7 @@ docs              month summoned veneration fondest
 <span><span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_wordcloud.html">textplot_wordcloud</a></span><span class="op">(</span><span class="va">dfmat_tweets</span>, max_words <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="3-quanteda_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="3-quanteda_files/figure-html/unnamed-chunk-39-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="3-quanteda_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1250,7 +1254,7 @@ docs              month summoned veneration fondest
 <span><span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_wordcloud.html">textplot_wordcloud</a></span><span class="op">(</span><span class="va">dfmat_corp_language</span>, comparison <span class="op">=</span> <span class="cn">TRUE</span>, max_words <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="3-quanteda_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="3-quanteda_files/figure-html/unnamed-chunk-40-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="3-quanteda_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1296,7 +1300,7 @@ TTR = \frac{N_{\text{types}}}{N_{\text{tokens}}}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="3-quanteda_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="3-quanteda_files/figure-html/unnamed-chunk-42-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="3-quanteda_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1331,7 +1335,7 @@ TTR = \frac{N_{\text{types}}}{N_{\text{tokens}}}
 <span><span class="fu"><a href="https://andrie.github.io/ggdendro/reference/ggdendrogram.html">ggdendrogram</a></span><span class="op">(</span><span class="va">dendr</span>, rotate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="3-quanteda_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="3-quanteda_files/figure-html/unnamed-chunk-44-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="3-quanteda_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1400,7 +1404,7 @@ government       year       last
 <span><span class="fu">quanteda.textplots</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_network.html">textplot_network</a></span><span class="op">(</span><span class="va">fcmat_news_select</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="3-quanteda_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="3-quanteda_files/figure-html/unnamed-chunk-49-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="3-quanteda_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1468,7 +1472,7 @@ psi           -4.456       -1.357 0.9321</code></pre>
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_scale1d.html">textplot_scale1d</a></span><span class="op">(</span><span class="va">tmod_wf</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="3-quanteda_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="3-quanteda_files/figure-html/unnamed-chunk-51-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="3-quanteda_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1491,7 +1495,7 @@ Note
 <div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/quanteda.textplots/man/textplot_scale1d.html">textplot_scale1d</a></span><span class="op">(</span><span class="va">tmod_wf</span>, groups <span class="op">=</span> <span class="va">dfmat_irish</span><span class="op">$</span><span class="va">party</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="3-quanteda_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="3-quanteda_files/figure-html/unnamed-chunk-52-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="3-quanteda_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1507,7 +1511,7 @@ Note
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="3-quanteda_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="3-quanteda_files/figure-html/unnamed-chunk-53-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="3-quanteda_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1684,7 +1688,7 @@ Data Dimension:
 <div class="sourceCode" id="cb119"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://koheiw.github.io/LSX/reference/textplot_terms.html">textplot_terms</a></span><span class="op">(</span><span class="va">lss</span>, highlighted <span class="op">=</span> <span class="va">data_dictionary_LSD2015</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="3-quanteda_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="3-quanteda_files/figure-html/unnamed-chunk-63-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="3-quanteda_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1722,12 +1726,13 @@ $ lss  &lt;dbl&gt; 0.10093989, 0.99263241, -0.76609160, 0.15991318, 0.25420329, 
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="3-quanteda_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="3-quanteda_files/figure-html/unnamed-chunk-65-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="3-quanteda_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>The plot shows that the sentiment of the articles about Ukraine became more negative in March but more positive in April. Zero on the Y-axis is the overall mean of the score; the dotted vertical line indicate the beginning of the war.</p>
+</section></section><section id="references" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -1735,7 +1740,7 @@ $ lss  &lt;dbl&gt; 0.10093989, 0.99263241, -0.76609160, 0.15991318, 0.25420329, 
 Slapin, Jonathan B., and Sven-Oliver Proksch. 2008. <span>“A <span>Scaling Model</span> for <span>Estimating Time-Series Party Positions</span> from <span>Texts</span>.”</span> <em>American Journal of Political Science</em> 52 (3): 705–22. <a href="https://doi.org/10.1111/j.1540-5907.2008.00338.x">https://doi.org/10.1111/j.1540-5907.2008.00338.x</a>.
 </div>
 </div>
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -2163,7 +2168,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 </body></html>

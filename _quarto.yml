@@ -32,6 +32,7 @@ book:
   downloads: pdf
   repo-url: https://github.com/sm2302-aug24/special-lectures
 
+lightbox: true
 
 format:
   html:

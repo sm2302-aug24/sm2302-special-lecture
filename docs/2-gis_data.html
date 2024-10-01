@@ -90,7 +90,10 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-79bb3942e891885f9f7af119cd221462.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0fc701aa89f539aeeb882d74ca6374b9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-0fc701aa89f539aeeb882d74ca6374b9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -240,6 +243,7 @@ window.Quarto = {
 <li><a href="#example-how-to-get-all-the-schools-in-brunei" id="toc-example-how-to-get-all-the-schools-in-brunei" class="nav-link" data-scroll-target="#example-how-to-get-all-the-schools-in-brunei"><span class="header-section-number">2.5.1</span> EXAMPLE: How to get all the schools in Brunei</a></li>
   </ul>
 </li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -289,11 +293,11 @@ Note
 <li>
 <code>dis_sf</code>: Brunei districts geometries.</li>
 <li>
-<code>mukim_sf</code>: Brunei mukim geometries.</li>
+<code>mkm_sf</code>: Brunei mukim geometries.</li>
 <li>
 <code>kpg_sf</code>: Brunei kampong geometries.</li>
 <li>
-<code>brn_df</code>: Brunei outline geometries.</li>
+<code>brn_sf</code>: Brunei outline geometries.</li>
 <li>
 <code>bn_census2021</code>: Brunei 2021 census data.</li>
 </ol>
@@ -376,23 +380,23 @@ Note
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 10 features and 3 fields
-Geometry type: POLYGON
+Geometry type: GEOMETRY
 Dimension:     XY
-Bounding box:  xmin: 114.6427 ymin: 4.68294 xmax: 115.1056 ymax: 4.973181
+Bounding box:  xmin: 114.3165 ymin: 4.164842 xmax: 115.2607 ymax: 5.027408
 Geodetic CRS:  WGS 84
 # A tibble: 10 × 4
-   kampong                district     population                       geometry
-   &lt;chr&gt;                  &lt;chr&gt;             &lt;dbl&gt;                  &lt;POLYGON [°]&gt;
- 1 Kg. Sengkurong A       Brunei Muara       3151 ((114.8363 4.900598, 114.8364…
- 2 Kg. Jerudong           Brunei Muara       3650 ((114.8624 4.972971, 114.8626…
- 3 Kg. Peliunan Batu Apoi Temburong            33 ((115.1031 4.723269, 115.1039…
- 4 Kg. Sebakit            Tutong              164 ((114.6697 4.744418, 114.6701…
- 5 Pulau Berbunut         Temburong            NA ((115.0469 4.896099, 115.0469…
- 6 Kg. Baong              Brunei Muara        351 ((114.9697 4.840602, 114.9698…
- 7 Kg. Subok Kota Batu    Brunei Muara       3258 ((114.9688 4.889511, 114.9685…
- 8 Kg. Sungai Tilong      Brunei Muara       4204 ((114.973 4.962542, 114.973 4…
- 9 Kg. Tanjong Panjang    Tutong              253 ((114.6603 4.78818, 114.6606 …
-10 Kg. Puni               Temburong           259 ((115.0357 4.704832, 115.0359…</code></pre>
+   kampong                 district     population                      geometry
+   &lt;chr&gt;                   &lt;chr&gt;             &lt;dbl&gt;                &lt;GEOMETRY [°]&gt;
+ 1 Kg. Tanjong Panjang     Tutong              253 POLYGON ((114.6603 4.78818, …
+ 2 Kg. Tamoi Tengah        Brunei Muara        357 POLYGON ((114.9336 4.882453,…
+ 3 Kg. Senukoh             Temburong           250 POLYGON ((115.2302 4.766017,…
+ 4 Kg. Teraja              Belait               16 POLYGON ((114.4258 4.299611,…
+ 5 Kg. Petani              Tutong             1087 POLYGON ((114.6572 4.808279,…
+ 6 Kg. Penapar             Tutong              395 POLYGON ((114.6801 4.733614,…
+ 7 Kg. Serasa              Brunei Muara       2676 MULTIPOLYGON (((115.0612 5.0…
+ 8 Kg. Lalipo              Tutong                1 POLYGON ((114.7675 4.480617,…
+ 9 Kg. Tungku              Brunei Muara       2320 POLYGON ((114.9062 4.98372, …
+10 STKRJ Lumapas Kawasan 1 Brunei Muara         NA POLYGON ((114.9149 4.839475,…</code></pre>
 </div>
 </div>
 <p>Spatial data analysis must have these two components:</p>
@@ -572,7 +576,7 @@ What we’ll learn
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">soil_gps</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Longitude</span>, <span class="va">Latitude</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="2-gis_data_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="2-gis_data_files/figure-html/unnamed-chunk-8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="2-gis_data_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -618,7 +622,7 @@ What we’ll learn
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="2-gis_data_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="2-gis_data_files/figure-html/unnamed-chunk-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="2-gis_data_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -735,7 +739,7 @@ $ Texture_classification &lt;chr&gt; "Sand", "Sand", "Sand", "Sand", "Sand", "Sa
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>size <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="2-gis_data_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="2-gis_data_files/figure-html/unnamed-chunk-14-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="2-gis_data_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -803,7 +807,7 @@ $ geometry   &lt;LINESTRING [°]&gt; LINESTRING (114.6236 4.7910..., LINESTRING 
 </div>
 </div>
 <p>According to this <a href="https://wiki.openstreetmap.org/wiki/OpenStreetMap_Carto/Lines">wiki</a>, In OpenStreetMap, the major roads of a road network are sorted on an importance scale, from motorway to quaternary road.</p>
-<p><img src="figures/osm_roads.png" class="img-fluid"></p>
+<p><a href="figures/osm_roads.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="figures/osm_roads.png" class="img-fluid"></a></p>
 <div class="cell">
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">brd_mjr</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">brd</span> <span class="op">|&gt;</span></span>
@@ -842,7 +846,7 @@ Geodetic CRS:  WGS 84
 <span>  <span class="fu">ggsci</span><span class="fu">::</span><span class="fu"><a href="https://nanx.me/ggsci/reference/scale_npg.html">scale_colour_npg</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="2-gis_data_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="2-gis_data_files/figure-html/unnamed-chunk-18-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="2-gis_data_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -927,7 +931,7 @@ all geometries</code></pre>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dis_sf</span>, <span class="va">name</span> <span class="op">==</span> <span class="st">"Belait"</span><span class="op">)</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="2-gis_data_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="2-gis_data_files/figure-html/unnamed-chunk-19-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="2-gis_data_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -942,7 +946,7 @@ all geometries</code></pre>
 <span><span class="fu">get_random_point</span><span class="op">(</span><span class="va">brd_belait</span><span class="op">$</span><span class="va">geometry</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         X          Y         L1 
-114.241433   4.594193   1.000000 </code></pre>
+114.241941   4.594271   1.000000 </code></pre>
 </div>
 </div>
 <p>Once we have this function, we need to <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> this function onto each of the linestrings in the <code>brd_belait</code> data set. The resulting list of points is too large! So we will just sample 100 points (you can experiment with this number).</p>
@@ -998,7 +1002,7 @@ Geodetic CRS:  WGS 84
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_colour_viridis_c</a></span><span class="op">(</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="2-gis_data_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="2-gis_data_files/figure-html/unnamed-chunk-23-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="2-gis_data_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1063,7 +1067,7 @@ $ occ_liv_q    &lt;dbl&gt; 13, 62, 27, 16, 22, 21, 37, 22, 12, 23, 14, 492, 71, 
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_c</a></span><span class="op">(</span>na.value <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="2-gis_data_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="2-gis_data_files/figure-html/unnamed-chunk-26-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="2-gis_data_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1078,7 +1082,7 @@ $ occ_liv_q    &lt;dbl&gt; 13, 62, 27, 16, 22, 21, 37, 22, 12, 23, 14, 492, 71, 
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="2-gis_data_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="2-gis_data_files/figure-html/unnamed-chunk-27-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="2-gis_data_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1114,7 +1118,7 @@ $ occ_liv_q    &lt;dbl&gt; 13, 62, 27, 16, 22, 21, 37, 22, 12, 23, 14, 492, 71, 
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="2-gis_data_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="2-gis_data_files/figure-html/unnamed-chunk-28-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="2-gis_data_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1140,7 +1144,7 @@ What we’ll learn
 <section id="example-how-to-get-all-the-schools-in-brunei" class="level3" data-number="2.5.1"><h3 data-number="2.5.1" class="anchored" data-anchor-id="example-how-to-get-all-the-schools-in-brunei">
 <span class="header-section-number">2.5.1</span> EXAMPLE: How to get all the schools in Brunei</h3>
 <p>When we go to https://www.openstreetmap.org/ website, we can search for some key terms. For example, if we search for “Sekolah Rendah Kiarong”, we see the following:</p>
-<p><img src="figures/sr_kiarong.png" class="img-fluid"></p>
+<p><a href="figures/sr_kiarong.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="figures/sr_kiarong.png" class="img-fluid"></a></p>
 <p>Highlighted in red is the polygon that represents the school. Furthermore, we have some information in the “Tags” section such as:</p>
 <ul>
 <li>
@@ -1215,7 +1219,7 @@ give correct results for longitude/latitude data</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="2-gis_data_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="2-gis_data_files/figure-html/unnamed-chunk-31-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="2-gis_data_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1283,7 +1287,7 @@ Geodetic CRS:  WGS 84
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">schools_sf</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="2-gis_data_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><a href="2-gis_data_files/figure-html/unnamed-chunk-33-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="2-gis_data_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1293,7 +1297,7 @@ Geodetic CRS:  WGS 84
 <li>Visit the <a href="https://wiki.openstreetmap.org/wiki/Key:amenity?uselang=en-GB">OSM Wiki</a> to see what other amenities you can query.</li>
 <li>Clearly not limited to schools – clinics, shops, movie theatres, …</li>
 <li>Combine with the road data from <a href="https://github.com/riatelab/osrm">osrm</a> to calculate distances between schools and hospitals, for example.</li>
-</ul>
+</ul></section></section><section id="references" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -1307,7 +1311,7 @@ Jaafar, Salwana Md, and Rahayu Sukmaria Sukri. 2023. <span>“Data on the Physic
 Pebesma, Edzer, and Roger Bivand. 2023. <em>Spatial <span>Data Science</span>: <span>With Applications</span> in <span>R</span></em>. 1st ed. New York: <span>Chapman and Hall/CRC</span>. <a href="https://doi.org/10.1201/9780429459016">https://doi.org/10.1201/9780429459016</a>.
 </div>
 </div>
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1738,7 +1742,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","loop":false,"selector":".lightbox","closeEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 </body></html>

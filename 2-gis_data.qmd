@@ -26,9 +26,9 @@ More info:
 The `{bruneimap}` package contains the following data sets:
 
 1. `dis_sf`: Brunei districts geometries.
-2. `mukim_sf`: Brunei mukim geometries.
+2. `mkm_sf`: Brunei mukim geometries.
 3. `kpg_sf`: Brunei kampong geometries.
-5. `brn_df`: Brunei outline geometries.
+5. `brn_sf`: Brunei outline geometries.
 4. `bn_census2021`: Brunei 2021 census data.
 :::
 
@@ -591,3 +591,5 @@ From here...
 - Visit the [OSM Wiki](https://wiki.openstreetmap.org/wiki/Key:amenity?uselang=en-GB) to see what other amenities you can query.
 - Clearly not limited to schools -- clinics, shops, movie theatres, ...
 - Combine with the road data from `{osrm}` to calculate distances between schools and hospitals, for example.
+
+## References {.unnumbered}

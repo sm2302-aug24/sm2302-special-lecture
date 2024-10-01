@@ -886,3 +886,5 @@ ggplot(dat_smooth, aes(x = date, y = fit)) +
 ```
 
 The plot shows that the sentiment of the articles about Ukraine became more negative in March but more positive in April. Zero on the Y-axis is the overall mean of the score; the dotted vertical line indicate the beginning of the war.
+
+## References {.unnumbered}
